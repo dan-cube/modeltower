@@ -10,7 +10,7 @@ Install the engine, pick a model, load it with one click, let it test itself, an
 
 [简体中文](README.zh-CN.md) · [Guide](docs/guide.en.md) · [FAQ](docs/faq.en.md) · [Changelog](CHANGELOG.md)
 
-<img src="docs/images/main.png" width="732" alt="ModelTower main window: MiniMax online on a 512 GB Mac, with the memory bar showing Used, Most when full and the Safety line">
+<img src="docs/images/main.png" width="732" alt="ModelTower main window: DeepSeek at full precision online on a 512 GB Mac with a 1M context, MTP and Tables on SSD both on, and the memory bar showing Used, Most when full and the Safety line">
 
 <sub>The main window (the numbers are sample data). Measured on a 512 GB Mac Studio (M3 Ultra): DeepSeek V4.1 Flash at full precision, about 330 GB, loaded in 53 seconds and passed its self-test.</sub>
 

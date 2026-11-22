@@ -10,7 +10,7 @@
 
 [English](README.md) · [操作指南](docs/guide.zh-CN.md) · [常见问题](docs/faq.zh-CN.md) · [更新记录](CHANGELOG.md)
 
-<img src="docs/images/main.png" width="732" alt="ModelTower 主窗口：一台 512 GB 的 Mac 上 MiniMax 在线，内存条标着已用、塞满时最多和安全线">
+<img src="docs/images/main.png" width="732" alt="ModelTower 主窗口：一台 512 GB 的 Mac 上 DeepSeek 满血版在线，上下文 1M，MTP 和表放 SSD 都开着，内存条标着已用、塞满时最多和安全线">
 
 <sub>主窗口（图中数字是示例）。实测：512 GB 的 Mac Studio（M3 Ultra）上，DeepSeek V4.1 Flash 满血版约 330 GB，53 秒加载完并通过自检。</sub>
 
