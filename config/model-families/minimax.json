@@ -1,0 +1,80 @@
+{
+  "说明": "出厂说明（三层里的①，已定第 1、27 条）：只写这个家族是什么、有哪些开关，不含任何人的实测。文字写中英两份；{eta}、{title} 是占位。你的说法在运行目录的 model-notes.json（③），模型自己的数在 model-facts.json（②）。",
+  "family": "minimax",
+  "title": {
+    "zh": "MiniMax",
+    "en": "MiniMax"
+  },
+  "match": {
+    "model_type": [
+      "minimax_m3_vl"
+    ]
+  },
+  "about": [
+    [
+      {
+        "zh": "能做什么",
+        "en": "What it does"
+      },
+      {
+        "zh": "通用的文字和推理模型；能不能读图、上下文多长，看具体型号。",
+        "en": "A general text and reasoning model; image input and context length depend on the exact version."
+      }
+    ]
+  ],
+  "switches": [
+    {
+      "key": "mtp",
+      "name": {
+        "zh": "MTP",
+        "en": "MTP"
+      },
+      "setting": "mtp_enabled",
+      "default": true,
+      "mode": "free",
+      "info": [
+        [
+          {
+            "zh": "是什么",
+            "en": "What it is"
+          },
+          {
+            "zh": "多 token 预测：模型先一次猜出后面几个字，再一起核对，猜对的直接用。答案逐字不变。",
+            "en": "Multi-token prediction: the model drafts several tokens ahead and verifies them together, keeping the ones that match. The output is identical."
+          }
+        ],
+        [
+          {
+            "zh": "什么时候值得开",
+            "en": "When it helps"
+          },
+          {
+            "zh": "生成得多的时候（写代码、思考、长回答）提速最明显。",
+            "en": "Most useful when it generates a lot: code, reasoning, long answers."
+          }
+        ],
+        [
+          {
+            "zh": "代价",
+            "en": "Cost"
+          },
+          {
+            "zh": "多占一些内存；开关要重新加载模型，下线{eta}。",
+            "en": "Uses a little more memory; switching reloads the model, offline for {eta}."
+          }
+        ]
+      ]
+    }
+  ],
+  "known": {
+    "MiniMax-M3.1-Flash": {
+      "version": "M3.1 Flash",
+      "native": 1048576,
+      "kv": 266240,
+      "size_gib": 245,
+      "mtp_gib": 2.5,
+      "vision": true,
+      "cache_256k_gb": 34
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "updated": "2026-11-22",
+  "about": "oMLX compatibility table shipped with the console. Each installer is pinned by SHA-256 (a version number alone is not enough). state: verified, works (usable with known gaps), testing, old (too old, please upgrade).",
+  "minimum": "0.8.0",
+  "recommended": "0.8.2",
+  "tested_max": "0.8.2",
+  "versions": [
+    {
+      "version": "0.8.2",
+      "state": "verified",
+      "published": "2026-11-21",
+      "cmax_fix": true,
+      "packages": [
+        {
+          "system": "macos26",
+          "file": "oMLX-0.8.2-macos26-27.dmg",
+          "size": 938489223,
+          "sha256": "6316ad32cde3248bcf23abece8b9222847f7ae8e594cea1b378a34049252df78",
+          "url": "https://github.com/jundot/omlx/releases/download/v0.8.2/oMLX-0.8.2-macos26-27.dmg"
+        },
+        {
+          "system": "macos15",
+          "file": "oMLX-0.8.2-macos15-sequoia.dmg",
+          "size": 910609044,
+          "sha256": "f081fee936f4c706459db8f69d79c9bf25df099b6a0e71ffec7c65ca23d2b1fd",
+          "url": "https://github.com/jundot/omlx/releases/download/v0.8.2/oMLX-0.8.2-macos15-sequoia.dmg",
+          "only_tested_on": "macos26"
+        }
+      ]
+    },
+    {
+      "version": "0.8.0rc1",
+      "state": "old",
+      "published": "2026-11-12",
+      "cmax_fix": true,
+      "packages": [
+        {
+          "system": "macos26",
+          "file": "oMLX-0.8.0rc1-macos26-27.dmg",
+          "size": 966392706,
+          "sha256": "978625719a46fe36e272e70a2d7f9c005f86ffe6b9749e5d1503fbefa4a4caa5",
+          "url": "https://github.com/jundot/omlx/releases/download/v0.8.0rc1/oMLX-0.8.0rc1-macos26-27.dmg"
+        },
+        {
+          "system": "macos15",
+          "file": "oMLX-0.8.0rc1-macos15-sequoia.dmg",
+          "size": 937705534,
+          "sha256": "a550431a0f2acad1dc4f0022ff0b5d008f1f7a2b67165b1d29bd042d72d581fa",
+          "url": "https://github.com/jundot/omlx/releases/download/v0.8.0rc1/oMLX-0.8.0rc1-macos15-sequoia.dmg",
+          "only_tested_on": "macos26"
+        }
+      ],
+      "note": {
+        "zh": "这是测试版，正式版已经发布。请升级到最新的正式版。",
+        "en": "This is a test build and the final release is out. Please upgrade to the latest release."
+      }
+    },
+    {
+      "version": "0.7.3",
+      "state": "old",
+      "published": "2026-10-31",
+      "cmax_fix": false,
+      "note": {
+        "zh": "缺 CMAX 修复（DeepSeek 刚加载和对话变长时会变慢），控制台也没对这一版测过。请升级到最新版。",
+        "en": "Lacks the CMAX fix (DeepSeek slows down right after loading and as conversations grow), and the console has not been tested with this version. Please upgrade to the latest version."
+      },
+      "packages": [
+        {
+          "system": "macos26",
+          "file": "oMLX-0.7.3-macos26-27.dmg",
+          "size": 881239063,
+          "sha256": "2acfde41aeac0b022dbca803ca109437f3ccaf0c33f3415881526b985bee86f2",
+          "url": "https://github.com/jundot/omlx/releases/download/v0.7.3/oMLX-0.7.3-macos26-27.dmg"
+        },
+        {
+          "system": "macos15",
+          "file": "oMLX-0.7.3-macos15-sequoia.dmg",
+          "size": 838158761,
+          "sha256": "cd5e3b454798a002f32ef2f3bf06ae033ea2f4e5b02aa039a2c68445498605f1",
+          "url": "https://github.com/jundot/omlx/releases/download/v0.7.3/oMLX-0.7.3-macos15-sequoia.dmg",
+          "only_tested_on": "macos26"
+        }
+      ]
+    }
+  ],
+  "bad": [],
+  "sources": {
+    "about": "Download sources. With \"China\" selected, installers prefer the ModelScope mirror and the console suggests picking ModelScope inside oMLX; oMLX's Hugging Face endpoint is not changed unless the user ticks the community mirror (cn_hf_endpoint; run by an individual, no official guarantee).",
+    "cn_hf_endpoint": "https://hf-mirror.com",
+    "modelscope_base": "https://www.modelscope.cn/models/skyeyes1999/omlx-release-copy/resolve/master"
+  }
+}

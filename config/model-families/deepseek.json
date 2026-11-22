@@ -1,0 +1,119 @@
+{
+  "说明": "出厂说明（三层里的①，已定第 1、27 条）：只写这个家族是什么、有哪些开关，不含任何人的实测。文字写中英两份；{eta}、{title} 是占位。你的说法在运行目录的 model-notes.json（③），模型自己的数在 model-facts.json（②）。",
+  "family": "deepseek",
+  "title": {
+    "zh": "DeepSeek",
+    "en": "DeepSeek"
+  },
+  "match": {
+    "model_type": [
+      "deepseek_v41"
+    ]
+  },
+  "about": [
+    [
+      {
+        "zh": "能做什么",
+        "en": "What it does"
+      },
+      {
+        "zh": "通用的文字和推理模型；能不能读图、上下文多长，看具体型号。",
+        "en": "A general text and reasoning model; image input and context length depend on the exact version."
+      }
+    ]
+  ],
+  "load_always": {
+    "deepseek_v41_engram_ssd_offload": true
+  },
+  "warmup": true,
+  "switches": [
+    {
+      "key": "mtp",
+      "name": {
+        "zh": "MTP",
+        "en": "MTP"
+      },
+      "setting": "mtp_enabled",
+      "default": true,
+      "mode": "free",
+      "info": [
+        [
+          {
+            "zh": "是什么",
+            "en": "What it is"
+          },
+          {
+            "zh": "多 token 预测：模型先一次猜出后面几个字，再一起核对，猜对的直接用。答案逐字不变。",
+            "en": "Multi-token prediction: the model drafts several tokens ahead and verifies them together, keeping the ones that match. The output is identical."
+          }
+        ],
+        [
+          {
+            "zh": "什么时候值得开",
+            "en": "When it helps"
+          },
+          {
+            "zh": "生成得多的时候（写代码、思考、长回答）提速最明显。",
+            "en": "Most useful when it generates a lot: code, reasoning, long answers."
+          }
+        ],
+        [
+          {
+            "zh": "代价",
+            "en": "Cost"
+          },
+          {
+            "zh": "多占一些内存；开关要重新加载模型，下线{eta}。",
+            "en": "Uses a little more memory; switching reloads the model, offline for {eta}."
+          }
+        ]
+      ]
+    },
+    {
+      "key": "ssd",
+      "name": {
+        "zh": "表放 SSD",
+        "en": "Tables on SSD"
+      },
+      "mode": "locked",
+      "official_setting": "deepseek_v41_engram_ssd_offload",
+      "locked_reason": {
+        "zh": "{title} 的查询表太大，放进内存装不下，固定放在 SSD 上按需读；这个开关锁定为开。",
+        "en": "{title}'s lookup tables are too large for memory, so they always stay on the SSD and are read on demand; this switch is locked on."
+      },
+      "info": [
+        [
+          {
+            "zh": "是什么",
+            "en": "What it is"
+          },
+          {
+            "zh": "把模型的查询表留在 SSD 上，用到时再读，答案不变。",
+            "en": "Keeps the model's lookup tables on the SSD and reads them when needed. The output is identical."
+          }
+        ],
+        [
+          {
+            "zh": "为什么锁定",
+            "en": "Why it's locked"
+          },
+          {
+            "zh": "这张表太大，放进内存装不下。",
+            "en": "The tables are too large to fit in memory."
+          }
+        ]
+      ]
+    }
+  ],
+  "known": {
+    "DeepSeek-V4.1-Flash-1017-MLX-original": {
+      "version": "V4.1 Flash",
+      "native": 1048576,
+      "kv": 81920,
+      "size_gib": 269,
+      "mtp_gib": 0.4,
+      "vision": true,
+      "cache_256k_gb": 0.3
+    }
+  }
+}

@@ -1,0 +1,2384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>
+
+%@ 上有 %@ 个请求在算、%@ 个在排队。切换会立刻中断它们（这个弹窗开着时新来的也一样）；想让它们答完，就点取消，过会儿再拨。</key>
+	<string>
+
+Requests on %@: %@ running, %@ queued. Switching interrupts them right away (including any that arrive while this dialog is open); to let them finish, click Cancel and try again in a bit.</string>
+	<key>
+
+%@ 此刻正在回答 %@ 个请求</key>
+	<string>
+
+Requests being answered on %@ right now: %@</string>
+	<key>
+
+%@ 此刻没有请求在处理。这个弹窗开着时新来的请求，切换时也会被中断。</key>
+	<string>
+
+%@ isn't processing any requests right now. Requests that arrive while this dialog is open will also be interrupted when you switch.</string>
+	<key>
+
+%@ 此刻没有请求在处理，不会打断谁。</key>
+	<string>
+
+%@ isn't processing any requests right now, so nothing will be interrupted.</string>
+	<key>
+
+关掉后资料不再写入这台的硬盘，同一份资料再问要从头读。已有的缓存（%@）不会自动删，可以点「清空缓存」。</key>
+	<string>
+
+With this off, documents are no longer written to this Mac's disk, and asking about the same document again means reading it from scratch. The existing cache (%@) isn't deleted automatically; you can click "Clear Cache".</string>
+	<key>
+
+升级系统或 oMLX 后第一次开，加载后还会自动预热 1–3 分钟，期间能用但会慢。</key>
+	<string>
+
+The first time after upgrading macOS or oMLX, it also warms up automatically for 1–3 minutes after loading; it's usable during that time but slower.</string>
+	<key>
+
+只想收起窗口，点红色关闭按钮就行，服务继续运行。</key>
+	<string>
+
+To just hide the window, click the red close button; the service keeps running.</string>
+	<key>
+
+此刻有 %@ 个请求在算、%@ 个在排队，会被立刻中断；想让它们答完，就点取消，过会儿再改。</key>
+	<string>
+
+Requests right now: %@ running, %@ queued. They will be interrupted immediately; to let them finish, click Cancel and change this a bit later.</string>
+	<key>
+
+此刻没有请求在处理。</key>
+	<string>
+
+No requests are being processed right now.</string>
+	<key>
+
+现在占 %@，比新上限大：%@加载时会删掉最久没用的笔记，删到约 %@ GB，不能恢复。这些内容下次问要重新读。</key>
+	<string>
+
+Currently using %@, which is over the new limit: the least recently used cache entries will be deleted on %@load, down to about %@ GB. This can't be undone, and that content will have to be read in again the next time it's asked about.</string>
+	<key>
+
+读不到 %@ 此刻的请求数；正在用它的对话会中断。</key>
+	<string>
+
+Can't read the current request count on %@; conversations using it will be interrupted.</string>
+	<key>
+
+读不到 %@ 此刻的请求数；正在用它的对话会被中断。</key>
+	<string>
+
+Can't read the current request count on %@; conversations using it will be interrupted.</string>
+	<key>
+
+读不到此刻的请求数；正在用它的对话会被中断。</key>
+	<string>
+
+Can't read the current request count; conversations using it will be interrupted.</string>
+	<key>  ⚠️ 超安全线</key>
+	<string>  ⚠️ Over the safety limit</string>
+	<key> · %%.1f token/秒（启动以来平均）</key>
+	<string> · %%.1f tokens/s (average since launch)</string>
+	<key> · %@ token/秒（正在生成）</key>
+	<string> · %@ tokens/s (generating)</string>
+	<key> · 推荐</key>
+	<string> · Recommended</string>
+	<key> 可以当主机</key>
+	<string> can be the Hub</string>
+	<key>#!/bin/zsh
+echo '%@ 开机解锁：下面输入这台的 macOS 密码，密码直接交给系统。看到 System successfully unlocked 就可以关掉这个窗口。'
+%@
+</key>
+	<string>#!/bin/zsh
+echo '%@ startup unlock: enter the macOS password for this Mac below. The password goes straight to the system. Once you see System successfully unlocked, you can close this window.'
+%@
+</string>
+	<key>%@ GB · 读不到总内存</key>
+	<string>%@ GB · total memory unknown</string>
+	<key>%@ · %@</key>
+	<string>%@ · %@</string>
+	<key>%@ · 等对方允许</key>
+	<string>%@ · Waiting for the other side to allow</string>
+	<key>%@ 不能在模型运行中直接切换，要重新加载 %@ 才生效：%@ 上的它会下线%@</key>
+	<string>%@ can't be changed while the model is running; %@ has to be reloaded for it to take effect: on %@ it goes offline for %@</string>
+	<key>%@ 发出关机 3 分钟了还开着：可能有进程卡住。可以再点一次关机，还不行就到机器前长按电源键。</key>
+	<string>%@ was told to shut down 3 minutes ago and is still on: a process may be stuck. Click Shut Down again; if that doesn't work, go to the Mac and hold the power button.</string>
+	<key>%@ 台</key>
+	<string>%@ Macs</string>
+	<key>%@ 和这台对主机的说法不一样：可能主机离线时两边各改过，也可能那台被动过。入口先不开。查清楚后点重新签一次，各台就会一致。</key>
+	<string>%@ and this Mac disagree about who the Hub is: either the Hub was offline and each side changed it, or that Mac was altered. The gateway stays off for now. Once you've sorted it out, click Re-sign and all the Macs will agree.</string>
+	<key>%@ 对话塞满时会超内存安全线</key>
+	<string>%@ will go over the memory safety limit when conversations fill the context</string>
+	<key>%@ 已关机。要开机，请到机器上按电源键。</key>
+	<string>%@ has shut down. To turn it on, press the power button on the Mac.</string>
+	<key>%@ 已改为%@，下次加载生效 · 现在切换…</key>
+	<string>%@ set to %@, takes effect on the next load · Switch Now…</string>
+	<key>%@ 开着在等解锁，这次不关它（它的 oMLX 本来就没在跑）；要关就到机器前，在登录界面点关机。</key>
+	<string>%@ is on and waiting to be unlocked, so it isn't shut down this time (its oMLX isn't running anyway); to shut it down, go to the Mac and click Shut Down on the login screen.</string>
+	<key>%@ 开着，还没解锁。点上面的解锁，在打开的终端里输入它的 macOS 密码；解锁后自动启动 oMLX。</key>
+	<string>%@ is on but not unlocked yet. Click Unlock above and enter its macOS password in the Terminal that opens; oMLX starts automatically after unlocking.</string>
+	<key>%@ 放不下它们一起跑。会先卸载 %@，再加载 %@（%@）。</key>
+	<string>They don't fit together on %@. It will unload %@ first, then load %@ (%@).</string>
+	<key>%@ 是个人维护的公益镜像，没有官方保障；它同时给文件和校验值，出了错核不出来。在中国下载模型，建议先在 oMLX 的模型下载页选「魔搭」，魔搭上没有的再用它。
+
+随时能取消勾选，或在「更新」页一键还原。</key>
+	<string>%@ is a free mirror run by an individual, with no official guarantee. It serves both the files and their checksums, so errors there cannot be caught. In China, first choose "ModelScope" on oMLX's model download page, and use this mirror only for models ModelScope doesn't have.
+
+You can untick it at any time, or restore it with one click on the Updates page.</string>
+	<key>%@ 正在关机。</key>
+	<string>%@ is shutting down.</string>
+	<key>%@ 正在处理 %@ 个请求、排队 %@ 个，会被中断。</key>
+	<string>%@ is busy with requests: %@ processing, %@ queued. They will be interrupted.</string>
+	<key>%@ 现在连不上，没查到</key>
+	<string>%@ can't be reached right now; nothing found</string>
+	<key>%@ 现在连不上，那一栏没查到。</key>
+	<string>%@ can't be reached right now, so that column couldn't be read.</string>
+	<key>%@ 生成</key>
+	<string>Generated %@</string>
+	<key>%@ 申请登记</key>
+	<string>%@ requested registration</string>
+	<key>%@ 的 %@</key>
+	<string>%2$@ on %1$@</string>
+	<key>%@ 的 oMLX 和控制台都会重启。</key>
+	<string>oMLX and the Console on %@ will both restart.</string>
+	<key>%@ 的查询表必须放 SSD，锁定为开</key>
+	<string>%@ requires Tables on SSD, locked on</string>
+	<key>%@ 还没有接受：到那台的 设置 → 安全 核对后接受，在那之前它不查签名。</key>
+	<string>%@ hasn't accepted yet: on that Mac, go to Settings → Security, verify, then Accept. Until then it won't check signatures.</string>
+	<key>%@ 还没跟上这台的状态：可能还没接受登记，也可能签这份状态的钥匙已经换了。先让它接受，再重新签一次。</key>
+	<string>%@ hasn't caught up with this Mac's state: it may not have accepted the registration yet, or the key that signed this state may have changed. Have it accept first, then Re-sign.</string>
+	<key>%@。%@ 没登录桌面，它的控制台窗口没打开，服务照常能用。</key>
+	<string>%@. %@ isn't logged in to the desktop, so its Console window didn't open; the service works as usual.</string>
+	<key>%@没成（退出码 %@）</key>
+	<string>%1$@ failed (exit code %2$@)</string>
+	<key>%@没成：%@</key>
+	<string>%1$@ failed: %2$@</string>
+	<key>%@（%@ GB）</key>
+	<string>%@ (%@ GB)</string>
+	<key>%@（之后状态已经变了）</key>
+	<string>%@ (the status has changed since)</string>
+	<key>%@，%@ 登记</key>
+	<string>%@, registered %@</string>
+	<key>%@：%@</key>
+	<string>%@: %@</string>
+	<key>%@：失败（退出码 %@）</key>
+	<string>%@: failed (exit code %@)</string>
+	<key>%@：完成（%@ 秒）</key>
+	<string>%@: done (%@ s)</string>
+	<key>%@：已停止等待，什么都没改</key>
+	<string>%@: stopped waiting, nothing was changed</string>
+	<key>**日志**是 oMLX 自己的记录，**操作记录**是这个窗口做过什么。</key>
+	<string>**Logs** are oMLX's own record; **Activity** shows what this window has done.</string>
+	<key>**模型卡片**：上下文在这里选，选项写明了推荐。放不下一起跑时按钮写**切换**，会先卸载别的模型。</key>
+	<string>**Model card**: choose the context here; the options say which one is Recommended. When models don't fit together, the button says **Switch** and unloads the other model first.</string>
+	<key>**点的颜色**：绿，服务在跑；红，开着但服务没跑或卡住；灰，已关机或连不上；橙，正在变。</key>
+	<string>**Dot colors**: green, the service is running; red, the Mac is on but the service isn't running or is stuck; gray, shut down or unreachable; orange, changing.</string>
+	<key>**顶部一排**管所有机器：启动全部、关闭全部、卸载全部、重启全部、全部关机、刷新全部。现在不能按的会灰着。</key>
+	<string>**The top row** controls all Macs: Start All, Stop All, Unload All, Restart All, Shut Down All, Refresh All. Buttons that can't be used right now are grayed out.</string>
+	<key>192.168.1.20 或 my-mac.local</key>
+	<string>192.168.1.20 or my-mac.local</string>
+	<key>&lt;body style='font:14px -apple-system;padding:40px;color:#666'&gt;打不开管理页：%@&lt;/body&gt;</key>
+	<string>&lt;body style='font:14px -apple-system;padding:40px;color:#666'&gt;Unable to open the admin page: %@&lt;/body&gt;</string>
+	<key>FileVault 开着</key>
+	<string>FileVault is on</string>
+	<key>Ollama 正占着 %@ 的内存，加上 %@ 会超过上限。确认后会请 Ollama 卸载它当前的模型，再加载 %@。</key>
+	<string>Ollama is using memory on %@, and adding %@ would go over the limit. If you confirm, Ollama will be asked to unload its current model, and then %@ will be loaded.</string>
+	<key>Ollama 正占着 %@ 的内存，按新设置加载 %@ 会超过上限。确认后会请 Ollama 卸载它当前的模型，再切换。</key>
+	<string>Ollama is using memory on %@, and loading %@ with the new settings would go over the limit. If you confirm, Ollama will be asked to unload its current model, and then the switch happens.</string>
+	<key>Ollama 正占着 %@ 的内存，模型加载回来时会超过上限。确认后会请 Ollama 卸载它当前的模型，再改。</key>
+	<string>Ollama is using memory on %@, and reloading the model would go over the limit. If you confirm, Ollama will be asked to unload its current model, and then the change is made.</string>
+	<key>do shell script "%@" with prompt "让这台 Mac 准备好当模型机：断电后自动开机、不自动休眠、允许控制台关机。" with administrator privileges</key>
+	<string>do shell script "%@" with prompt "Get this Mac ready to serve models: start automatically after a power loss, never sleep automatically, and allow the Console to shut it down." with administrator privileges</string>
+	<key>dsh 里选</key>
+	<string>In dsh</string>
+	<key>oMLX 日志：服务自己的记录，点开时取一次</key>
+	<string>oMLX Logs: the service's own record, fetched once when opened</string>
+	<key>oMLX 服务没开</key>
+	<string>oMLX service is off</string>
+	<key>oMLX 服务没运行。启动后在这里加载模型（启动不会自动加载）。</key>
+	<string>The oMLX service isn't running. After starting it, load a model here (starting doesn't load one automatically).</string>
+	<key>oMLX 正在启动…</key>
+	<string>oMLX is starting…</string>
+	<key>oMLX 自己的自动更新</key>
+	<string>oMLX's own auto-update</string>
+	<key>oMLX 自己的自动更新照旧开着，能在「更新」页关。</key>
+	<string>oMLX's own auto-update is still on; you can turn it off on the Updates page.</string>
+	<key>oMLX 装好了。</key>
+	<string>oMLX is installed.</string>
+	<key>oMLX 装好了：%@。</key>
+	<string>oMLX is installed: %@.</string>
+	<key>oMLX 默认会在后台下载约 900 MB 的新安装包，这些版本没经过控制台核对。关掉以后，有新版时由控制台的「更新」页提示，核对过再装。
+
+随时能在「更新」页还原。</key>
+	<string>By default oMLX downloads new installers (about 900 MB) in the background, and those versions have not been checked by the console. Once it's off, the console's Updates page tells you about new versions, and you install them after they're verified.
+
+You can restore it on the Updates page at any time.</string>
+	<key>· 程序版本不同</key>
+	<string>· Different app version</string>
+	<key>· 被 %@ 占用%@%@</key>
+	<string>· In use by %@%@%@</string>
+	<key>⌘Q 才是退出：oMLX 一起关，模型也卸载。退出前会告诉你还有多少请求在处理。</key>
+	<string>Only ⌘Q quits: oMLX is stopped too and the models are unloaded. Before quitting, you'll be told how many requests are still being processed.</string>
+	<key>○ 本地模型</key>
+	<string>○ Local Models</string>
+	<key>⚠️ 内存超线：</key>
+	<string>⚠️ Over the memory limit: </string>
+	<key>、</key>
+	<string>, </string>
+	<key>、排队 %@ 个</key>
+	<string>, %@ queued</string>
+	<key>。</key>
+	<string>. </string>
+	<key>「%@ · %@」</key>
+	<string>"%@ · %@"</string>
+	<key>「%@」刚开始，这次没有切换语言</key>
+	<string>"%@" has just started, so the language was not changed this time</string>
+	<key>「%@」刚开始，这次没有退出</key>
+	<string>"%@" has just started, so the Console did not quit this time</string>
+	<key>「%@」还在进行中（已 %@ 秒）</key>
+	<string>"%@" is still in progress (%@ s so far)</string>
+	<key>一句话说明</key>
+	<string>One-line description</string>
+	<key>一台可以登记几个地址（**机器** → **地址**），网线在前：连不上第一个就自动用下一个。</key>
+	<string>A Mac can have several addresses registered (**Machines** → **Address**), wired first: if the first can't be reached, the next one is used automatically.</string>
+	<key>一台的钥匙没了（抹盘、换主板、机器丢了）</key>
+	<string>A Mac's key is gone (disk erased, logic board replaced, Mac lost)</string>
+	<key>一次设好：断电开机、不休眠、允许关机…</key>
+	<string>Set All at Once: Auto-Start, No Sleep, Allow Shut Down…</string>
+	<key>一键体检</key>
+	<string>One-Click Health Check</string>
+	<key>万一出事</key>
+	<string>If Something Goes Wrong</string>
+	<key>上下排</key>
+	<string>Stacked</string>
+	<key>上下文</key>
+	<string>Context</string>
+	<key>上下文 · %@</key>
+	<string>Context · %@</string>
+	<key>上次检查：%@</key>
+	<string>Last checked: %@</string>
+	<key>上次没读成：%@</key>
+	<string>Last check failed: %@</string>
+	<key>下一步</key>
+	<string>Next</string>
+	<key>下次</key>
+	<string>next </string>
+	<key>下次加载</key>
+	<string>Next Load</string>
+	<key>下次加载 %@ 时用这一档。模型最多支持 %@</key>
+	<string>Applies the next time %@ is loaded. The model supports up to %@</string>
+	<key>下次加载 %@ 时用这一档；同时写进 dsh，重开 dsh 后按新额度显示剩余。模型最多支持 %@</key>
+	<string>Applies the next time %@ is loaded; also written to dsh, which shows the remaining quota against the new limit after you reopen it. The model supports up to %@</string>
+	<key>下载</key>
+	<string>Download</string>
+	<key>下载 oMLX 安装包</key>
+	<string>Download the oMLX installer</string>
+	<key>下载完了，但读不懂后端的回复。</key>
+	<string>The download finished, but the reply from the backend couldn't be read.</string>
+	<key>下载完了，大小和 SHA-256 都和兼容表对上：%@。</key>
+	<string>Downloaded. Size and SHA-256 match the compatibility table: %@.</string>
+	<key>下载官方安装包（推荐）</key>
+	<string>Download the Official Installer (Recommended)</string>
+	<key>下载源</key>
+	<string>Download Source</string>
+	<key>下载源：%@</key>
+	<string>Download source: %@</string>
+	<key>下载页</key>
+	<string>Download Page</string>
+	<key>不允许</key>
+	<string>Don't Allow</string>
+	<key>不允许读主密钥</key>
+	<string>Disallow reading the main key</string>
+	<key>不再显示这条</key>
+	<string>Don't show this again</string>
+	<key>不用重启服务。</key>
+	<string>No service restart needed.</string>
+	<key>不用重启服务，但 %@ 上的 %@ 会先卸载、改完再加载回来（下线%@）。</key>
+	<string>No service restart needed, but %2$@ on %1$@ will be unloaded first and loaded back after the change (offline for %3$@).</string>
+	<key>不等请求答完，对话会中断。关机后远程开不回来，只能到机器上按电源键。
+
+</key>
+	<string> It won't wait for requests to finish, so conversations will be interrupted. After shutdown it can't be turned back on remotely; you have to press the power button on the Mac.
+
+</string>
+	<key>不自动休眠</key>
+	<string>Prevent Automatic Sleep</string>
+	<key>两台</key>
+	<string>both Macs</string>
+	<key>两次不一样</key>
+	<string>The two entries don't match</string>
+	<key>个人维护的社区镜像，没有官方保障。</key>
+	<string>A community mirror run by an individual, with no official guarantee.</string>
+	<key>中国</key>
+	<string>China</string>
+	<key>主密钥</key>
+	<string>Main key</string>
+	<key>主机</key>
+	<string>Hub</string>
+	<key>主机 ●</key>
+	<string>Hub ●</string>
+	<key>主机、名单都不变，只是用现在登记的钥匙再签一次，让各台跟上。</key>
+	<string>The Hub and the list stay as they are; this just re-signs with the currently registered key so all Macs catch up.</string>
+	<key>主机上的登录账号</key>
+	<string>Login account on the Hub</string>
+	<key>主机刚开机就先解锁；主机坏了，就让名单里的另一台接管，要最高密码。开机只能到机器上按电源键。</key>
+	<string>Unlock the Hub first right after it boots. If the Hub is down, let another Mac on the hub candidates list take over (needs the console password). A Mac can only be turned on by pressing its power button.</string>
+	<key>主机名字</key>
+	<string>Hub Name</string>
+	<key>主机崩了才用这个。这台会变成主机，原主机修好回来后自动退成副机。主机还连得上时会再问一次。</key>
+	<string>Use this only if the Hub has crashed. This Mac becomes the Hub, and when the old Hub is fixed and comes back, it automatically steps down to Worker. If the Hub is still reachable, you'll be asked once more.</string>
+	<key>主机崩了才用，要最高密码</key>
+	<string>Only if the Hub has crashed; needs the console password</string>
+	<key>主机已关机</key>
+	<string>Hub has shut down</string>
+	<key>主机开了安全芯片的话，先到**安全**页点**申请登记**，回主机批准。</key>
+	<string>If the Hub uses Secure Enclave, first click **Request Registration** on the **Security** page, then go back to the Hub and approve it.</string>
+	<key>主机批准后才换；10 分钟没人批就失效</key>
+	<string>Applied only after the Hub approves; expires after 10 minutes without approval</string>
+	<key>主机换了，正在改连新主机。</key>
+	<string>The Hub has changed; switching over to the new Hub.</string>
+	<key>主机没了、最高密码也丢了才用；主机钥匙的授权也一起撤掉</key>
+	<string>Only if the Hub is gone and the console password is lost; access granted by the Hub key is withdrawn as well</string>
+	<key>主机还会把副机的 oMLX 和控制台一起打开。不会自动加载模型。</key>
+	<string>The Hub also starts oMLX and the Console on the Workers. No models are loaded automatically.</string>
+	<key>主机还在：到主机上重新登记，再回这里接受。主机没了：在这里点开始新的登记。</key>
+	<string>If the Hub is still there: register again on the Hub, then come back here and Accept. If the Hub is gone: click Start New Registration here.</string>
+	<key>主机还连得上</key>
+	<string>Hub still reachable</string>
+	<key>主机退出等于关闭所有机器的服务；副机退出只关它自己。</key>
+	<string>Quitting the Hub stops the service on every Mac; quitting a Worker only stops that one.</string>
+	<key>主机靠它连这台，断电重启后也靠它解锁。系统设置 → 通用 → 共享 → 远程登录。</key>
+	<string>The Hub uses it to connect to this Mac, and to unlock it after a power-loss restart. System Settings → General → Sharing → Remote Login.</string>
+	<key>也把 oMLX 的 Hugging Face 地址换成社区镜像 %@</key>
+	<string>Also switch oMLX's Hugging Face address to the community mirror %@</string>
+	<key>仍然改成 %@</key>
+	<string>Change to %@ Anyway</string>
+	<key>仍然退出</key>
+	<string>Quit Anyway</string>
+	<key>从 %@ 升级到 %@。控制台先备份 oMLX 的设置，下载并核对新版，由你替换，换好后自检一遍。</key>
+	<string>Upgrade from %1$@ to %2$@. The console backs up oMLX's settings, downloads and verifies the new version, you replace the app, and then it runs a self-test.</string>
+	<key>从官方发布的地址下载，下完按兼容表核对大小和 SHA-256；对不上就删掉，不打开。</key>
+	<string>Downloads from the official release address, then checks the size and SHA-256 against the compatibility table. If they don't match, the file is deleted and never opened.</string>
+	<key>从这台的控制台移除 %@？</key>
+	<string>Remove %@ from this Mac's Console?</string>
+	<key>以后关机、移交、接管、改名单、改最高密码，系统都会弹框要指纹或 Mac 密码。
+
+系统先弹一次框确认登记，然后显示恢复码，只显示一次，请准备好密码管理器。</key>
+	<string>From now on, shutting down, handing over, taking over, editing the list, and changing the console password will all bring up a system prompt asking for Touch ID or your Mac password.
+
+The system first shows one prompt to confirm the registration, then displays the recovery code. It is shown only once, so have your password manager ready.</string>
+	<key>休眠了模型就停了。只管机器，屏幕照常息屏。</key>
+	<string>If the Mac sleeps, the model stops. This only controls the Mac; the display still goes to sleep as usual.</string>
+	<key>会先卸载 %@，再加载 %@（%@）。</key>
+	<string>It will unload %@ first, then load %@ (%@).</string>
+	<key>会先卸载模型、停止 oMLX，再关机。</key>
+	<string>It will unload the models, stop oMLX, then shut down.</string>
+	<key>会先卸载模型、停止 oMLX，再关机。这台上别的应用不会提示保存，未保存的内容会丢。关机后只能到机器上按电源键才能再开。
+
+</key>
+	<string>It will unload the models, stop oMLX, then shut down. Other apps on this Mac won't be asked to save, so unsaved work will be lost. After shutdown, the Mac can only be turned back on by pressing its power button.
+
+</string>
+	<key>会先卸载模型、停止 oMLX，再关这台 Mac。这台上别的应用不会提示保存，未保存的内容会丢。</key>
+	<string>It will unload the models, stop oMLX, then shut down this Mac. Other apps on this Mac won't be asked to save, so unsaved work will be lost.</string>
+	<key>会删除 %@ 上的多轮缓存（约 %@）。删除后不可恢复；之后第一次问同一份资料会慢一些（要重新读入），模型本身不受影响。</key>
+	<string>This deletes the multi-turn cache on %@ (about %@). It can't be undone; the first question about the same document afterwards will be slower (it has to be read in again). The model itself is not affected.</string>
+	<key>会删除连它的钥匙。它上面的模型和服务不受影响；它那边的授权还留着，要在 %@ 的控制台吊销。</key>
+	<string>This deletes the key used to connect to it. Models and services on it are not affected. The access granted on its side remains and must be revoked in the Console on %@.</string>
+	<key>会卸载 %@，释放内存；%@的 oMLX 服务保持运行。之后要用时重新加载。</key>
+	<string>This unloads %@ to free memory; the oMLX service on %@ keeps running. Load it again when you need it.</string>
+	<key>会卸载模型、停止 oMLX。窗口留着，可以再点启动。</key>
+	<string>This unloads the models and stops oMLX. The window stays open, so you can click Start again.</string>
+	<key>会卸载模型、停止 oMLX，它的控制台也一起退出。主机这边还能再点启动。</key>
+	<string>This unloads the models and stops oMLX, and its Console quits too. You can still click Start from the Hub.</string>
+	<key>会请 Ollama 卸载 %@。下次在 Ollama 或 dsh 里用到时，它会自动重新加载。</key>
+	<string>This asks Ollama to unload %@. It reloads automatically the next time it is used from Ollama or dsh.</string>
+	<key>会请 Ollama 卸载 %@。下次在 Ollama 里用到时，它会自动重新加载。</key>
+	<string>This asks Ollama to unload %@. It reloads automatically the next time it is used from Ollama.</string>
+	<key>体检</key>
+	<string>Health Check</string>
+	<key>你没点操作时弹出来的框不要确认。</key>
+	<string>Don't confirm a prompt that appears when you haven't clicked anything.</string>
+	<key>保存</key>
+	<string>Save</string>
+	<key>保存到这台</key>
+	<string>Saves to this Mac</string>
+	<key>保存到这台，并同步给 %@（同步前都先备份）</key>
+	<string>Saves to this Mac and syncs to %@ (both are backed up first)</string>
+	<key>保存说明</key>
+	<string>Save Description</string>
+	<key>修改…</key>
+	<string>Change…</string>
+	<key>修改可当主机的名单</key>
+	<string>Edit Hub Candidates</string>
+	<key>修改最高密码</key>
+	<string>Change Console Password</string>
+	<key>停止</key>
+	<string>Stop</string>
+	<key>停止等待</key>
+	<string>Stop Waiting</string>
+	<key>允许</key>
+	<string>Allow</string>
+	<key>允许…</key>
+	<string>Allow…</string>
+	<key>允许控制台关这台</key>
+	<string>Allow Console to Shut Down This Mac</string>
+	<key>允许控制台读这台 oMLX 的主密钥吗？</key>
+	<string>Allow the console to read this Mac's oMLX main key?</string>
+	<key>允许新机器</key>
+	<string>Allow New Mac</string>
+	<key>允许新机器：贴上对方的配对串</key>
+	<string>Allow New Mac: Paste the Other Side's Pairing String</string>
+	<key>允许读主密钥</key>
+	<string>Allow reading the main key</string>
+	<key>先停 oMLX 再关机；关机后只能到机器上按电源键才能再开</key>
+	<string>Stops oMLX first, then shuts down; afterwards it can only be turned back on by pressing the power button on the Mac</string>
+	<key>先停 oMLX 再关这台 Mac；这个窗口会跟着关掉</key>
+	<string>Stops oMLX first, then shuts down this Mac; this window closes with it</string>
+	<key>先关 %@，确认关掉后再关 %@；有副机关不掉，%@ 就不关，让你看得到。</key>
+	<string>Shuts down %@ first and, once confirmed off, shuts down %@; if a Worker won't shut down, %@ stays on so you can see it.</string>
+	<key>先到主机上登记第一台。</key>
+	<string>First register the first Mac on the Hub.</string>
+	<key>先卸载 %@，再加载 %@</key>
+	<string>Unload %@ first, then load %@</string>
+	<key>先卸载这台的模型才能清空</key>
+	<string>Unload this Mac's models first to clear</string>
+	<key>先在菜单栏点 oMLX 的图标，选「Quit oMLX」退出；再打开安装包，把新版拖进「应用程序」替换旧版。</key>
+	<string>First click the oMLX icon in the menu bar and choose "Quit oMLX". Then open the installer and drag the new version into Applications to replace the old one.</string>
+	<key>先点左下角的连接，把这台加进来。</key>
+	<string>First click Connect at the bottom left to add this Mac.</string>
+	<key>先点底部的**体检**，它逐项查，告诉你哪里不对。</key>
+	<string>First click **Health Check** at the bottom; it checks item by item and tells you what's wrong.</string>
+	<key>先登记安全芯片</key>
+	<string>Register Secure Enclave first</string>
+	<key>先设最高密码</key>
+	<string>Set the console password first</string>
+	<key>先设最高密码。</key>
+	<string>Set the console password first.</string>
+	<key>入口</key>
+	<string>Gateway</string>
+	<key>全部关机</key>
+	<string>Shut Down All</string>
+	<key>全部关机？</key>
+	<string>Shut down all?</string>
+	<key>全部卸载</key>
+	<string>Unload All</string>
+	<key>全部恢复默认</key>
+	<string>Restore All Defaults</string>
+	<key>全部机器</key>
+	<string>All Macs</string>
+	<key>全部通过，升级好了。</key>
+	<string>All checks passed. The upgrade is done.</string>
+	<key>关</key>
+	<string>Off</string>
+	<key>关于</key>
+	<string>About</string>
+	<key>关掉</key>
+	<string>Turn Off</string>
+	<key>关掉 oMLX 自己的自动更新</key>
+	<string>Turn off oMLX's own auto-update</string>
+	<key>关掉 oMLX 自己的自动更新？</key>
+	<string>Turn off oMLX's own auto-update?</string>
+	<key>关掉…</key>
+	<string>Turn Off…</string>
+	<key>关掉以后，客户端要改连 oMLX 的端口 %@。官方 oMLX 的子密钥能直接加载模型：客户端点到一个没加载的模型，它会被加载起来，可能挤掉正在用的模型。
+
+随时能在这里再打开。</key>
+	<string>Once it's off, clients need to connect to oMLX's port %@ instead. Official oMLX sub-keys can load models directly: if a client asks for a model that isn't loaded, it gets loaded and may push out the model in use.
+
+You can turn it back on here at any time.</string>
+	<key>关掉入口</key>
+	<string>Turn Off the Gateway</string>
+	<key>关掉入口？</key>
+	<string>Turn off the gateway?</string>
+	<key>关机</key>
+	<string>Shut Down</string>
+	<key>关机 %@</key>
+	<string>Shut Down %@</string>
+	<key>关机 %@？</key>
+	<string>Shut down %@?</string>
+	<key>关机中</key>
+	<string>Shutting Down</string>
+	<key>关机卡住了</key>
+	<string>Shutdown is stuck</string>
+	<key>关机后只能到机器上按电源键才能再开。</key>
+	<string>After shutdown, the Mac can only be turned back on by pressing its power button.</string>
+	<key>关机后只能到机器上按电源键才能再开。**全部关机**先关副机，确认关掉再关主机；有副机关不掉，主机就留着。</key>
+	<string>After shutdown, a Mac can only be turned back on by pressing its power button. **Shut Down All** shuts down the Workers first and the Hub once they're confirmed off; if a Worker won't shut down, the Hub stays on.</string>
+	<key>关机后这个窗口会跟着关掉，看不到结果。</key>
+	<string>This window closes with the shutdown, so you won't see the result.</string>
+	<key>关机后，要到 %@ 前按电源键开机并登录。</key>
+	<string>After shutdown, go to %@, press the power button to turn it on, and log in.</string>
+	<key>关机和安全</key>
+	<string>Shutdown and Security</string>
+	<key>关机怎么确认</key>
+	<string>How Shutdown Is Confirmed</string>
+	<key>关机时点确认，再按一下指纹或输 Mac 密码，不用提前设置。</key>
+	<string>When shutting down, click Confirm, then use Touch ID or enter your Mac password. No setup needed beforehand.</string>
+	<key>关机超过 3 分钟还没关掉，卡片会说卡住，到机器前长按电源键。</key>
+	<string>If a shutdown still hasn't finished after 3 minutes, the card says stuck; go to the Mac and hold down the power button.</string>
+	<key>关着</key>
+	<string>Off</string>
+	<key>关着：客户端直连 oMLX，没加载的模型会被点起来</key>
+	<string>Off: clients connect to oMLX directly, and models that aren't loaded get loaded on request</string>
+	<key>关窗口和退出</key>
+	<string>Closing the Window and Quitting</string>
+	<key>关闭</key>
+	<string>Stop</string>
+	<key>关闭 %@</key>
+	<string>Stop %@</string>
+	<key>关闭 %@？</key>
+	<string>Stop %@?</string>
+	<key>关闭全部</key>
+	<string>Stop All</string>
+	<key>关闭全部…</key>
+	<string>Stop All…</string>
+	<key>关闭全部并退出</key>
+	<string>Stop All and Quit</string>
+	<key>关闭全部？</key>
+	<string>Stop all?</string>
+	<key>关闭并退出</key>
+	<string>Stop and Quit</string>
+	<key>关闭所有机器的 oMLX 和副机的控制台</key>
+	<string>Stops oMLX on every Mac and the Console on Workers</string>
+	<key>关闭所有机器的 oMLX 和副机的控制台，这个窗口也退出</key>
+	<string>Stops oMLX on every Mac and the Console on Workers; this window quits too</string>
+	<key>兼容表里没有能装在这台上的版本。</key>
+	<string>The compatibility table has no version that can be installed on this Mac.</string>
+	<key>内存</key>
+	<string>Memory</string>
+	<key>内存吃紧</key>
+	<string>Memory Tight</string>
+	<key>内存正常</key>
+	<string>Memory OK</string>
+	<key>内存超线</key>
+	<string>Over the Memory Limit</string>
+	<key>内存超线、模型卡住时让 Dock 图标跳动</key>
+	<string>Bounce the Dock icon when over the memory limit or a model gets stuck</string>
+	<key>内容对不上，没有签</key>
+	<string>The content doesn't match, so it wasn't signed</string>
+	<key>再发一次关机；还不行就到机器前长按电源键</key>
+	<string>Send Shut Down again; if that doesn't work, hold the power button at the Mac</string>
+	<key>再申请一次</key>
+	<string>Request Again</string>
+	<key>再输一次</key>
+	<string>Enter again</string>
+	<key>出问题时</key>
+	<string>When Things Go Wrong</string>
+	<key>切换</key>
+	<string>Switch</string>
+	<key>切换 %@ 上 %@ 的 %@</key>
+	<string>Switch %3$@ for %2$@ on %1$@</string>
+	<key>切换语言要重开控制台</key>
+	<string>Changing the language reopens the Console</string>
+	<key>列出这台的网线、Wi-Fi 网口和它们现在的地址</key>
+	<string>List this Mac's wired and Wi-Fi ports and their current addresses</string>
+	<key>删掉这个地址</key>
+	<string>Remove this address</string>
+	<key>删除这台的多轮缓存</key>
+	<string>Delete This Mac's Multi-Turn Cache</string>
+	<key>别的推理进程 %@ 个（体检会提示）</key>
+	<string>Other inference processes: %@ (Health Check will flag them)</string>
+	<key>别的机器</key>
+	<string>Other Macs</string>
+	<key>别的机器不跟着关，但客户端要等这台回来，才能经这台用它们的模型。</key>
+	<string>The other Macs stay on, but clients can only use their models through this Mac once it's back.</string>
+	<key>别的版本</key>
+	<string>another version</string>
+	<key>到主机上批准</key>
+	<string>Approve on the Hub</string>
+	<key>到主机上接受</key>
+	<string>Accept on the Hub</string>
+	<key>到已登记的机器（通常是主机）的 设置 → 安全 批准，核对指纹是不是 %@。10 分钟内有效。</key>
+	<string>Approve it in Settings → Security on a registered Mac (usually the Hub), and check that the fingerprint is %@. Valid for 10 minutes.</string>
+	<key>到新机器上</key>
+	<string>On the New Mac</string>
+	<key>到每台机器前，过 macOS 管理员验证，清掉登记，重新登记、接受，最后在主机点重新签一次。人到场总能恢复，模型和数据不受影响。</key>
+	<string>Go to each Mac in person, pass macOS administrator authentication, clear the registration, register and accept again, and finally click Re-sign on the Hub. Being there in person can always recover things; models and data are not affected.</string>
+	<key>刷新</key>
+	<string>Refresh</string>
+	<key>刷新中…</key>
+	<string>Refreshing…</string>
+	<key>刷新全部</key>
+	<string>Refresh All</string>
+	<key>副机先关，确认关掉后再关主机。关机后只能到机器上按电源键才能再开</key>
+	<string>Workers shut down first, then the Hub once they are confirmed off. After shutdown, a Mac can only be turned back on by pressing its power button</string>
+	<key>副机先关，确认关掉后再关主机；有副机关不掉，主机就留着，让你看得到。</key>
+	<string>Workers shut down first; the Hub shuts down only after they are confirmed off. If a Worker won't shut down, the Hub stays on so you can see it.</string>
+	<key>副机的窗口只显示它自己，全局操作都在主机上。卡片的顺序和名字也在**机器**里调。</key>
+	<string>A Worker's window shows only itself; all global actions are on the Hub. The order and names of the cards are also adjusted in **Machines**.</string>
+	<key>加一个地址</key>
+	<string>Add an address</string>
+	<key>加一台机器</key>
+	<string>Add a Mac</string>
+	<key>加载</key>
+	<string>Load</string>
+	<key>加载 %@</key>
+	<string>Load %@</string>
+	<key>加载中</key>
+	<string>Loading</string>
+	<key>加载中…</key>
+	<string>Loading…</string>
+	<key>加载后才能自检</key>
+	<string>Load first to run Self-Test</string>
+	<key>升级 oMLX</key>
+	<string>Upgrade oMLX</string>
+	<key>升级…</key>
+	<string>Upgrade…</string>
+	<key>升级后自检：全部通过</key>
+	<string>Post-upgrade self-test: all passed</string>
+	<key>升级后自检：有没过的项</key>
+	<string>Post-upgrade self-test: some checks failed</string>
+	<key>卡片和模型的顺序（只影响这个控制台）</key>
+	<string>Order of cards and models (only affects this Console)</string>
+	<key>卸载</key>
+	<string>Unload</string>
+	<key>卸载 %@ 上的 %@？</key>
+	<string>Unload %2$@ on %1$@?</string>
+	<key>卸载 %@ 并加载</key>
+	<string>Unload %@ and Load</string>
+	<key>卸载 %@ 的 %@</key>
+	<string>Unload %2$@ on %1$@</string>
+	<key>卸载 %@ 的 %@…</key>
+	<string>Unload %2$@ on %1$@…</string>
+	<key>卸载%@的全部模型？</key>
+	<string>Unload all models on %@?</string>
+	<key>卸载全部</key>
+	<string>Unload All</string>
+	<key>卸载全部模型</key>
+	<string>Unload All Models</string>
+	<key>卸载全部模型…</key>
+	<string>Unload All Models…</string>
+	<key>卸载所有模型，服务保持运行</key>
+	<string>Unloads all models; the service keeps running</string>
+	<key>卸载模型、停止 oMLX，它的控制台也退出；机器还开着</key>
+	<string>Unloads models and stops oMLX; its Console quits too; the Mac stays on</string>
+	<key>卸载模型、停止 oMLX；窗口留着</key>
+	<string>Unloads models and stops oMLX; the window stays open</string>
+	<key>压力严重</key>
+	<string>Pressure Critical</string>
+	<key>压力正常</key>
+	<string>Pressure Normal</string>
+	<key>压力警告</key>
+	<string>Pressure Warning</string>
+	<key>发一道题，确认模型答得出来</key>
+	<string>Sends a question to check that the model can answer</string>
+	<key>发布者</key>
+	<string>Publisher</string>
+	<key>取消</key>
+	<string>Cancel</string>
+	<key>取消添加</key>
+	<string>Cancel Adding</string>
+	<key>取消添加 %@</key>
+	<string>Cancel Adding %@</string>
+	<key>取消添加 %@？</key>
+	<string>Cancel adding %@?</string>
+	<key>另一个控制台</key>
+	<string>another Console</string>
+	<key>另外还有 %@ 行不是控制台加的，这里不管。</key>
+	<string>Other lines not added by the Console (%@) are left alone here.</string>
+	<key>只放行关机这一条命令。没设的话，卡片上的“关机”用不了，只能用苹果菜单关机。</key>
+	<string>Only the shutdown command is allowed. Without it, Shut Down on the card won't work; use the Apple menu instead.</string>
+	<key>只有主机没了、别的登记机器也没了、恢复码也丢了才用。主机还在的话，应该点申请登记，回主机批准；不然两边接不上，要到每台清掉重来。</key>
+	<string>Only if the Hub is gone, no other registered Mac is left, and the recovery code is lost. If the Hub is still there, click Request Registration and approve it on the Hub; otherwise the two sides can't connect and you will have to clear each Mac and start over.</string>
+	<key>只有主机没了才用</key>
+	<string>Only if the Hub is gone</string>
+	<key>只有名单里的机器存着加密的主机钥匙，才能被移交或强制接管。</key>
+	<string>Only a Mac on the list that holds the encrypted Hub key can receive a Hand Over or perform a Force Takeover.</string>
+	<key>只有登记弄乱了、恢复码也丢了才用。这台的钥匙和登记表都清掉。之后别的机器发来的登记不会自动生效，要你在这里核对指纹后接受。模型和数据不受影响。</key>
+	<string>Only if the registration is messed up and the recovery code is lost. This clears this Mac's key and registry. Registrations sent by other Macs afterwards won't take effect automatically; you have to check the fingerprint here and accept. Models and data are not affected.</string>
+	<key>只能在主机本机做</key>
+	<string>Can only be done on the Hub itself</string>
+	<key>只能在主机本机改。</key>
+	<string>Can only be changed on the Hub itself.</string>
+	<key>只能在主机本机改，改完会把新的加密钥匙发给名单里的机器。</key>
+	<string>Can only be changed on the Hub itself; afterwards the new encrypted key is sent to the Macs on the list.</string>
+	<key>只能看状态</key>
+	<string>View status only</string>
+	<key>只读两样小文件：兼容表和通知清单，都用发布者的钥匙签了名，被改过就不认。不上传任何东西。</key>
+	<string>Only two small files are read: the compatibility table and the notice list. Both are signed with the publisher's key and rejected if altered. Nothing is uploaded.</string>
+	<key>只调模型</key>
+	<string>Call models only</string>
+	<key>可以升级到 %@</key>
+	<string>Can upgrade to %@</string>
+	<key>可以在浏览器里打开管理页，自己输主密钥。</key>
+	<string>You can open the admin page in a browser and enter the main key yourself.</string>
+	<key>可当主机</key>
+	<string>Can Be Hub</string>
+	<key>可当主机的机器</key>
+	<string>Hub Candidates</string>
+	<key>可能卡住了</key>
+	<string>May be stuck</string>
+	<key>各台不再认它，它上面的模型和服务不受影响。它那边的授权和加密钥匙要到那台的 设置 → 安全 点退出主机模式才清掉。机器丢了或卖了，还要吊销它的安全芯片钥匙。</key>
+	<string>The other Macs will stop recognizing it; models and services on it are not affected. Its access grants and encrypted key are only cleared when you click Exit Hub Mode in Settings → Security on that Mac. If the Mac was lost or sold, also revoke its Secure Enclave key.</string>
+	<key>各台都收到了。</key>
+	<string>All Macs received it.</string>
+	<key>吊销</key>
+	<string>Revoke</string>
+	<key>吊销 %@ 的安全芯片钥匙</key>
+	<string>Revoke the Secure Enclave Key of %@</string>
+	<key>吊销 %@ 的钥匙？</key>
+	<string>Revoke the key of %@?</string>
+	<key>吊销…</key>
+	<string>Revoke…</string>
+	<key>吊销「%@」</key>
+	<string>Revoke "%@"</string>
+	<key>吊销「%@」？</key>
+	<string>Revoke "%@"?</string>
+	<key>吊销了</key>
+	<string>Revoked</string>
+	<key>吊销后那台做不了最高操作，要重新登记。机器丢了、卖了就吊销。</key>
+	<string>After revoking, that Mac can't perform privileged actions and must register again. Revoke it if the Mac is lost or sold.</string>
+	<key>名字</key>
+	<string>Name</string>
+	<key>名称</key>
+	<string>Name</string>
+	<key>名称默认是那台的系统名称，可以改。</key>
+	<string>The name defaults to that Mac's system name, and you can change it.</string>
+	<key>后端要签的内容和你点的操作不一样，什么都没动。程序可能被改过，到别的机器上查一下，先不要继续做最高操作。</key>
+	<string>What the backend was about to sign doesn't match the action you clicked, so nothing was changed. The app may have been tampered with; check on another Mac and don't continue with privileged actions for now.</string>
+	<key>启动</key>
+	<string>Start</string>
+	<key>启动 %@</key>
+	<string>Start %@</string>
+	<key>启动 %@ 的 oMLX 服务</key>
+	<string>Start the oMLX service on %@</string>
+	<key>启动 oMLX</key>
+	<string>Start oMLX</string>
+	<key>启动中</key>
+	<string>Starting</string>
+	<key>启动全部</key>
+	<string>Start All</string>
+	<key>启动它的 oMLX 和控制台，不加载模型</key>
+	<string>Starts oMLX and the Console on it; no models are loaded</string>
+	<key>启动所有机器的 oMLX 和副机的控制台，不加载模型</key>
+	<string>Starts oMLX on every Mac and the Console on Workers; no models are loaded</string>
+	<key>启动这台的 oMLX，不加载模型</key>
+	<string>Starts oMLX on this Mac; no models are loaded</string>
+	<key>启用</key>
+	<string>Enable</string>
+	<key>启用主机模式</key>
+	<string>Enable Hub Mode</string>
+	<key>启用主机模式…</key>
+	<string>Enable Hub Mode…</string>
+	<key>和登记表里的对不上，什么都没动。可能是旧的恢复码，或者抄错了。</key>
+	<string>It doesn't match the registry, so nothing was changed. It may be an old recovery code, or it was copied wrongly.</string>
+	<key>回到新机器上允许</key>
+	<string>Go back to the new Mac and Allow</string>
+	<key>回这里填</key>
+	<string>Come back here and fill in</string>
+	<key>国际</key>
+	<string>International</string>
+	<key>在 %@ 上切换到 %@？</key>
+	<string>Switch to %2$@ on %1$@?</string>
+	<key>在 %@ 上加载 %@</key>
+	<string>Load %2$@ on %1$@</string>
+	<key>在 %@ 上加载约 %@ GB（不含对话占的上下文）</key>
+	<string>About %2$@ GB will be loaded on %1$@ (not counting the context used by conversations)</string>
+	<key>在「终端」里运行。装好后控制台自动接上。</key>
+	<string>Run these in Terminal. The console connects automatically once it's installed.</string>
+	<key>在主机点忘记密码，过 macOS 管理员密码框，设一个新的。日常使用不受影响。</key>
+	<string>On the Hub, click Forgot Password, pass the macOS administrator password prompt, and set a new one. Day-to-day use is not affected.</string>
+	<key>在另一台登记过的机器上吊销旧的，这台重新申请。</key>
+	<string>Revoke the old one on another registered Mac, then request again from this Mac.</string>
+	<key>在哪几台</key>
+	<string>On Which Macs</string>
+	<key>在浏览器打开</key>
+	<string>Open in Browser</string>
+	<key>在用</key>
+	<string>In use</string>
+	<key>在线</key>
+	<string>Online</string>
+	<key>在运行，客户端连端口 %@</key>
+	<string>Running; clients connect to port %@</string>
+	<key>在这台开始新的登记？</key>
+	<string>Start a new registration on this Mac?</string>
+	<key>在这台点用恢复码登记。</key>
+	<string>On this Mac, click Register with Recovery Code.</string>
+	<key>地址</key>
+	<string>Address</string>
+	<key>地址，如 192.168.1.20</key>
+	<string>Address, e.g. 192.168.1.20</string>
+	<key>处理 %@ 个 · 排队 %@ 个</key>
+	<string>%@ processing · %@ queued</string>
+	<key>备份 oMLX 的设置：%@</key>
+	<string>Back up oMLX's settings: %@</string>
+	<key>备份设置，下载新版</key>
+	<string>Back Up Settings, Download the New Version</string>
+	<key>复制</key>
+	<string>Copy</string>
+	<key>复制主密钥</key>
+	<string>Copy Main Key</string>
+	<key>复制子密钥「%@」</key>
+	<string>Copy Sub-Key "%@"</string>
+	<key>复制配对串</key>
+	<string>Copy Pairing String</string>
+	<key>多轮缓存</key>
+	<string>Cache</string>
+	<key>多轮缓存 · %@</key>
+	<string>Multi-Turn Cache · %@</string>
+	<key>好</key>
+	<string>OK</string>
+	<key>它能关每一台机器，也能全部关机，方便人不在时远程切断。关机后远程开不回来，只能到机器上按电源键。</key>
+	<string>It can shut down every Mac, and also Shut Down All, which is handy for cutting everything off remotely when you're away. A Mac that has shut down can't be turned back on remotely; you have to press its power button.</string>
+	<key>它还没进机器表，取消后配对串作废。</key>
+	<string>It isn't in the machine list yet; once cancelled, the pairing string is void.</string>
+	<key>它连这台的隧道和控制会立刻断开。别的控制方也会断一下，自动重连；正在流式输出的请求会中断。</key>
+	<string>Its tunnel and control connection to this Mac will drop immediately. Other controllers will also drop briefly and reconnect automatically; requests that are streaming output will be interrupted.</string>
+	<key>安全</key>
+	<string>Security</string>
+	<key>安全芯片</key>
+	<string>Secure Enclave</string>
+	<key>安全芯片没有签名</key>
+	<string>Secure Enclave did not sign</string>
+	<key>安装 oMLX</key>
+	<string>Install oMLX</string>
+	<key>安装 oMLX…</key>
+	<string>Install oMLX…</string>
+	<key>安装包准备好了</key>
+	<string>Installer Ready</string>
+	<key>安装和升级 oMLX</key>
+	<string>Install and Upgrade oMLX</string>
+	<key>完成</key>
+	<string>Done</string>
+	<key>客户端报错：看模型是不是已经加载，选的是不是那台机器上现在在线的那个。</key>
+	<string>If a client reports an error: check whether the model is loaded and whether you picked the one that's currently online on that Mac.</string>
+	<key>客户端连入口，不直接连 oMLX：入口认子密钥，只放行已加载的模型，挡住加载、卸载和管理页。官方 oMLX 的子密钥能直接加载模型，所以默认开着。每次请求多约 1 毫秒。</key>
+	<string>Clients connect to the gateway instead of oMLX: it checks sub-keys, lets through only loaded models, and blocks loading, unloading and the admin pages. Official oMLX sub-keys can load models directly, so it's on by default. It adds about 1 ms to each request.</string>
+	<key>密钥</key>
+	<string>Keys</string>
+	<key>对方的登录账号</key>
+	<string>Login account on the other Mac</string>
+	<key>展开控制台</key>
+	<string>Expand Console</string>
+	<key>已停止下载。下了的部分留着，下次接着下。</key>
+	<string>Download stopped. The part already downloaded is kept, and the next download resumes from there.</string>
+	<key>已停止核对。</key>
+	<string>Check stopped.</string>
+	<key>已允许控制台读</key>
+	<string>Allowed for the console</string>
+	<key>已关机</key>
+	<string>Shut down</string>
+	<key>已生成</key>
+	<string>Generated</string>
+	<key>已用 %@ / %@ GB</key>
+	<string>%@ / %@ GB</string>
+	<key>已用 %@ GB</key>
+	<string>%@ GB used</string>
+	<key>已用 %@ GB · 上限自动</key>
+	<string>%@ GB used · limit automatic</string>
+	<key>已由控制台关掉</key>
+	<string>Turned off by the console</string>
+	<key>已申请</key>
+	<string>Requested</string>
+	<key>已申请，等批准</key>
+	<string>Requested, awaiting approval</string>
+	<key>已登记，指纹 %@</key>
+	<string>Registered, fingerprint %@</string>
+	<key>已经从 GitHub 或别处下好了安装包（.dmg），选它来核对；不是适配的版本会说清。</key>
+	<string>If you already downloaded the installer (.dmg) from GitHub or elsewhere, choose it to verify. If it isn't a supported version, you'll be told.</string>
+	<key>已设好。</key>
+	<string>Set up.</string>
+	<key>已设置</key>
+	<string>Set</string>
+	<key>已配对</key>
+	<string>Paired</string>
+	<key>并排</key>
+	<string>Side by Side</string>
+	<key>开</key>
+	<string>On</string>
+	<key>开了主机模式：入口在主机上</key>
+	<string>Hub mode is on: the gateway is on the Hub</string>
+	<key>开始</key>
+	<string>Start</string>
+	<key>开始新的登记…</key>
+	<string>Start New Registration…</string>
+	<key>开着，等你解锁（点“解锁…”）</key>
+	<string>On, waiting for you to unlock (click “Unlock…”)</string>
+	<key>开着，等待解锁</key>
+	<string>On, waiting for unlock</string>
+	<key>开着：会在后台下载新安装包</key>
+	<string>On: downloads new installers in the background</string>
+	<key>开着：只检查，不下载</key>
+	<string>On: checks only, doesn't download</string>
+	<key>强制接管</key>
+	<string>Force Takeover</string>
+	<key>强制接管…</key>
+	<string>Force Takeover…</string>
+	<key>强制接管主机</key>
+	<string>Force Takeover of the Hub</string>
+	<key>强制接管主机？</key>
+	<string>Force takeover of the Hub?</string>
+	<key>往前排</key>
+	<string>Move Earlier</string>
+	<key>往后排</key>
+	<string>Move Later</string>
+	<key>待解锁</key>
+	<string>Awaiting Unlock</string>
+	<key>忘了最高密码</key>
+	<string>Forgot Console Password</string>
+	<key>忘了最高密码、钥匙没了：看**安全**页的"万一出事"。</key>
+	<string>Forgot the console password or lost the key: see "If Something Goes Wrong" on the **Security** page.</string>
+	<key>忘记密码…</key>
+	<string>Forgot Password…</string>
+	<key>忘记最高密码？</key>
+	<string>Forgot the console password?</string>
+	<key>恢复码</key>
+	<string>Recovery Code</string>
+	<key>恢复码不对</key>
+	<string>Incorrect recovery code</string>
+	<key>恢复码不对：应该是 24 位字母和数字。</key>
+	<string>Incorrect recovery code: it should be 24 letters and digits.</string>
+	<key>恢复码也丢了</key>
+	<string>Recovery code lost too</string>
+	<key>恢复码只能用来登记一把新钥匙，用过就作废，会生成一个新的。之后记得吊销丢了的那台。</key>
+	<string>A recovery code can only be used to register one new key. Once used it becomes void and a new one is generated. Remember to revoke the lost Mac afterwards.</string>
+	<key>恢复码（24 位）</key>
+	<string>Recovery code (24 characters)</string>
+	<key>恢复码（只显示这一次）</key>
+	<string>Recovery code (shown only this once)</string>
+	<key>恢复默认</key>
+	<string>Restore Default</string>
+	<key>恢复默认顺序</key>
+	<string>Restore Default Order</string>
+	<key>我存好了</key>
+	<string>I've Saved It</string>
+	<key>我已经下载好了</key>
+	<string>I Already Downloaded It</string>
+	<key>我已经下载好了…</key>
+	<string>I Already Downloaded It…</string>
+	<key>我换好了，自检</key>
+	<string>I've Replaced It, Run Self-Test</string>
+	<key>我明白，继续</key>
+	<string>I Understand, Continue</string>
+	<key>所有机器的 oMLX 和副机的控制台都会关闭，模型卸载，机器本身不关机。
+
+</key>
+	<string>oMLX on every Mac and the Console on Workers will be stopped and models unloaded; the Macs themselves won't shut down.
+
+</string>
+	<key>所有机器的 oMLX 都会重启，副机的控制台重开，这台的控制台刷新。</key>
+	<string>oMLX on every Mac will restart, the Consoles on Workers will reopen, and this Mac's Console will refresh.</string>
+	<key>打开 %@ 的解锁终端</key>
+	<string>Open Unlock Terminal for %@</string>
+	<key>打开 oMLX 安装包</key>
+	<string>Open the oMLX installer</string>
+	<key>打开「远程登录」：系统设置 → 通用 → 共享 → 远程登录。那一页写着它的地址和账号，形如 ssh 账号@地址。装了控制台的话，它的「机器 → 本机授权」里有完整清单。</key>
+	<string>Turn on "Remote Login": System Settings → General → Sharing → Remote Login. That page shows its address and account, in the form ssh account@address. If the Console is installed on it, the full checklist is under "Machines → This Mac's Access".</string>
+	<key>打开入口</key>
+	<string>Turn On the Gateway</string>
+	<key>打开它的控制台：机器 → 本机授权，贴上配对串。两边核对码一样才点允许。配对串不是秘密，用什么传都行，不要求同一个苹果账号。</key>
+	<string>Open its Console: Machines → This Mac's Access, and paste the pairing string. Click Allow only if the verification codes on both sides are the same. The pairing string is not a secret, so you can send it any way you like; the two Macs don't need the same Apple account.</string>
+	<key>打开安装包</key>
+	<string>Open Installer</string>
+	<key>打开控制台时启动 oMLX</key>
+	<string>Start oMLX when the Console opens</string>
+	<key>打开控制台窗口</key>
+	<string>Open Console Window</string>
+	<key>打开系统设置</key>
+	<string>Open System Settings</string>
+	<key>打开终端，把 %@ 的 macOS 密码直接输给系统；解锁后自动启动 oMLX，不加载模型</key>
+	<string>Opens Terminal so you can type the macOS password for %@ directly to the system; oMLX starts automatically after unlocking, with no model loaded</string>
+	<key>打开终端，把这台的 macOS 密码直接输给系统</key>
+	<string>Opens Terminal so you can type this Mac's macOS password directly to the system</string>
+	<key>打开设置</key>
+	<string>Open Settings</string>
+	<key>批准</key>
+	<string>Approve</string>
+	<key>批准 %@ 当主机？</key>
+	<string>Approve %@ as the Hub?</string>
+	<key>批准 %@ 登记安全芯片钥匙</key>
+	<string>Approve Secure Enclave Key Registration for %@</string>
+	<key>批准 %@ 登记？</key>
+	<string>Approve registration for %@?</string>
+	<key>批准…</key>
+	<string>Approve…</string>
+	<key>批准了</key>
+	<string>Approved</string>
+	<key>把 %@ 上 %@ 的 %@ 改为%@？</key>
+	<string>Set %3$@ for %2$@ on %1$@ to %4$@?</string>
+	<key>把 %@ 的多轮缓存改成 %@</key>
+	<string>Set the multi-turn cache on %@ to %@</string>
+	<key>把 %@ 的多轮缓存改成 %@？</key>
+	<string>Set the multi-turn cache on %@ to %@?</string>
+	<key>把 %@ 移出机器表</key>
+	<string>Remove %@ from the Machine List</string>
+	<key>把 %@ 移出机器表？</key>
+	<string>Remove %@ from the machine list?</string>
+	<key>把 oMLX 拖进「应用程序」</key>
+	<string>Drag oMLX into Applications</string>
+	<key>把 oMLX 的 Hugging Face 地址换成社区镜像？</key>
+	<string>Switch oMLX's Hugging Face address to the community mirror?</string>
+	<key>把主机移交给 %@</key>
+	<string>Hand Over the Hub to %@</string>
+	<key>把主机移交给 %@？</key>
+	<string>Hand over the Hub to %@?</string>
+	<key>把开源大模型跑在你自己的 Mac 上。启动服务、加载和切换模型、发密钥给客户端，都在这一个窗口里。</key>
+	<string>Run open-source large models on your own Mac. Starting the service, loading and switching models, and issuing keys to clients all happen in this one window.</string>
+	<key>把新机器加进机器表</key>
+	<string>Add the new Mac to the machine list</string>
+	<key>把现在的主机和加密的钥匙发给各台；加了新机器的授权行之后点一次</key>
+	<string>Sends the current Hub and the encrypted key to every Mac; click once after adding a new Mac's authorization line</string>
+	<key>抹过盘、换过主板会这样。确定要换一把新的吗？旧的钥匙包留着，不删。</key>
+	<string>This happens after a disk erase or a logic board replacement. Replace it with a new key? The old key bundle is kept, not deleted.</string>
+	<key>拒绝</key>
+	<string>Reject</string>
+	<key>拒绝 %@ 的申请</key>
+	<string>Reject Request from %@</string>
+	<key>指纹 %@，共 %@ 条</key>
+	<string>Fingerprint %@, %@ entries</string>
+	<key>指纹 %@，来自 %@。10 分钟不批就失效。</key>
+	<string>Fingerprint %@, from %@. Expires if not approved within 10 minutes.</string>
+	<key>指纹不认、手指磨损、键盘坏了</key>
+	<string>Touch ID fails, worn fingertips, broken keyboard</string>
+	<key>按设置里的下载源</key>
+	<string>Use the download source setting</string>
+	<key>换一个恢复码</key>
+	<string>Replace Recovery Code</string>
+	<key>换一个恢复码？</key>
+	<string>Replace the recovery code?</string>
+	<key>换一个新的…</key>
+	<string>Replace with a New One…</string>
+	<key>换一把新的</key>
+	<string>Replace with a New Key</string>
+	<key>换好了</key>
+	<string>Replaced</string>
+	<key>换成社区镜像</key>
+	<string>Switch to the Mirror</string>
+	<key>排列</key>
+	<string>Arrange</string>
+	<key>接下来控制台会问你允不允许读 oMLX 的主密钥；允许以后就能加载模型了。</key>
+	<string>Next, the console will ask whether it may read oMLX's main key; once you allow it, you can load models.</string>
+	<key>接受</key>
+	<string>Accept</string>
+	<key>接受…</key>
+	<string>Accept…</string>
+	<key>接受安全芯片登记</key>
+	<string>Accept Secure Enclave Registration</string>
+	<key>接受这份登记？</key>
+	<string>Accept this registration?</string>
+	<key>接管</key>
+	<string>Take Over</string>
+	<key>控制台</key>
+	<string>Console</string>
+	<key>控制台和 oMLX 一起退出</key>
+	<string>The Console and oMLX quit together</string>
+	<key>控制台和 oMLX 同进退：退出后这台的模型卸载、oMLX 停止，机器本身不关机。主机可以再把它打开。</key>
+	<string>The Console and oMLX start and quit together: after quitting, this Mac's models are unloaded and oMLX stops, but the Mac itself stays on. The Hub can start it again.</string>
+	<key>控制台有新版 %@</key>
+	<string>A new version of the console is available: %@</string>
+	<key>控制台要读 oMLX 的主密钥，才能加载和卸载模型、管理子密钥、看日志和多轮缓存。只记允许还是不允许，不存密钥，每次用时现读。</key>
+	<string>The console needs the oMLX main key to load and unload models, manage sub-keys, and show logs and the multi-turn cache. It only remembers whether you allowed it, never stores the key, and reads it fresh each time.</string>
+	<key>推荐 %@</key>
+	<string>Recommended %@</string>
+	<key>推荐档位</key>
+	<string>Recommended size</string>
+	<key>提醒</key>
+	<string>Alerts</string>
+	<key>操作失败</key>
+	<string>Action Failed</string>
+	<key>操作失败（退出码 %@）</key>
+	<string>Operation failed (exit code %@)</string>
+	<key>操作未完成：</key>
+	<string>Not completed: </string>
+	<key>操作记录</key>
+	<string>Activity</string>
+	<key>操作记录：这个控制台做过的事</key>
+	<string>Activity: what this Console has done</string>
+	<key>收到一份登记，还没生效</key>
+	<string>A registration was received but hasn't taken effect yet</string>
+	<key>收成%@时看得全%@的最小窗口；再点一下换另一种排法</key>
+	<string>Collapse to the smallest window that shows %2$@ in full (%1$@); click again to switch to another layout</string>
+	<key>收成看得全这台的最小窗口</key>
+	<string>Collapse to the smallest window that shows this Mac in full</string>
+	<key>收起为长条</key>
+	<string>Collapse to Mini Bar</string>
+	<key>收起成浮动长条，主窗口隐藏；点长条右边的按钮展开回来</key>
+	<string>Collapses to a floating Mini Bar and hides the main window; click the button on the right of the bar to expand it again</string>
+	<key>改</key>
+	<string>Change</string>
+	<key>改 %@ 的地址</key>
+	<string>Change %@'s addresses</string>
+	<key>改了先保存，下次加载时生效</key>
+	<string>Changes are saved first and apply the next time it loads</string>
+	<key>改了当场生效，不用重新加载，对话不中断。模型最多支持 %@</key>
+	<string>Takes effect immediately without reloading, and conversations aren't interrupted. The model supports up to %@</string>
+	<key>改了当场生效，不用重新加载，对话不中断；同时写进 dsh，重开 dsh 后按新额度显示剩余。模型最多支持 %@</key>
+	<string>Takes effect immediately without reloading, and conversations aren't interrupted; also written to dsh, which shows the remaining quota against the new limit after you reopen it. The model supports up to %@</string>
+	<key>改了要重新加载 %@ 才生效，会先问你切换还是取消</key>
+	<string>Changes only take effect after %@ is reloaded; you'll be asked whether to switch or cancel first</string>
+	<key>改动待生效</key>
+	<string>Change pending</string>
+	<key>改可当主机的名单</key>
+	<string>Edit Hub Candidates</string>
+	<key>改名</key>
+	<string>Rename</string>
+	<key>改名为 %@</key>
+	<string>Rename to %@</string>
+	<key>改名后 dsh 里显示的名字不变。</key>
+	<string> Renaming doesn't change the name shown in dsh.</string>
+	<key>改成 %@</key>
+	<string>Change to %@</string>
+	<key>改成不允许</key>
+	<string>Disallow</string>
+	<key>改最高密码</key>
+	<string>Change Console Password</string>
+	<key>改的是这台的说法，存在 %@ 上。"恢复默认"回到出厂说明。</key>
+	<string>This changes the description on this Mac and is saved on %@. "Restore Default" goes back to the built-in description.</string>
+	<key>放不下，只能切换：先卸载 %@</key>
+	<string>Doesn't fit, so switching only: unload %@ first</string>
+	<key>放得下，和 %@ 一起跑</key>
+	<string>Fits, runs together with %@</string>
+	<key>教程</key>
+	<string>Guide</string>
+	<key>断电后自动开机</key>
+	<string>Start Automatically After Power Loss</string>
+	<key>新建子密钥「%@」</key>
+	<string>Create Sub-Key "%@"</string>
+	<key>新建并复制</key>
+	<string>Create and Copy</string>
+	<key>新机器进了机器表，主机就能操作它。输入最高密码。</key>
+	<string>Once the new Mac is in the machine list, the Hub can operate it. Enter the console password.</string>
+	<key>新版下好并核对过：%@。</key>
+	<string>New version downloaded and verified: %@.</string>
+	<key>新的最高密码</key>
+	<string>New console password</string>
+	<key>无法运行 clusterctl.py：%@</key>
+	<string>Unable to run clusterctl.py: %@</string>
+	<key>日志</key>
+	<string>Logs</string>
+	<key>旧主密钥立刻失效，用主密钥的客户端都要换成新的；子密钥不受影响。单独配对的机器有自己的主密钥，不受影响。新主密钥会复制到剪贴板，30 秒后清空。已经登录的网页不会被踢下线。</key>
+	<string>The old main key stops working immediately, so every client using the main key has to switch to the new one; sub-keys are not affected. Macs paired separately have their own main keys and are not affected either. The new main key is copied to the clipboard and cleared after 30 seconds. Web pages that are already signed in are not logged out.</string>
+	<key>是主机</key>
+	<string>Is the Hub</string>
+	<key>是副机，归主机管</key>
+	<string>Is a Worker, managed by the Hub</string>
+	<key>显示语言</key>
+	<string>Display Language</string>
+	<key>更新</key>
+	<string>Updates</string>
+	<key>最高密码</key>
+	<string>Console Password</string>
+	<key>最高密码在设置里改</key>
+	<string>Change the console password in Settings</string>
+	<key>最高密码要在主机本机设：到主机的 设置 → 安全。</key>
+	<string>The console password has to be set on the Hub itself: go to Settings → Security on the Hub.</string>
+	<key>最高密码连错太多次，暂时锁定了。</key>
+	<string>Too many wrong console password attempts; it's locked for now.</string>
+	<key>最高操作要本人确认。点右上角的设置 → 安全 → 申请登记，到已登记的机器上批准；或者用恢复码登记。</key>
+	<string>Privileged actions need your own confirmation. Click Settings at the top right → Security → Request Registration, then approve on a registered Mac; or register with a recovery code.</string>
+	<key>最高操作要本人确认（指纹或 Mac 密码）。点右上角的设置 → 安全，登记这台。</key>
+	<string>Privileged actions need your own confirmation (Touch ID or Mac password). Click Settings at the top right → Security and register this Mac.</string>
+	<key>有操作正在进行</key>
+	<string>An action is in progress</string>
+	<key>有操作正在进行，这次没有做</key>
+	<string>An action is in progress, so this wasn't done</string>
+	<key>有没过的项，看上面。升级前的设置备份还在（路径见第 1 步）。</key>
+	<string>Some checks failed; see above. The settings backup from before the upgrade is still there (path in step 1).</string>
+	<key>服务关闭中…</key>
+	<string>Service stopping…</string>
+	<key>服务启动中…</key>
+	<string>Service starting…</string>
+	<key>服务在线，空闲待命</key>
+	<string>Service online, idle and on standby</string>
+	<key>服务开着，没有模型</key>
+	<string>Service on, no model</string>
+	<key>服务没运行</key>
+	<string>Service not running</string>
+	<key>服务没运行（点“启动”）</key>
+	<string>Service not running (click “Start”)</string>
+	<key>服务运行中</key>
+	<string>Service running</string>
+	<key>未加载</key>
+	<string>Not Loaded</string>
+	<key>未实测</key>
+	<string>Not tested</string>
+	<key>ModelTower</key>
+	<string>ModelTower</string>
+	<key>ModelTower（预览）</key>
+	<string>ModelTower (Preview)</string>
+	<key>本机</key>
+	<string>This Mac</string>
+	<key>本机授权</key>
+	<string>This Mac's Access</string>
+	<key>机器</key>
+	<string>Machines</string>
+	<key>机器丢了、卖了就吊销</key>
+	<string>Revoke if the Mac is lost or sold</string>
+	<key>来源</key>
+	<string>Source</string>
+	<key>来源：%@</key>
+	<string>Source: %@</string>
+	<key>来电后自己开机，不用到机器前按电源键。</key>
+	<string>The Mac turns itself on when power returns, so you don't need to press the power button.</string>
+	<key>来自 %@。指纹 %@，到那台的 设置 → 安全 看一眼，要一模一样。不是你刚点的就别批。</key>
+	<string>From %@. Fingerprint %@; check Settings → Security on that Mac, and it must match exactly. If it isn't something you just requested, don't approve it.</string>
+	<key>查看</key>
+	<string>View</string>
+	<key>查网口</key>
+	<string>List Ports</string>
+	<key>核对完了，但读不懂后端的回复。</key>
+	<string>The check finished, but the reply from the backend couldn't be read.</string>
+	<key>核对码</key>
+	<string>Verification Code</string>
+	<key>核对码 %@：要和主机上显示的一样才点允许。</key>
+	<string>Verification code %@: click Allow only if it matches the one shown on the Hub.</string>
+	<key>核对过：%@</key>
+	<string>Verified: %@</string>
+	<key>核对过：%@，可以装。</key>
+	<string>Verified: %@. Ready to install.</string>
+	<key>检查中…</key>
+	<string>Checking…</string>
+	<key>模型和缓存都留在原机器，只有入口换地方。正在经入口的请求答完才切换，这台之后变成副机。
+
+可当主机的名单：%@。多了不认识的机器就别继续。</key>
+	<string>Models and caches stay on their original Macs; only the gateway moves. The switch happens once requests going through the gateway have finished, and this Mac then becomes a Worker.
+
+Hub candidates: %@. If there is a Mac you don't recognize, don't continue.</string>
+	<key>模型由 oMLX 运行，这个窗口是它的开关和仪表盘。</key>
+	<string>Models run on oMLX; this window is its switch and dashboard.</string>
+	<key>模型要你再加载。</key>
+	<string>Models have to be loaded again.</string>
+	<key>模型顺序</key>
+	<string>Model Order</string>
+	<key>正在%@… 已用 %@ 秒</key>
+	<string>In progress: %@… %@ s elapsed</string>
+	<key>正在下载 oMLX 安装包…</key>
+	<string>Downloading the oMLX installer…</string>
+	<key>正在关机…</key>
+	<string>Shutting down…</string>
+	<key>正在关机（已 %@ 秒）</key>
+	<string>Shutting down (%@ s so far)</string>
+	<key>正在加载</key>
+	<string>Loading</string>
+	<key>正在加载 %@…</key>
+	<string>Loading %@…</string>
+	<key>正在启动 oMLX…</key>
+	<string>Starting oMLX…</string>
+	<key>正在备份 oMLX 的设置…</key>
+	<string>Backing up oMLX's settings…</string>
+	<key>正在打开安装包…</key>
+	<string>Opening the installer…</string>
+	<key>正在查…</key>
+	<string>Checking…</string>
+	<key>正在核对安装包…</key>
+	<string>Verifying the installer…</string>
+	<key>正在自检…</key>
+	<string>Running self-test…</string>
+	<key>正在读取状态…</key>
+	<string>Reading status…</string>
+	<key>正在运行 %@</key>
+	<string>Running %@</string>
+	<key>正在重启…</key>
+	<string>Restarting…</string>
+	<key>正在重新连接 %@：它的 oMLX 还在跑。换了网线或 Wi-Fi 时会这样，一般十几秒接上。</key>
+	<string>Reconnecting to %@: its oMLX is still running. This happens after switching between cable and Wi-Fi and usually takes about 15 seconds.</string>
+	<key>正在重新连接…</key>
+	<string>Reconnecting…</string>
+	<key>正常情况用申请或移交。确实要强制接管吗？旧主机的指令会立刻失效。</key>
+	<string>Normally you would use Request or Hand Over. Do you really want to Force Takeover? Commands from the old Hub stop working immediately.</string>
+	<key>此刻没有请求在处理。</key>
+	<string>No requests are being processed right now.</string>
+	<key>每分钟检查一次；有新进度后这条会自动消失。</key>
+	<string>Checked once a minute; this line disappears automatically when there is new progress.</string>
+	<key>比如 en0；不知道就点下面的“查网口”</key>
+	<string>For example en0; if unsure, click “List Ports” below</string>
+	<key>没允许控制台读这台 oMLX 的主密钥，管理功能用不了：看不到模型，也不能加载、卸载、管理子密钥、看日志和多轮缓存。</key>
+	<string>The console isn't allowed to read this Mac's oMLX main key, so management is unavailable: no models are shown, and you can't load, unload, manage sub-keys, or see logs and the multi-turn cache.</string>
+	<key>没允许，管理功能用不了</key>
+	<string>Not allowed; management is unavailable</string>
+	<key>没在运行：%@</key>
+	<string>Not running: %@</string>
+	<key>没在运行：启动 oMLX 或重开控制台时会再起</key>
+	<string>Not running: it starts again when you start oMLX or reopen the console</string>
+	<key>没有</key>
+	<string>None</string>
+	<key>没有做</key>
+	<string>Not done</string>
+	<key>没有地址</key>
+	<string>No address</string>
+	<key>没有安全芯片，用不了这一项</key>
+	<string>No Secure Enclave, so this option isn't available</string>
+	<key>没有完成（退出码 %@）。</key>
+	<string>Did not finish (exit code %@).</string>
+	<key>没有开着的副机，直接关 %@。</key>
+	<string>No Worker is on, so %@ shuts down directly.</string>
+	<key>没有成功</key>
+	<string>Didn't succeed</string>
+	<key>没有换</key>
+	<string>Not replaced</string>
+	<key>没有接受</key>
+	<string>Not accepted</string>
+	<key>没有改。</key>
+	<string>Not changed.</string>
+	<key>没有改成：%@</key>
+	<string>Couldn't change it: %@</string>
+	<key>没有清掉</key>
+	<string>Not cleared</string>
+	<key>没有申请成</key>
+	<string>The request didn't go through</string>
+	<key>没有登记</key>
+	<string>Not registered</string>
+	<key>没有确认：取消了，或者验证没通过。什么都没动。</key>
+	<string>Not confirmed: it was cancelled or the verification failed. Nothing was changed.</string>
+	<key>没有设置。</key>
+	<string>Not set.</string>
+	<key>没有设：系统的密码框取消了，或者不是管理员账号。</key>
+	<string>Not set: the system password prompt was cancelled, or the account isn't an administrator.</string>
+	<key>没查到网口</key>
+	<string>No ports found</string>
+	<key>没检查过</key>
+	<string>Not checked yet</string>
+	<key>没登录桌面</key>
+	<string>Not logged in</string>
+	<key>没能自动登录 %@</key>
+	<string>Couldn't sign in to %@ automatically</string>
+	<key>添加</key>
+	<string>Add</string>
+	<key>添加 %@</key>
+	<string>Add %@</string>
+	<key>添加失败（退出码 %@）。</key>
+	<string>Add failed (exit code %@).</string>
+	<key>添加机器</key>
+	<string>Add Machine</string>
+	<key>清掉了</key>
+	<string>Cleared</string>
+	<key>清掉安全芯片登记要 macOS 管理员验证。</key>
+	<string>Clearing the Secure Enclave registration needs macOS administrator authentication.</string>
+	<key>清掉这台的安全芯片登记？</key>
+	<string>Clear this Mac's Secure Enclave registration?</string>
+	<key>清掉这台的登记…</key>
+	<string>Clear This Mac's Registration…</string>
+	<key>清空</key>
+	<string>Clear</string>
+	<key>清空 %@ 的多轮缓存？</key>
+	<string>Clear the multi-turn cache on %@?</string>
+	<key>清空 %@ 的缓存</key>
+	<string>Clear Cache on %@</string>
+	<key>清空缓存…</key>
+	<string>Clear Cache…</string>
+	<key>点右上角的设置 → 安全，设好最高密码再做。</key>
+	<string>Click Settings at the top right → Security, set the console password, and then do this.</string>
+	<key>点确认，再按一下指纹或输 Mac 密码。不用提前设置，直接能用。</key>
+	<string>Click Confirm, then use Touch ID or enter your Mac password. No setup needed; it works right away.</string>
+	<key>点确认，再按一下指纹或输 Mac 密码。开了下面的高级保护，就按开的来。</key>
+	<string>Click Confirm, then use Touch ID or enter your Mac password. If Advanced Protection below is on, its checks apply too.</string>
+	<key>版本</key>
+	<string>Version</string>
+	<key>状态</key>
+	<string>Status</string>
+	<key>现在再查一次</key>
+	<string>Check Again Now</string>
+	<key>现在各台各自管理。启用后，一台主机总控，别的机器只听它的；主机可以移交，主机崩了名单里的机器能凭最高密码接管。启用不影响正在跑的模型。</key>
+	<string>Right now each Mac is managed on its own. Once enabled, one Hub is in charge and the other Macs follow only it; the Hub can be handed over, and if it crashes, a Mac on the list can take over with the console password. Enabling it doesn't affect models that are running.</string>
+	<key>现在启动</key>
+	<string>Start Now</string>
+	<key>现在就卸载（中断）</key>
+	<string>Unload Now (Interrupt)</string>
+	<key>现在检查</key>
+	<string>Check Now</string>
+	<key>现在的主机</key>
+	<string>Current Hub</string>
+	<key>现在的最高密码</key>
+	<string>Current console password</string>
+	<key>现在退出，这次操作可能停在半路（例如模型只加载了一半），之后要重新做一次。建议等操作记录里出现结果后再退出。</key>
+	<string>If you quit now, this action may stop halfway (for example, a model only half loaded) and you will have to do it again. It's best to wait until a result appears in Activity before quitting.</string>
+	<key>生成配对串</key>
+	<string>Generate Pairing String</string>
+	<key>生成钥匙失败。</key>
+	<string>Failed to generate the key.</string>
+	<key>用 Homebrew 装</key>
+	<string>Install with Homebrew</string>
+	<key>用恢复码登记…</key>
+	<string>Register with Recovery Code…</string>
+	<key>用恢复码登记这台</key>
+	<string>Register This Mac with Recovery Code</string>
+	<key>申请当主机</key>
+	<string>Request to Be Hub</string>
+	<key>申请登记…</key>
+	<string>Request Registration…</string>
+	<key>留着 %@ GB</key>
+	<string>%@ GB kept</string>
+	<key>留空就用那台的系统名称</key>
+	<string>Leave blank to use that Mac's system name</string>
+	<key>登录 Mac 时打开控制台</key>
+	<string>Open the Console when you log in to your Mac</string>
+	<key>登录后控制台会打开并启动 oMLX，模型要你再加载。</key>
+	<string>After you log in, the Console opens and starts oMLX; models have to be loaded again.</string>
+	<key>登录后控制台会打开；oMLX 要你点启动，模型要你再加载。</key>
+	<string>After you log in, the Console opens; click Start for oMLX, and models have to be loaded again.</string>
+	<key>登录后要你打开控制台（设置 → 通用 → 启动 能设成登录时自动打开），模型要你再加载。</key>
+	<string>After you log in, open the Console yourself (Settings → General → Startup can open it at login); models have to be loaded again.</string>
+	<key>登记后，关机、移交这些操作要这台 Mac 的安全芯片签名，别的机器也会核对。你没点操作时弹出来的框不要确认。</key>
+	<string>After registering, actions like Shut Down and Hand Over need a signature from this Mac's Secure Enclave, and the other Macs verify it too. Don't confirm a prompt that appears when you haven't clicked anything.</string>
+	<key>登记好了</key>
+	<string>Registered</string>
+	<key>登记好了，记得吊销丢了的那台</key>
+	<string>Registered; remember to revoke the lost Mac</string>
+	<key>登记的机器全没了</key>
+	<string>All registered Macs are gone</string>
+	<key>登记的机器都没了时，靠它登记一把新钥匙，用一次就换新的。这里不保存恢复码。</key>
+	<string>When all registered Macs are gone, use it to register a new key; after one use it is replaced with a new one. The recovery code is not stored here.</string>
+	<key>登记的机器都没了时，靠它登记新钥匙。存进密码管理器或打印出来。
+
+丢了也不影响日常使用，只是到时候要到每台机器前重新配对。</key>
+	<string>When all registered Macs are gone, use it to register a new key. Save it in a password manager or print it out.
+
+Losing it doesn't affect day-to-day use, but you would then have to go to each Mac and pair again.</string>
+	<key>登记表</key>
+	<string>Registry</string>
+	<key>登记这台 Mac 的安全芯片钥匙</key>
+	<string>Register This Mac's Secure Enclave Key</string>
+	<key>登记这台 Mac 的安全芯片？</key>
+	<string>Register this Mac's Secure Enclave?</string>
+	<key>登记这台…</key>
+	<string>Register This Mac…</string>
+	<key>硬盘剩 %@</key>
+	<string>Disk: %@ free</string>
+	<key>确认移交</key>
+	<string>Confirm Hand Over</string>
+	<key>离线</key>
+	<string>Offline</string>
+	<key>种类</key>
+	<string>Type</string>
+	<key>移交</key>
+	<string>Hand Over</string>
+	<key>移交…</key>
+	<string>Hand Over…</string>
+	<key>移交给</key>
+	<string>Hand over to</string>
+	<key>移除</key>
+	<string>Remove</string>
+	<key>移除 %@</key>
+	<string>Remove %@</string>
+	<key>移除…</key>
+	<string>Remove…</string>
+	<key>空闲</key>
+	<string>Idle</string>
+	<key>窗口上的按钮</key>
+	<string>Buttons in the Window</string>
+	<key>窗口会关掉再打开。服务和模型不受影响。</key>
+	<string>The window will close and reopen. Services and models are not affected.</string>
+	<key>立刻刷新</key>
+	<string>Refresh Now</string>
+	<key>立刻刷新所有机器的状态</key>
+	<string>Refresh the status of every Mac right away</string>
+	<key>第一把钥匙：%@，登记表指纹 %@，共 %@ 条。
+
+到登记第一把钥匙的那台（通常是主机），看 设置 → 安全 里这台 Mac 的指纹和条数，要一模一样。不是你刚登记的就别接受：接受后，这把钥匙就能关这台。</key>
+	<string>First key: %@, registry fingerprint %@, %@ entries.
+
+Go to the Mac that registered the first key (usually the Hub) and look at this Mac's fingerprint and entry count in Settings → Security; they must match exactly. If it isn't one you just registered, don't accept it: once accepted, this key can shut this Mac down.</string>
+	<key>第一把钥匙：%@，登记表指纹 %@，共 %@ 条。到登记第一把钥匙的那台（通常是主机）的这一页核对，一样才接受。</key>
+	<string>First key: %@, registry fingerprint %@, %@ entries. Check this page on the Mac that registered the first key (usually the Hub); accept only if they match.</string>
+	<key>第一次跑通一个模型</key>
+	<string>Getting Your First Model Running</string>
+	<key>等你装好。装好后控制台会自己接上，不用回来点。</key>
+	<string>Waiting for you to install it. The console connects by itself once it's installed; no need to come back and click.</string>
+	<key>等它做完再切换语言。</key>
+	<string>Wait for it to finish before changing the language.</string>
+	<key>等它做完再试。</key>
+	<string>Wait for it to finish, then try again.</string>
+	<key>等它做完再退出。</key>
+	<string>Wait for it to finish before quitting.</string>
+	<key>等它答完再卸载</key>
+	<string>Unload When Idle</string>
+	<key>签</key>
+	<string>Sign</string>
+	<key>简体中文</key>
+	<string>简体中文</string>
+	<key>算法：现在整台最多约 + 它的权重 + 它塞满上下文的 KV 不超过内存安全线，权重也不超过 oMLX 的软水位，才能不卸载别的模型一起跑</key>
+	<string>How it's decided: the Mac's current maximum (approx.) + its weights + the KV for a full context must not exceed the memory safety limit, and the weights must also stay under oMLX's soft watermark; only then can it run alongside other models without unloading them</string>
+	<key>管理控制台</key>
+	<string>Manager Console</string>
+	<key>管理版只是遥控器，不跑模型。在这里生成一把钥匙，把配对串拿到主机的控制台：机器 → 粘贴配对串 → 核对 6 位码 → 允许。</key>
+	<string>The Manager edition is just a remote control and doesn't run models. Generate a key here, then take the pairing string to the Hub's Console: Machines → Paste Pairing String → check the 6-digit code → Allow.</string>
+	<key>管理版是遥控器，不跑模型。点左下角**连接**连上主机，之后的操作都由主机执行。</key>
+	<string>The Manager edition is a remote control and doesn't run models. Click **Connect** at the bottom left to connect to the Hub; all actions after that are carried out by the Hub.</string>
+	<key>管理版：遥控器，不跑模型</key>
+	<string>Manager edition: a remote control, doesn't run models</string>
+	<key>管理页要在主机上打开</key>
+	<string>The admin page has to be opened on the Hub</string>
+	<key>系统会弹密码框，由你本人确认。这是仅有的要动系统设置的一步</key>
+	<string>The system shows a password prompt for you to confirm yourself. This is the only step that changes system settings</string>
+	<key>系统会弹对话框显示核对码，要你亲手点允许；要和对方屏幕上的一样</key>
+	<string>The system shows a dialog with the verification code, and you have to click Allow yourself; it must match the one on the other side's screen</string>
+	<key>系统会让你改输 Mac 密码。增删指纹不影响钥匙。</key>
+	<string>The system will ask for your Mac password instead. Adding or removing fingerprints doesn't affect the key.</string>
+	<key>系统先弹框确认，然后显示新的恢复码。确认保存后，旧的才失效。</key>
+	<string>The system first shows a prompt to confirm, then displays the new recovery code. The old one is only invalidated after you confirm you've saved it.</string>
+	<key>系统没有给出原因。</key>
+	<string>The system didn't give a reason.</string>
+	<key>紧凑</key>
+	<string>Compact</string>
+	<key>继续等待</key>
+	<string>Keep Waiting</string>
+	<key>编辑 %@ 上的 %@</key>
+	<string>Edit %2$@ on %1$@</string>
+	<key>编辑这台上这个模型的名称和说明</key>
+	<string>Edit this model's name and description on this Mac</string>
+	<key>网口</key>
+	<string>Port</string>
+	<key>网线在前，连不上第一个就用下一个，最多 4 个。建议在路由器里给这台绑定固定地址，做法见使用指南。</key>
+	<string>Wired first; if the first can't be reached, the next is used, up to 4. It's best to reserve a fixed address for this Mac on your router; see the User Guide.</string>
+	<key>联网检查</key>
+	<string>Online Check</string>
+	<key>联网检查更新和通知（每天一次）</key>
+	<string>Check for updates and notices online (once a day)</string>
+	<key>能操作</key>
+	<string>Can operate</string>
+	<key>能用，建议更新这台的控制台</key>
+	<string>Works, but update the Console on this Mac</string>
+	<key>能管理（包括关机、子密钥、移交主机）</key>
+	<string>Can manage (including Shut Down, sub-keys, Hub hand over)</string>
+	<key>自动</key>
+	<string>Auto</string>
+	<key>自动：下载 oMLX 安装包时测速，挑 GitHub 和魔搭转存里快的；国际：只用 GitHub；中国：优先魔搭转存，下载模型请在 oMLX 的模型下载页选「魔搭」（官方 oMLX 自带）。</key>
+	<string>Auto: when downloading the oMLX installer, test the speed and pick the faster of GitHub and the ModelScope mirror. International: GitHub only. China: prefer the ModelScope mirror; to download models, choose "ModelScope" on oMLX's model download page (built into official oMLX).</string>
+	<key>自己在局域网里用，不开也可以。多人共用、以后要远程控制时再开。</key>
+	<string>For personal use on a local network you can leave it off. Turn it on for shared use or when you need remote control later.</string>
+	<key>自己在局域网里用，这样就够了。想更严，到**安全**页打开高级保护：最高密码和安全芯片都是可选的，开了哪样查哪样。启用主机模式要先设最高密码。</key>
+	<string>For personal use on a local network, this is enough. For stricter protection, turn on Advanced Protection on the **Security** page: the console password and Secure Enclave are both optional, and whichever you turn on is the one that gets checked. Hub mode requires setting the console password first.</string>
+	<key>自检</key>
+	<string>Self-test</string>
+	<key>自检 %@ 的 %@</key>
+	<string>Self-Test %2$@ on %1$@</string>
+	<key>至少 8 位，不要全是数字。</key>
+	<string>At least 8 characters, not all digits.</string>
+	<key>至少 8 位，不要全是数字。这里只存校验值，不存明文，忘了可以重设。</key>
+	<string>At least 8 characters, not all digits. Only a check value is stored here, not the plain text; if you forget it, you can reset it.</string>
+	<key>表放 SSD</key>
+	<string>Tables on SSD</string>
+	<key>被 %@ 占用%@</key>
+	<string>in use by %@%@</string>
+	<key>装好了</key>
+	<string>Installed</string>
+	<key>装好后启动服务：</key>
+	<string>After installing, start the service:</string>
+	<key>要再开机，到机器上按电源键，开机后在这里解锁。主机坏了才让名单里的另一台接管，要最高密码。</key>
+	<string>To turn a Mac back on, press its power button, then unlock it here after it boots. Only let another Mac on the list take over if the Hub is broken (needs the console password).</string>
+	<key>要在主机本机上启用。</key>
+	<string>Has to be enabled on the Hub itself.</string>
+	<key>要开着 oMLX、允许控制台读主密钥，才能看到和改这一项。</key>
+	<string>oMLX needs to be running, and the console needs to be allowed to read the main key, to see or change this.</string>
+	<key>要装的版本：%@</key>
+	<string>Version to install: %@</string>
+	<key>解锁…</key>
+	<string>Unlock…</string>
+	<key>让 Ollama 先释放内存？</key>
+	<string>Ask Ollama to release memory first?</string>
+	<key>让 Ollama 释放…</key>
+	<string>Ask Ollama to Release…</string>
+	<key>让 Ollama 释放内存</key>
+	<string>Ask Ollama to Release Memory</string>
+	<key>让 Ollama 释放内存？</key>
+	<string>Ask Ollama to release memory?</string>
+	<key>设了以后，关机要多输一次。启用主机模式必须先设。</key>
+	<string>Once set, shutting down requires entering it one more time. It must be set before Hub mode can be enabled.</string>
+	<key>设备版：和这台的 oMLX 同进退</key>
+	<string>Device edition: starts and quits together with this Mac's oMLX</string>
+	<key>设好</key>
+	<string>Set</string>
+	<key>设密码…</key>
+	<string>Set Password…</string>
+	<key>设新的最高密码</key>
+	<string>Set a New Console Password</string>
+	<key>设最高密码</key>
+	<string>Set Console Password</string>
+	<key>设置</key>
+	<string>Settings</string>
+	<key>设置 %@</key>
+	<string>Set %@</string>
+	<key>设置 %@ 的多轮缓存</key>
+	<string>Set Up Multi-Turn Cache on %@</string>
+	<key>设置…</key>
+	<string>Settings…</string>
+	<key>设置上下文</key>
+	<string>Set Context</string>
+	<key>设置备份在 %@（只在这台，只有你能读）。</key>
+	<string>Settings backed up to %@ (only on this Mac, readable only by you).</string>
+	<key>设置ModelTower的最高密码</key>
+	<string>Set the console password for ModelTower</string>
+	<key>详情</key>
+	<string>Details</string>
+	<key>语言</key>
+	<string>Language</string>
+	<key>读不出来</key>
+	<string>Can't be read</string>
+	<key>读不到</key>
+	<string>Couldn't read</string>
+	<key>读不到 %@ 此刻的请求数。</key>
+	<string>Can't read the current request count on %@.</string>
+	<key>读不到安全芯片的登记</key>
+	<string>Can't read the Secure Enclave registration</string>
+	<key>读取中…</key>
+	<string>Reading…</string>
+	<key>读取状态出错：%@</key>
+	<string>Error reading status: %@</string>
+	<key>读取状态失败</key>
+	<string>Failed to read status</string>
+	<key>账号</key>
+	<string>Account</string>
+	<key>跟随系统</key>
+	<string>Follow System</string>
+	<key>输入最高密码。</key>
+	<string>Enter the console password.</string>
+	<key>输入最高密码，才会真的关机。</key>
+	<string>Enter the console password to actually shut down.</string>
+	<key>输入最高密码，才会真的移交给 %@。</key>
+	<string>Enter the console password to actually hand over to %@.</string>
+	<key>运行</key>
+	<string>Running</string>
+	<key>运行 </key>
+	<string>Running </string>
+	<key>还原</key>
+	<string>Restore</string>
+	<key>还原 Hugging Face 地址</key>
+	<string>Restore the Hugging Face Address</string>
+	<key>还原 oMLX 自己的自动更新</key>
+	<string>Restore oMLX's own auto-update</string>
+	<key>还在等请求答完，什么都没动；停止后模型保持在线</key>
+	<string>Still waiting for requests to finish, nothing has been changed; the model stays online after you stop</string>
+	<key>还没允许控制台读这台 oMLX 的主密钥：允许以后才看得到模型、能加载和卸载。</key>
+	<string>The console isn't allowed to read this Mac's oMLX main key yet. Allow it to see models and load or unload them.</string>
+	<key>还没有「%@ · %@」，要先在 dsh 的配置里加上</key>
+	<string>"%@ · %@" doesn't exist yet; add it to the dsh configuration first</string>
+	<key>还没有子密钥。</key>
+	<string>No sub-keys yet.</string>
+	<key>还没有授权给别的机器。</key>
+	<string>No access has been granted to other Macs yet.</string>
+	<key>还没检查过</key>
+	<string>Not checked yet</string>
+	<key>还没登记</key>
+	<string>Not registered yet</string>
+	<key>还没设</key>
+	<string>Not set yet</string>
+	<key>还没读到</key>
+	<string>Not read yet</string>
+	<key>还没连接过 %@</key>
+	<string>%@ has never been connected</string>
+	<key>还没连接过任何机器，点左下角的连接。</key>
+	<string>No Mac has been connected yet. Click Connect at the bottom left.</string>
+	<key>还没问过</key>
+	<string>Not asked yet</string>
+	<key>还解决不了：**关于**页有发布者的 GitHub。</key>
+	<string>Still can't solve it? The **About** page has the publisher's GitHub.</string>
+	<key>还连得上</key>
+	<string>still reachable</string>
+	<key>这一份</key>
+	<string>This Copy</string>
+	<key>这一份只在 %@ 上验证过。</key>
+	<string>This one has only been verified on %@.</string>
+	<key>这一份是管理版</key>
+	<string>This copy is the Manager edition</string>
+	<key>这一档能选，平时也不多占内存；但对话一直聊到接近上限时，%@ 的内存会超过安全线，可能开始拿硬盘顶内存，模型变得极慢。</key>
+	<string>This setting can be selected and doesn't use extra memory day to day; but if a conversation runs up close to the limit, memory on %@ will go over the safety limit, it may start using the disk as memory, and the model becomes extremely slow.</string>
+	<key>这一版不再提示</key>
+	<string>Don't remind me about this version</string>
+	<key>这一项是什么、有什么收益和风险、什么时候调</key>
+	<string>What this option is, its benefits and risks, and when to adjust it</string>
+	<key>这个 oMLX 不是官方签名的，控制台不对接它。请删掉它，从官方安装包重新装。</key>
+	<string>This oMLX is not signed by its developer, so the console will not connect to it. Delete it and reinstall from the official package.</string>
+	<key>这个操作要到已登记的机器上做。</key>
+	<string>This action has to be done on a registered Mac.</string>
+	<key>这个文件不能用来装。</key>
+	<string>This file can't be used for installing.</string>
+	<key>这些机器这次没收到，连上后补发：%@。</key>
+	<string>These Macs didn't receive it this time and will be sent it once they connect: %@.</string>
+	<key>这台</key>
+	<string>this Mac</string>
+	<key>这台 Mac</key>
+	<string>This Mac</string>
+	<key>这台 Mac 没有安全芯片</key>
+	<string>This Mac has no Secure Enclave</string>
+	<key>这台 Mac 没有安全芯片。</key>
+	<string>This Mac has no Secure Enclave.</string>
+	<key>这台 Mac 锁屏了，解锁后再做。</key>
+	<string>This Mac's screen is locked; unlock it and try again.</string>
+	<key>这台不再认现在的主机，加密的钥匙和主机钥匙的授权都删掉。模型和服务不受影响。之后要重新启用主机模式，并到每台重新贴授权行。主机还在时不要用。</key>
+	<string>This Mac will no longer recognize the current Hub, and the encrypted key and the access granted by the Hub key will both be deleted. Models and services are not affected. Afterwards you have to re-enable Hub mode and paste the authorization line again on each Mac. Don't use this while the Hub still exists.</string>
+	<key>这台停在登录界面：它的控制台窗口打不开，oMLX 照常能用。要看它的窗口，到机器前登录</key>
+	<string>This Mac is at the login screen: its Console window can't open, but oMLX works as usual. To see its window, log in at the Mac</string>
+	<key>这台就是现在的主机时用</key>
+	<string>Use when this Mac is the current Hub</string>
+	<key>这台授权给了谁</key>
+	<string>Who This Mac Has Granted Access To</string>
+	<key>这台改好了。别的机器还不知道：打开主机的 设置 → 安全，主机会拿走并发给各台。</key>
+	<string>This Mac has been updated. The other Macs don't know yet: open Settings → Security on the Hub, and the Hub will pick it up and send it to every Mac.</string>
+	<key>这台放不下一起跑：先卸载 %@，再加载 %@</key>
+	<string>They don't fit together on this Mac: unload %@ first, then load %@</string>
+	<key>这台是主机，主机钥匙就在这里，可以直接设一个新的。系统会先要 macOS 管理员验证。新密码会发给名单里的机器，连得上的立刻换新；没连上的那台连上后补发。</key>
+	<string>This Mac is the Hub and holds the Hub key, so you can set a new one directly. The system will first ask for macOS administrator authentication. The new password is sent to the Macs on the list; those that can be reached switch right away, and any that can't get it once they reconnect.</string>
+	<key>这台是主机，关掉后这边连不上任何一台，副机的模型也用不了入口。</key>
+	<string>That Mac is the Hub. Once it's shut down, this Console can't reach any Mac, and the Workers' models can't use the gateway either.</string>
+	<key>这台没装 Homebrew。要走这条路，先到 brew.sh 装好 Homebrew。</key>
+	<string>Homebrew isn't installed on this Mac. To use this option, install Homebrew from brew.sh first.</string>
+	<key>这台的 oMLX 是 %@，%@</key>
+	<string>oMLX on this Mac is %1$@, %2$@</string>
+	<key>这台的 oMLX 是官方版，还没允许控制台读它的主密钥：子密钥看不到，也建不了。到设置的 oMLX 页允许。</key>
+	<string>This Mac runs the official oMLX and the console isn't allowed to read its main key, so sub-keys can't be shown or created. Allow it on the oMLX page of Settings.</string>
+	<key>这台的 oMLX 说这个模型不支持 %@</key>
+	<string>This Mac's oMLX says this model doesn't support %@</string>
+	<key>这台的 oMLX：%@</key>
+	<string>oMLX on this Mac: %@</string>
+	<key>这台的主机状态是旧钥匙签的，别的机器过不了。</key>
+	<string>This Mac's Hub state was signed with the old key, so the other Macs can't accept it.</string>
+	<key>这台的准备</key>
+	<string>Preparing This Mac</string>
+	<key>这台的多轮缓存上限，所有模型共用；关了资料就不写硬盘。改了不用重启服务，模型会卸载再加载回来</key>
+	<string>Multi-turn cache limit for this Mac, shared by all models; when off, documents are no longer written to disk. No service restart needed after changing it; the model is unloaded and loaded back</string>
+	<key>这台的钥匙读不出来</key>
+	<string>This Mac's key can't be read</string>
+	<key>这台空着，可直接加载</key>
+	<string>This Mac is empty and can load right away</string>
+	<key>这台还没有登记安全芯片</key>
+	<string>This Mac hasn't registered a Secure Enclave yet</string>
+	<key>这台还没有登记安全芯片钥匙，或者钥匙已经失效。</key>
+	<string>This Mac hasn't registered a Secure Enclave key yet, or the key is no longer valid.</string>
+	<key>这台还没装 oMLX。控制台用它运行模型：这里帮你装官方版，装好后自动接上。</key>
+	<string>oMLX isn't installed on this Mac yet. The console runs models with it: install the official version here, and the console connects automatically once it's installed.</string>
+	<key>这把不在本机上，到它所在机器的管理页处理</key>
+	<string>This one isn't on this Mac; manage it on the admin page of the Mac it lives on</string>
+	<key>这把在 %@ 上没有，那台调用会被拒绝</key>
+	<string>This one doesn't exist on %@, so calls to that Mac will be rejected</string>
+	<key>这把在 %@ 上能用</key>
+	<string>This one works on %@</string>
+	<key>这是 %@，这次要升级到 %@。</key>
+	<string>This is %1$@; this upgrade is to %2$@.</string>
+	<key>这是什么</key>
+	<string>What Is This</string>
+	<key>这是好事，不用关。断电重启后要先解锁：主机上点解锁，或到机器前输密码。</key>
+	<string>That's a good thing; no need to turn it off. After a power-loss restart you must unlock first: click Unlock on the Hub, or enter the password at the Mac.</string>
+	<key>这是最后一把，吊销了就没有机器能做最高操作了</key>
+	<string>This is the last one; once revoked, no Mac can perform privileged actions</string>
+	<key>这是这台自己的钥匙。</key>
+	<string>This is this Mac's own key. </string>
+	<key>远程关机：%@</key>
+	<string>Remote shutdown: %@</string>
+	<key>远程只能在名单内移交；授权、名单、最高密码只能在主机本机改。</key>
+	<string>Remotely you can only hand over to a Mac on the list; access grants, the list, and the console password can only be changed on the Hub itself.</string>
+	<key>远程登录</key>
+	<string>Remote Login</string>
+	<key>连不上 %@，确认主机开着、打开了远程登录。</key>
+	<string>Can't reach %@; make sure that Mac is on and Remote Login is enabled.</string>
+	<key>连不上 %@：可能已关机或断网。开机要到机器上按电源键。</key>
+	<string>Can't reach %@: it may have shut down or lost its network connection. To turn it on, press its power button.</string>
+	<key>连不上主机</key>
+	<string>Can't reach the Hub</string>
+	<key>连不上主机，或者这台的登记文件有问题。什么都没动。</key>
+	<string>Can't reach the Hub, or there is a problem with this Mac's registration file. Nothing was changed.</string>
+	<key>连不上主机，看不到 %@ 现在的状态。</key>
+	<string>Can't reach the Hub, so the current status of %@ isn't available.</string>
+	<key>连它</key>
+	<string>Connect</string>
+	<key>连接</key>
+	<string>Connect</string>
+	<key>连接不上</key>
+	<string>Can't Connect</string>
+	<key>连接主机</key>
+	<string>Connect to Hub</string>
+	<key>连错太多次，暂时锁定了。</key>
+	<string>Too many wrong attempts; locked for now.</string>
+	<key>退出 oMLX，换成新版</key>
+	<string>Quit oMLX and Replace It with the New Version</string>
+	<key>退出主机模式</key>
+	<string>Exit Hub Mode</string>
+	<key>退出主机模式…</key>
+	<string>Exit Hub Mode…</string>
+	<key>退出主机模式要 macOS 管理员验证。</key>
+	<string>Exiting Hub mode needs macOS administrator authentication.</string>
+	<key>退出主机模式？</key>
+	<string>Exit Hub mode?</string>
+	<key>退出后所有机器的 oMLX 和副机的控制台都会关闭，模型卸载，机器本身不关机。想让别的机器接手，先在「主机」里移交。</key>
+	<string>After quitting, oMLX on every Mac and the Console on the Workers will be stopped and models unloaded; the Macs themselves won't shut down. To let another Mac take over, first use Hand Over under "Hub".</string>
+	<key>退出并关闭 %@ 的 oMLX？</key>
+	<string>Quit and stop oMLX on %@?</string>
+	<key>退出并关闭全部？</key>
+	<string>Quit and stop all?</string>
+	<key>退出控制台…</key>
+	<string>Quit Console…</string>
+	<key>退出管理版什么都不会停，模型和服务照常跑。</key>
+	<string>Quitting the Manager edition doesn't stop anything; models and services keep running.</string>
+	<key>选一台</key>
+	<string>Choose a Mac</string>
+	<key>选下载好的 oMLX 安装包（.dmg）</key>
+	<string>Choose the downloaded oMLX installer (.dmg)</string>
+	<key>选择安装包…</key>
+	<string>Choose Installer…</string>
+	<key>通用</key>
+	<string>General</string>
+	<key>通知各台</key>
+	<string>Notify All Macs</string>
+	<key>释放</key>
+	<string>Release</string>
+	<key>释放 %@ 的内存，服务保持运行。</key>
+	<string>Frees up memory on %@; the service keeps running.</string>
+	<key>释放并切换</key>
+	<string>Release and Switch</string>
+	<key>释放并加载</key>
+	<string>Release and Load</string>
+	<key>释放并改</key>
+	<string>Release and Change</string>
+	<key>重启</key>
+	<string>Restart</string>
+	<key>重启 %@</key>
+	<string>Restart %@</string>
+	<key>重启 %@？</key>
+	<string>Restart %@?</string>
+	<key>重启 oMLX 和控制台；确认时可以选把模型加载回来</key>
+	<string>Restarts oMLX and the Console; when you confirm, you can choose to load the models back</string>
+	<key>重启全部</key>
+	<string>Restart All</string>
+	<key>重启全部？</key>
+	<string>Restart all?</string>
+	<key>重启后加载回 %@（每个约 1–3 分钟）</key>
+	<string>Load back %@ after restarting (about 1–3 min each)</string>
+	<key>重启所有机器的 oMLX，刷新所有控制台</key>
+	<string>Restarts oMLX on every Mac and refreshes all Consoles</string>
+	<key>重开</key>
+	<string>Reopen</string>
+	<key>重新打开安装包</key>
+	<string>Reopen Installer</string>
+	<key>重新检查</key>
+	<string>Check Again</string>
+	<key>重新签一次</key>
+	<string>Re-sign</string>
+	<key>重新签一次…</key>
+	<string>Re-sign…</string>
+	<key>重新签一次主机状态</key>
+	<string>Re-sign the Hub State</string>
+	<key>重新签一次？</key>
+	<string>Re-sign?</string>
+	<key>重置</key>
+	<string>Reset</string>
+	<key>重置主密钥</key>
+	<string>Reset Main Key</string>
+	<key>重置主密钥…</key>
+	<string>Reset Main Key…</string>
+	<key>重置主密钥？</key>
+	<string>Reset the main key?</string>
+	<key>重设最高密码</key>
+	<string>Reset Console Password</string>
+	<key>重设最高密码要 macOS 管理员验证。</key>
+	<string>Resetting the console password needs macOS administrator authentication.</string>
+	<key>重连中</key>
+	<string>Reconnecting</string>
+	<key>钥匙失效了（抹过盘或换过主板），要重新登记</key>
+	<string>The key is no longer valid (disk erased or logic board replaced); register again</string>
+	<key>长条</key>
+	<string>Mini Bar</string>
+	<key>问题和建议可以到这里反馈。模型由 oMLX 运行，它是单独的开源项目。</key>
+	<string>Send questions and suggestions here. Models run on oMLX, which is a separate open-source project.</string>
+	<key>需要约 %@ GB</key>
+	<string>Needs about %@ GB</string>
+	<key>顺序和名字</key>
+	<string>Order and Names</string>
+	<key>验证</key>
+	<string>Verify</string>
+	<key>验证 %@</key>
+	<string>Verify %@</string>
+	<key>验证不了这台 Mac 的主人</key>
+	<string>Can't verify the owner of this Mac</string>
+	<key>高级保护（可选）</key>
+	<string>Advanced Protection (Optional)</string>
+	<key>默认本机最前，主机其次，其余按添加顺序；模型新的在前。</key>
+	<string>By default This Mac comes first, then the Hub, then the rest in the order they were added; newer models come first.</string>
+	<key>（%@）</key>
+	<string> (%@)</string>
+	<key>（估算）</key>
+	<string> (estimated)</string>
+	<key>（卸载 → 改设置 → 加载 → 自检），oMLX 服务、控制台和 dsh 都不用重启。</key>
+	<string> (Unload → change the setting → Load → Self-Test); the oMLX service, the Console and dsh don't need to restart.</string>
+	<key>（卸载 → 改设置 → 加载 → 自检），oMLX 服务和控制台都不用重启。</key>
+	<string> (Unload → change the setting → Load → Self-Test); the oMLX service and the Console don't need to restart.</string>
+	<key>（未命名）</key>
+	<string>(Untitled)</string>
+	<key>，</key>
+	<string>, </string>
+	<key>，%@</key>
+	<string>, %@</string>
+	<key>，%@ 开始</key>
+	<string>, started %@</string>
+	<key>，%@ 改过</key>
+	<string>, changed %@</string>
+	<key>，单次最多输出 %@</key>
+	<string>, up to %@ output per request</string>
+	<key>，含 Ollama</key>
+	<string>, including Ollama</string>
+	<key>，安装包 %@</key>
+	<string>, installer %@</string>
+	<key>，现在卸载会中断它们。选「等它答完再卸载」会等到没有请求时再动手（最长 10 分钟，等的时候可以停止）。</key>
+	<string>. Unloading now will interrupt them. Choosing "Unload When Idle" waits until there are no requests before acting (up to 10 minutes; you can stop while it waits).</string>
+	<key>：%@</key>
+	<string>: %@</string>
+	<key>；</key>
+	<string>; </string>
+	<key>｜</key>
+	<string> | </string>
+	<key>%@：这次没有做，有别的操作正在进行，等它做完再试。</key>
+	<string>%@: not done this time. Another operation is in progress; try again when it finishes.</string>
+	<key>oMLX 装好了，在运行</key>
+	<string>oMLX is installed and running</string>
+	<key>oMLX 装好了，还没启动。启动不会自动加载模型。</key>
+	<string>oMLX is installed but not running. Starting it does not load a model.</string>
+	<key>下载一个模型</key>
+	<string>Download a model</string>
+	<key>下载源选了“中国”：在 oMLX 的下载页里选魔搭。</key>
+	<string>The download source is set to “China”: choose ModelScope on the oMLX download page.</string>
+	<key>允许读主密钥…</key>
+	<string>Allow Reading the Main Key…</string>
+	<key>先允许控制台读 oMLX 的主密钥，才看得到这台有哪些模型。</key>
+	<string>Allow the console to read the oMLX main key first, so it can see which models are on this Mac.</string>
+	<key>再看一遍“开始使用”</key>
+	<string>Show “Get Started” Again</string>
+	<key>加载完控制台会让模型算一道题，确认它能正常回答。</key>
+	<string>After loading, the console asks the model one arithmetic question to confirm it answers properly.</string>
+	<key>加载并自检</key>
+	<string>Load and self-test</string>
+	<key>加载并自检过了</key>
+	<string>Loaded and self-tested</string>
+	<key>开始使用</key>
+	<string>Get Started</string>
+	<key>打开 oMLX 的管理页</key>
+	<string>Open the oMLX Admin Page</string>
+	<key>控制台用 oMLX 运行模型：这里帮你装官方版，装好后自动接上。</key>
+	<string>The console runs models with oMLX. It can install the official build for you here and connect to it automatically afterwards.</string>
+	<key>收起</key>
+	<string>Hide</string>
+	<key>模型在 oMLX 的管理页里下载，下完回到这里，卡片会自己出现。</key>
+	<string>Models are downloaded on the oMLX admin page. Come back here afterwards and the card appears by itself. </string>
+	<key>这台内存 %@ GB，建议挑 %@ GB 以内的 MLX 格式模型。</key>
+	<string>This Mac has %@ GB of memory; pick an MLX-format model of %@ GB or less. </string>
+	<key>这台有 %@ 个模型</key>
+	<string>%@ model(s) on this Mac</string>
+	<key>已打开终端：在那里先确认对方的指纹，再输入对方的 macOS 登录密码。配好后这里会自己接着做。</key>
+	<string>Terminal is open: confirm the other Mac's fingerprint there, then enter its macOS login password. This window continues by itself once pairing is done.</string>
+	<key>配好了，正在验证…</key>
+	<string>Paired. Verifying…</string>
+	<key>对方那边配好了，但验证没过：看下面的提示，或者点“验证”再试一次。</key>
+	<string>Pairing finished on the other Mac, but verification failed: see the message below, or click “Verify” to try again.</string>
+	<key>没配成。</key>
+	<string>Pairing failed.</string>
+	<key>不等了</key>
+	<string>Stop Waiting</string>
+	<key>正在检查…</key>
+	<string>Checking…</string>
+	<key>检查</key>
+	<string>Check</string>
+	<key>查六项：看得到、能登录、oMLX 在、能关机、FileVault、地址固定。只读</key>
+	<string>Checks six things: reachable, can log in, oMLX present, can be shut down, FileVault, fixed address. Read-only</string>
+	<key>输密码配对（自己的机器）</key>
+	<string>Pair with Password (Your Own Mac)</string>
+	<key>会打开终端，在那里输一次对方的 macOS 登录密码。密码直接交给系统，控制台不经手</key>
+	<string>Opens Terminal, where you enter the other Mac's macOS login password once. The password goes straight to the system; the console never handles it</string>
+	<key>生成配对串（别人的机器）</key>
+	<string>Create Pairing String (Someone Else's Mac)</string>
+	<key>不用知道对方的密码：把配对串发给对方，由对方在自己的屏幕上点允许</key>
+	<string>No need to know the other Mac's password: send the pairing string to its owner, who clicks Allow on their own screen</string>
+	<key>%@ 配好了</key>
+	<string>%@ is set up</string>
+	<key>%@ 配好了，还有 %@ 项要处理</key>
+	<string>%@ is set up; %@ item(s) still need attention</string>
+	<key>没查成：%@</key>
+	<string>Check failed: %@</string>
+	<key>%@：已强制结束，控制台不再等。机器上的动作可能还在继续，看一下状态再决定要不要重做。</key>
+	<string>%@: force-stopped; the Console is no longer waiting. The action may still be running on the machine. Check the status before deciding whether to redo it.</string>
+	<key>oMLX 的安装还在进行</key>
+	<string>oMLX setup is still in progress</string>
+	<key>一句话说明不能是空的；想回到出厂说明就点它右边的「恢复默认」。</key>
+	<string>The one-line description can't be empty. To go back to the built-in description, click "Restore Default" next to it.</string>
+	<key>一句话说明太长了：最多 120 个字。</key>
+	<string>The one-line description is too long: 120 characters at most.</string>
+	<key>仍然重启</key>
+	<string>Restart Anyway</string>
+	<key>仍然重开</key>
+	<string>Reopen Anyway</string>
+	<key>名称太长了：最多 40 个字。</key>
+	<string>The name is too long: 40 characters at most.</string>
+	<key>后端 %@ 分钟没有任何新输出，已结束这次操作。机器上的动作可能还在继续，过一会儿看状态再决定要不要重做。</key>
+	<string>No new output from the backend for %@ min, so this operation was ended. The action may still be running on the machine; check the status in a bit before deciding whether to redo it.</string>
+	<key>后端 %@ 秒没有回应，已结束这次查询。</key>
+	<string>The backend didn't respond for %@ s, so this query was ended.</string>
+	<key>启动入口</key>
+	<string>Start the Gateway</string>
+	<key>它已经 %@ 分钟没有任何新输出。强制结束只是让控制台不再等：机器上的动作可能还在继续，也可能停在半路（比如模型只加载了一半）。结束后先看状态，再决定要不要重做。</key>
+	<string>It has had no new output for %@ min. Force Stop only makes the Console stop waiting: the action may still be running on the machine, or may be left halfway (for example, a model only partly loaded). Check the status afterwards before deciding whether to redo it.</string>
+	<key>强制结束</key>
+	<string>Force Stop</string>
+	<key>强制结束…</key>
+	<string>Force Stop…</string>
+	<key>强制结束「%@」？</key>
+	<string>Force stop "%@"?</string>
+	<key>很久没有新输出了。只是让控制台不再等，机器上的动作可能还在继续</key>
+	<string>No new output for a long time. This only makes the Console stop waiting; the action may still be running on the machine</string>
+	<key>有别的操作正在进行，等它做完再点。填的内容还在。</key>
+	<string>Another operation is in progress; click again when it finishes. What you typed is still here.</string>
+	<key>没有存成，原因见操作记录。</key>
+	<string>Not saved. See Activity for the reason.</string>
+	<key>现在退出会把它打断。下了的部分留着，下次接着下。</key>
+	<string>Quitting now interrupts it. The part already downloaded is kept, and the next download resumes from there.</string>
+	<key>现在重开控制台会把它打断。下了的部分留着，下次接着下。</key>
+	<string>Reopening the Console now interrupts it. The part already downloaded is kept, and the next download resumes from there.</string>
+	<key>这份安装包不再用。在下面重新下载，或另选一份。</key>
+	<string>This installer won't be used. Download again below, or choose another one.</string>
+	<key>这份安装包不再用。点「开始」重新下载，或点「我已经下载好了…」另选一份。</key>
+	<string>This installer won't be used. Click "Start" to download again, or "I Already Downloaded It…" to choose another one.</string>
+	<key>重启这台时控制台会重开，会把它打断。下了的部分留着，下次接着下。</key>
+	<string>Restarting this Mac's oMLX reopens the Console, which interrupts it. The part already downloaded is kept, and the next download resumes from there.</string>
+	<key>先装 oMLX</key>
+	<string>Install oMLX First</string>
+	<key>控制台用 oMLX 自带的 Python 运行。这台 Mac 上还没找到 oMLX，也没有别的 Python。</key>
+	<string>The console runs on the Python that ships with oMLX. No oMLX, and no other Python, was found on this Mac.</string>
+	<key>两条路选一条：
+1. 装 oMLX（本来也要装）：下载后把它拖进"应用程序"，回来点"重新检查"。
+2. 装苹果的命令行工具（免费，系统会弹一个安装框，约几分钟）。</key>
+	<string>Pick one:
+1. Install oMLX (you need it anyway): download it, drag it into Applications, then come back and click Check Again.
+2. Install Apple's command line tools (free; macOS shows an installer, a few minutes).</string>
+	<key>打开 oMLX 下载页</key>
+	<string>Open the oMLX Download Page</string>
+	<key>装苹果的命令行工具</key>
+	<string>Install Apple's Command Line Tools</string>
+	<key>还没找到。装好后再点一次。</key>
+	<string>Still not found. Click again once it is installed.</string>
+	<key>1. 新装的 Mac：窗口上方有**开始使用**三步，照着做就行。三步做完它会自己收起；想再看，这一页最上面有按钮。</key>
+	<string>1. On a newly set up Mac, the top of the window shows the three **Get Started** steps; just follow them. They fold away once all three are done; to see them again, use the button at the top of this page.</string>
+	<key>2. 第一步点**安装 oMLX…**，控制台帮你装官方版。已经装了、只是没启动的，点**启动 oMLX**。机器卡片上的点变**绿**，就是服务在跑。</key>
+	<string>2. Step one: click **Install oMLX…** and the console installs the official build for you. If it is already installed but not running, click **Start oMLX**. When the dot on the machine card turns **green**, the service is running.</string>
+	<key>已经在用的 Mac 没有这三步：打开控制台，oMLX 会自动启动（**通用**页可以关），直接在模型卡片上点**加载**。</key>
+	<string>A Mac that is already set up doesn't show these steps: open the console and oMLX starts automatically (you can turn this off on the **General** page), then click **Load** on a model card.</string>
+	<key>用 dsh 的话，选模型卡片最下面写的那一项。</key>
+	<string>If you use dsh, pick the entry written at the bottom of the model card.</string>
+	<key>1. 到新机器上打开「远程登录」：系统设置 → 通用 → 共享 → 远程登录。那一页写着它的地址和账号。</key>
+	<string>1. On the new Mac, turn on "Remote Login": System Settings → General → Sharing → Remote Login. That page shows its address and account.</string>
+	<key>2. 回这台，点左下角**机器**，到**添加机器**填地址和账号。名称可以留空，默认用那台的系统名称。</key>
+	<string>2. Back on this Mac, click **Machines** at the bottom left and fill in the address and account under **Add Machine**. You can leave the name empty; it defaults to that Mac's system name.</string>
+	<key>3. 自己的机器：点**输密码配对（自己的机器）**。会打开终端，先确认一次那台的指纹，再输那台的 macOS 登录密码；密码直接交给系统，控制台不经手。配好后这边自己验证，新机器的卡片就出来了。</key>
+	<string>3. Your own Mac: click **Pair with Password (Your Own Mac)**. Terminal opens; confirm that Mac's fingerprint once, then enter its macOS login password. The password goes straight to the system; the console never handles it. Once paired, this Mac verifies the connection by itself and the new Mac's card appears.</string>
+	<key>4. 接着会自动查六项：看得到、能登录、oMLX 在、能关机、FileVault、地址固定。没过的那一项下面写着怎么办。以后想再查，到**机器**的**顺序和名字**页点**检查**。</key>
+	<string>4. Six things are then checked automatically: reachable, can log in, oMLX present, can be shut down, FileVault, fixed address. Any item that doesn't pass says what to do right below it. To check again later, click **Check** on the **Order and Names** page under **Machines**.</string>
+	<key>5. 别人的机器（不知道对方的密码）：点**生成配对串（别人的机器）**，把配对串发给对方。对方在自己的控制台 **机器** → **本机授权** 贴上，点**允许…**，两边核对码一样才确认；然后回这台点**验证**。</key>
+	<string>5. Someone else's Mac (you don't know its password): click **Create Pairing String (Someone Else's Mac)** and send them the pairing string. In their own console they paste it under **Machines** → **This Mac's Access** and click **Allow…**, confirming only if the verification codes match on both sides; then click **Verify** back on this Mac.</string>
+	<key>启用了主机模式的话，只有**生成配对串**这一条路，验证时还要指纹和最高密码。</key>
+	<string>If Hub mode is on, **Generate Pairing String** is the only way, and verifying also needs Touch ID and the console password.</string>
+	<key>加机器没配成：**添加机器**页会写明原因，照着改好再点一次。</key>
+	<string>Pairing a Mac failed: the **Add Machine** page says why; fix that and click again.</string>
+	<key>各台不再认它，它上面的模型和服务不受影响。它那边的授权还留着，要在 %@ 的控制台吊销。</key>
+	<string>The other Macs will stop recognizing it; models and services on it are not affected. The access granted on its side remains and must be revoked in the Console on %@.</string>
+	<key>能管理（包括关机、子密钥、打开这台的 oMLX 管理页）</key>
+	<string>Can manage (including Shut Down, sub-keys, opening this Mac's oMLX admin page)</string>
+	<key>退出后所有机器的 oMLX 和副机的控制台都会关闭，模型卸载，机器本身不关机。</key>
+	<string>After quitting, oMLX on every Mac and the Console on the Workers will be stopped and models unloaded; the Macs themselves won't shut down.</string>
+	<key>这台的 oMLX 是官方版。控制台要读它的主密钥，才能加载和卸载模型、管理子密钥、看日志和多轮缓存。
+
+控制台只记你允许还是不允许，不存密钥，每次用时现读；只有升级 oMLX 前会给它的设置文件留一份备份（里面有主密钥），放在这台、只有你的账号能读。不允许的话只能看状态，以后可以在设置的 oMLX 页改。</key>
+	<string>This Mac runs the official oMLX. The console needs its main key to load and unload models, manage sub-keys, and show logs and the multi-turn cache.
+
+The console only remembers whether you allowed it. It never stores the key and reads it fresh each time; the one exception is a backup of oMLX's settings file (which contains the main key) made before an oMLX upgrade, kept on this Mac and readable only by your account. If you don't allow it, you can only see the status; you can change this later on the oMLX page of Settings.</string>
+	<key>选「等它答完再卸载」会等到没有请求时再动手（最长 10 分钟，等的时候可以停止）。</key>
+	<string>Choosing "Unload When Idle" waits until there are no requests before acting (up to 10 minutes; you can stop while it waits).</string>
+	<key>
+
+「自动」是 oMLX 默认的上限：按（剩余硬盘 + 已有缓存）÷ 2 定，随硬盘剩多少变。</key>
+	<string>
+
+"Auto" is oMLX's default limit: (free disk + existing cache) ÷ 2, so it changes with free disk space.</string>
+	<key>
+
+只想收起窗口：点右上角的「长条」，或到设置 → 通用关掉「关闭窗口时退出控制台」。</key>
+	<string>
+
+To just put the window away, click "Mini Bar" at the top right, or turn off "Quit the console when closing the window" in Settings → General.</string>
+	<key>%@ · oMLX 管理页</key>
+	<string>%@ · oMLX Admin</string>
+	<key>%@ 上下文 %@%@%@；</key>
+	<string>%1$@ context %2$@%3$@%4$@; </string>
+	<key>%@ 台在线</key>
+	<string>%@ online</string>
+	<key>%@ 台都在线</key>
+	<string>all %@ online</string>
+	<key>%@ 跑 %@</key>
+	<string>%1$@ runs %2$@</string>
+	<key>%@/%@ 台在线</key>
+	<string>%1$@/%2$@ online</string>
+	<key>**右上角**：**设置**就是这里，最后一页 **oMLX** 能直接打开 oMLX 的设置；**排列**换排法，**长条**把窗口收成一条，**固定**把窗口钉在原处、总在最前。</key>
+	<string>**Top right**: **Settings** is where you are now, and its last tab, **oMLX**, opens oMLX's own settings directly; **Arrange** changes the layout, **Mini Bar** shrinks the window to a strip, and **Pin** keeps the window in place and always on top.</string>
+	<key>**机器卡片**：启动或关闭、重启、关机、**oMLX 管理页**。**oMLX 管理页**打开这台 oMLX 自己的网页（仪表盘、下载模型、聊天、日志），不用输密钥。这台自己的卡片也能关机，关了这个窗口跟着关掉。多轮缓存也在这里选。</key>
+	<string>**Machine card**: start or stop, restart, shut down, **oMLX Admin**. **oMLX Admin** opens this Mac's own oMLX web page (dashboard, model downloads, chat, logs) without typing a key. This Mac's own card can shut it down too, and this window closes with it. The cache is also set here.</string>
+	<key>0.6 先让局域网里的别的设备（手机、笔记本）调用这台的模型。</key>
+	<string>0.6 comes first: other devices on your local network (phones, laptops) can use this Mac's models.</string>
+	<key>macOS 自己报的内存压力，和活动监视器里「内存压力」那条曲线的颜色是一回事。正常就是够用；警告是系统已经在压缩内存；严重是在拿硬盘顶内存，模型会变得极慢。</key>
+	<string>Memory pressure as macOS reports it, the same thing as the color of the Memory Pressure graph in Activity Monitor. Normal means there's enough; Warning means the system is already compressing memory; Critical means it's using the disk as memory, and models get extremely slow.</string>
+	<key>oMLX 和加载着的模型照常运行，菜单栏的图标继续显示状态。</key>
+	<string>oMLX and the loaded models keep running, and the menu bar icon keeps showing the status.</string>
+	<key>oMLX 没在运行</key>
+	<string>oMLX isn't running</string>
+	<key>oMLX 没在运行：启动以后才能打开。</key>
+	<string>oMLX isn't running. Start it first.</string>
+	<key>oMLX 管理页</key>
+	<string>oMLX Admin</string>
+	<key>oMLX 管理页里「显存上限」那行如果是红字，可以不管：控制台的安全线本来就比系统默认的显存上限低（512 GB 的 Mac 上是 461 GB 对约 464 GB），模型不会用到那么多。</key>
+	<string>If the GPU memory limit line in oMLX Admin is red, you can ignore it: the console's safety line is already below the system's default GPU memory limit (461 GB vs. about 464 GB on a 512 GB Mac), so models won't reach it.</string>
+	<key>oMLX 管理页里「显存上限」那行红字可以不管：控制台的安全线本来就比系统默认的显存上限低（512 GB 的 Mac 上是 461 GB 对约 464 GB）。</key>
+	<string>A red GPU memory limit line in oMLX Admin can be ignored: the console's safety line is already below the system's default GPU memory limit (461 GB vs. about 464 GB on a 512 GB Mac).</string>
+	<key>「oMLX 设置」是服务器、模型、缓存、网络这些全局设置；「oMLX 管理页」是仪表盘、下载模型、聊天、日志。控制台代为登录，不用输密钥。</key>
+	<string>"oMLX Settings" holds global settings such as server, models, cache and network; "oMLX Admin" has the dashboard, model downloads, chat and logs. The console signs you in, so you don't type a key.</string>
+	<key>一键启动、关闭、重启、关机所有机器；副机断电重启后自动接上。</key>
+	<string>Start, stop, restart or shut down every Mac with one click; a worker that comes back after a power cut reconnects by itself.</string>
+	<key>上下文调到最小也超：卸载别的模型，或换一个小一点的模型</key>
+	<string>even the smallest context is over: unload another model, or use a smaller one</string>
+	<key>下不动？到官方发布页手动下载，再用下面的「我已经下载好了」。</key>
+	<string>Download stuck? Get it from the official release page yourself, then use "I Already Downloaded It" below.</string>
+	<key>下载源选了「中国」，但魔搭上还没有这一版的转存，只能从 GitHub 下。</key>
+	<string>The download source is set to China, but there's no ModelScope copy of this version yet, so it can only come from GitHub.</string>
+	<key>不再提示</key>
+	<string>Don't show again</string>
+	<key>主机 · %@ 台</key>
+	<string>Hub · %@ Macs</string>
+	<key>主机配对这台时，终端里会让你确认一串指纹，和这一串一样才是这台。</key>
+	<string>When a hub pairs with this Mac, Terminal asks you to confirm a fingerprint. It's this Mac only if it matches this one.</string>
+	<key>允许的时候选给多大的权限：只调模型、只能看状态、能操作，或能管理。</key>
+	<string>When allowing, you choose how much access to give: use models only, view status only, operate, or manage.</string>
+	<key>关着时，点红色按钮只收起窗口，控制台和 oMLX 照常运行。打开后，点红色按钮就是退出控制台，和 ⌘Q 一样先确认。</key>
+	<string>When off, the red button only puts the window away, and the console and oMLX keep running. When on, the red button quits the console, asking first just like ⌘Q.</string>
+	<key>关闭窗口</key>
+	<string>Closing the Window</string>
+	<key>关闭窗口时退出控制台</key>
+	<string>Quit the console when closing the window</string>
+	<key>内存 · %@</key>
+	<string>Memory · %@</string>
+	<key>副机</key>
+	<string>Worker</string>
+	<key>单机</key>
+	<string>Single Mac</string>
+	<key>压力</key>
+	<string>Pressure</string>
+	<key>哪台</key>
+	<string>Mac</string>
+	<key>固定</key>
+	<string>Pin</string>
+	<key>在线的模型对话都塞满上下文时，整台大约会到多少：oMLX 加载后实测的权重 + 上下文 × 每个 token 要的内存。平时用不到这么多。</key>
+	<string>Roughly how much the whole Mac would use if every loaded model's conversations filled their context: the weights measured after oMLX loads them, plus context × the memory each token needs. Normal use stays well below this.</string>
+	<key>在跑 %@</key>
+	<string>Running %@</string>
+	<key>塞满会超安全线：改成这一档整台就不超。当场生效，不用重新加载</key>
+	<string>Filling it up would go over the safety line; at this size the whole Mac stays under it. Takes effect right away, no reload.</string>
+	<key>塞满时最多</key>
+	<string>Most when full</string>
+	<key>塞满时最多约 %@ GB</key>
+	<string>Up to about %@ GB when full</string>
+	<key>安全线</key>
+	<string>Safety line</string>
+	<key>安全线 %@ GB</key>
+	<string>Safety line %@ GB</string>
+	<key>客户端连 127.0.0.1:%@</key>
+	<string>Clients connect to 127.0.0.1:%@</string>
+	<key>左下角**机器**里的**添加机器**、**本机授权**两页先放着预告；**顺序和名字**现在就能改这台卡片的显示名。</key>
+	<string>Under **Machines** at the bottom left, the **Add Machine** and **This Mac's Access** pages show a preview for now; **Order and Names** already lets you rename this Mac's card.</string>
+	<key>已固定：窗口钉在原处，总在别的窗口前面。再点一下取消</key>
+	<string>Pinned: the window stays in place, in front of other windows. Click again to unpin</string>
+	<key>已用</key>
+	<string>Used</string>
+	<key>当场生效，不用重新加载，对话不中断</key>
+	<string>Takes effect right away, no reload, conversations aren't interrupted</string>
+	<key>打开 oMLX 管理页</key>
+	<string>Open oMLX Admin</string>
+	<key>打开 oMLX 设置</key>
+	<string>Open oMLX Settings</string>
+	<key>打开发布页</key>
+	<string>Open release page</string>
+	<key>打开这台的 oMLX 管理页（仪表盘、模型、聊天、日志），控制台代为登录</key>
+	<string>Open this Mac's oMLX admin page (dashboard, models, chat, logs); the console signs you in</string>
+	<key>把家里的几台 Mac 连成一组，在这一个窗口里管：每台的内存、速度、在跑什么一眼看到，每台加载不同的模型。</key>
+	<string>Link the Macs at home into one group and manage them from this window: see each Mac's memory, speed and running models at a glance, and load a different model on each.</string>
+	<key>把窗口钉在原处，总在别的窗口前面；再点一下取消</key>
+	<string>Keep the window in place, in front of other windows; click again to unpin</string>
+	<key>控制台的设置：通用、更新、教程、关于、oMLX</key>
+	<string>Console settings: General, Updates, Guide, About, oMLX</string>
+	<key>改成 %@ 以内就不超</key>
+	<string>at %@ or less it stays under</string>
+	<key>整台 Mac 已经用掉的内存，和活动监视器的「已使用内存」同一算法%@；括号里是 oMLX 进程此刻的实际占用。</key>
+	<string>Memory the whole Mac is using, calculated the same way as Memory Used in Activity Monitor%@; the part in parentheses is what the oMLX process actually uses right now.</string>
+	<key>显卡此刻有多忙（0–100%%）。模型在回答时会很高，空闲时接近 0；一直很高却没有请求在跑，多半是卡住了。</key>
+	<string>How busy the GPU is right now (0–100%%). It's high while a model answers and near 0 when idle; staying high with no requests running usually means something is stuck.</string>
+	<key>显存上限</key>
+	<string>GPU memory limit</string>
+	<key>更新于 %@</key>
+	<string>Updated %@</string>
+	<key>服务在跑，还没加载模型</key>
+	<string>Service running, no model loaded yet</string>
+	<key>点 Dock 图标就能把窗口开回来。
+
+要完全退出：菜单栏图标 → 退出控制台，或按 ⌘Q。想点红色按钮就退出，到设置 → 通用打开「关闭窗口时退出控制台」。</key>
+	<string>Click the Dock icon to bring the window back.
+
+To quit completely: menu bar icon → Quit Console, or press ⌘Q. To make the red button quit, turn on "Quit the console when closing the window" in Settings → General.</string>
+	<key>现在用 %@ GB</key>
+	<string>Using %@ GB now</string>
+	<key>由 %@ 管理，全局操作在主机上</key>
+	<string>managed by %@; do whole-group actions on the hub</string>
+	<key>由主机管理，全局操作在主机上</key>
+	<string>managed by the hub; do whole-group actions there</string>
+	<key>窗口收起了，控制台还在运行</key>
+	<string>The window is hidden; the console is still running</string>
+	<key>窗口收起了，管理版还开着</key>
+	<string>The window is hidden; the remote is still open</string>
+	<key>管理版</key>
+	<string>Remote</string>
+	<key>管理页要在主机上打开。</key>
+	<string>Open the admin page on the hub.</string>
+	<key>红色按钮只收起窗口，服务和模型继续跑，点 Dock 图标就回来。想点红色按钮就退出，到**通用**页打开「关闭窗口时退出控制台」。</key>
+	<string>The red button only puts the window away; the service and models keep running, and clicking the Dock icon brings it back. To make the red button quit, turn on "Quit the console when closing the window" on the **General** page.</string>
+	<key>红色竖线%@（这台 %@ GB）。已用超过它就报「内存超线」；塞满时会超过它，这里会写明是哪个模型、改到哪一档就不超。</key>
+	<string>The red vertical line%1$@ (%2$@ GB on this Mac). Going over it while in use shows "Over the Memory Limit"; if filling up would go over it, this card names the model and the context size that stays under.</string>
+	<key>联机（1.0 推出）</key>
+	<string>Multiple Macs (coming in 1.0)</string>
+	<key>联机：1.0 正式版推出，敬请期待</key>
+	<string>Multiple Macs: coming in the 1.0 release, stay tuned</string>
+	<key>菜单栏的图标继续显示各台的状态。</key>
+	<string>The menu bar icon keeps showing each Mac's status.</string>
+	<key>读到这台的总内存后才有。</key>
+	<string>Shown once this Mac's total memory has been read.</string>
+	<key>路线：0.6 让局域网里的别的设备（手机、笔记本）调用这台的模型；1.0 正式版多台 Mac 联机。</key>
+	<string>Roadmap: 0.6 lets other devices on your local network (phones, laptops) use this Mac's models; the 1.0 release links several Macs.</string>
+	<key>还会列出被控制前要准备的几项（远程登录、断电后自动开机、不休眠、允许关机），一次设好。</key>
+	<string>It also lists what to set up before this Mac can be controlled (Remote Login, start after power failure, no sleep, allow shut down) and sets it all at once.</string>
+	<key>这一版是单机版，管这一台 Mac。多台 Mac 联机在 1.0 正式版推出：一个窗口管几台，每台跑不同的模型。</key>
+	<string>This version manages one Mac. Linking several Macs comes in the 1.0 release: one window for several Macs, each running a different model.</string>
+	<key>这一版是单机版：控制台管这一台 Mac。联机以后能做的：</key>
+	<string>This version manages one Mac. With multiple Macs you'll be able to:</string>
+	<key>这一页管"谁能控制这台"：别的 Mac 发来配对串，你在这里核对、点允许；随时能吊销，吊销同时断开。</key>
+	<string>This page manages who can control this Mac: another Mac sends a pairing string, you check it here and click Allow; you can revoke access at any time, which also disconnects it.</string>
+	<key>这台的主机指纹</key>
+	<string>This Mac's host fingerprint</string>
+	<key>连不上</key>
+	<string>unreachable</string>
+	<key>连不上 %@。</key>
+	<string>Can't reach %@.</string>
+	<key>遥控 %@ 台</key>
+	<string>Controlling %@ Macs</string>
+	<key>都在线</key>
+	<string>all online</string>
+	<key>配对时核对指纹和核对码，不经手对方的密码；一台可以登记几个地址，网线断了自动换 Wi-Fi。</key>
+	<string>Pairing checks a fingerprint and a code and never handles the other Mac's password; each Mac can have several addresses, switching to Wi-Fi automatically if the cable is unplugged.</string>
+	<key>（oMLX 官方发布页）</key>
+	<string> (oMLX's official release page)</string>
+	<key>（其中 oMLX %@ GB）</key>
+	<string> (oMLX %@ GB)</string>
+	<key>，塞满约 %@ GB</key>
+	<string>, about %@ GB when full</string>
+	<key>，总内存的 %@%%</key>
+	<string>, %@%% of total memory</string>
+	<key>，超安全线</key>
+	<string>, over the safety line</string>
+	<key>，超安全线 %@ GB</key>
+	<string>, over the %@ GB safety line</string>
+	<key> · 放不下</key>
+	<string> · too big</string>
+	<key>0.6 起支持</key>
+	<string>Supported from 0.6</string>
+	<key>3. 第二步点**打开 oMLX 的管理页**，在里面下载一个模型，下完回到这个窗口，模型卡片会自己出现。硬盘上已经有 MLX 格式的模型，就点**添加已有的模型文件夹…**，不用重新下载。要是先看到**允许读主密钥…**，点它：控制台有了这把钥匙才看得到这台有哪些模型，钥匙只在这台上用。</key>
+	<string>3. Step two: click **Open the oMLX Admin Page**, download a model there, then come back to this window; the model card appears by itself. If you already have MLX-format models on disk, click **Add an Existing Model Folder…** instead of downloading again. If you see **Allow Reading the Main Key…** first, click it: the console needs that key to see which models this Mac has, and the key is only used on this Mac.</string>
+	<key>4. 第三步挑一个模型，点**加载并自检**（列表里标了每个模型多大、放不放得下）。大模型要等几分钟，卡片上的按钮变成**卸载**就是加载好了，控制台接着让模型算一道题，确认它答得出来。以后想再测，点卡片上的**自检**。</key>
+	<string>4. Step three: pick a model and click **Load and self-test** (the list shows each model's size and whether it fits). Big models take a few minutes; when the button on the card changes to **Unload**, the model is loaded, and the console then has it solve one question to confirm it can answer. To run that again later, click **Self-test** on the card.</string>
+	<key>5. 让客户端（你用来聊天、写代码的软件）连上：点左下角**密钥**，里面写着要填的三样——地址（`http://127.0.0.1:8800/v1`）、模型名、密钥，都能一键复制；密钥在那一页**新建并复制**一把子密钥，一个客户端一把。</key>
+	<string>5. Connect a client (the app you chat or code with): click **Keys** at the bottom left. It lists the three things to fill in, the address (`http://127.0.0.1:8800/v1`), the model name and the key, each with a copy button; for the key, use **Create and Copy** on that page to make a sub-key, one per client.</string>
+	<key>oMLX 改模型目录时会卸载已加载的模型（%@），正在答的请求会中断；加完要再加载一次。
+
+%@</key>
+	<string>Changing oMLX's model folders unloads the loaded models (%1$@) and interrupts requests in progress; you'll need to load them again afterward.
+
+%2$@</string>
+	<key>上面的地址只在这台 Mac 上能用。让别的电脑、手机连这台，在 0.6 版支持</key>
+	<string>The address above only works on this Mac. Connecting from other computers and phones is supported from version 0.6</string>
+	<key>不带 /v1 的地址。Chatbox、Cherry Studio 这类软件要填这个</key>
+	<string>The address without /v1. Apps such as Chatbox and Cherry Studio need this one</string>
+	<key>主密钥（管理用，不要填进客户端）</key>
+	<string>Main key (for administration; don't put it in clients)</string>
+	<key>从 oMLX 里删掉，不能恢复；用这把子密钥的客户端会立刻无法调用（%@都是）。只想暂时不让它用，点停用。</key>
+	<string>It's removed from oMLX and can't be restored; clients using this sub-key stop working right away (on %@). To block it only for now, click Disable instead.</string>
+	<key>停用</key>
+	<string>Disable</string>
+	<key>停用子密钥「%@」</key>
+	<string>disabling sub-key "%@"</string>
+	<key>入口关着或不在这台上，停用不起作用。要停掉一把，只能删除它</key>
+	<string>The gateway is off or not on this Mac, so disabling has no effect. To stop a key, delete it</string>
+	<key>删除</key>
+	<string>Delete</string>
+	<key>删除…</key>
+	<string>Delete…</string>
+	<key>删除子密钥「%@」</key>
+	<string>deleting sub-key "%@"</string>
+	<key>删除子密钥「%@」？</key>
+	<string>Delete sub-key "%@"?</string>
+	<key>加载后可用</key>
+	<string>available once loaded</string>
+	<key>卸载并添加</key>
+	<string>Unload and Add</string>
+	<key>启用子密钥「%@」</key>
+	<string>enabling sub-key "%@"</string>
+	<key>在聊天、写代码的软件里选「OpenAI 兼容」，填这三样：</key>
+	<string>In your chat or coding app, choose "OpenAI compatible" and fill in these three things:</string>
+	<key>复制根地址</key>
+	<string>Copy Root Address</string>
+	<key>复制（30 秒后清空剪贴板）</key>
+	<string>Copy (clipboard clears after 30 s)</string>
+	<key>子密钥（客户端用）</key>
+	<string>Sub-keys (for clients)</string>
+	<key>子密钥（客户端用；新建会同时建到%@）</key>
+	<string>Sub-keys (for clients; a new one is also created on %@)</string>
+	<key>客户端怎么填</key>
+	<string>What to Enter in a Client</string>
+	<key>局域网</key>
+	<string>Local network</string>
+	<key>已停用</key>
+	<string>Disabled</string>
+	<key>已复制</key>
+	<string>Copied</string>
+	<key>建于</key>
+	<string>Created</string>
+	<key>放不下，oMLX 自动放 SSD：这台的内存装不下 %@ 的查询表，开关锁定为开</key>
+	<string>Doesn't fit, so oMLX keeps it on the SSD: this Mac's memory can't hold %@'s lookup tables, and the switch is locked on</string>
+	<key>新子密钥的名字：一台设备一个软件一把，比如 macbook-dsh</key>
+	<string>Name for the new sub-key: one per device and app, e.g. macbook-dsh</string>
+	<key>显示完整密钥 10 秒，同时复制到剪贴板（30 秒后自动清空）</key>
+	<string>Show the full key for 10 seconds and copy it to the clipboard (cleared after 30 s)</string>
+	<key>模型名</key>
+	<string>Model name</string>
+	<key>模型文件夹</key>
+	<string>Model Folders</string>
+	<key>添加已有的模型文件夹…</key>
+	<string>Add an Existing Model Folder…</string>
+	<key>添加模型文件夹</key>
+	<string>adding a model folder</string>
+	<key>添加这个文件夹？</key>
+	<string>Add this folder?</string>
+	<key>用下面的子密钥，每个客户端一把；不要填主密钥。</key>
+	<string>Use a sub-key from below, one per client; don't use the main key.</string>
+	<key>硬盘上已经有 MLX 格式的模型时用：选它们所在的文件夹，oMLX 会认出来，不用重新下载。只加一行，oMLX 自己下载模型的地方不变；控制台和 oMLX 都不往这个文件夹里写。</key>
+	<string>For when you already have MLX-format models on disk: choose the folder they're in and oMLX recognizes them, with no need to download again. This only adds a line; the folder oMLX downloads models into stays the same, and neither the console nor oMLX writes into the folder you add.</string>
+	<key>硬盘上已经有 MLX 格式的模型：选它们所在的文件夹，oMLX 会认出来，不用重新下载</key>
+	<string>Already have MLX-format models on disk? Choose the folder they're in and oMLX recognizes them, with no need to download again</string>
+	<key>经入口的调用立刻被拒；密钥还留着，随时能启用</key>
+	<string>Calls through the gateway are refused right away; the key is kept and can be enabled at any time</string>
+	<key>能用</key>
+	<string>Active</string>
+	<key>这个模型比这台的安全线还大，多半加载不了。挑一个小一点的，或在 oMLX 的管理页里下载一个放得下的。</key>
+	<string>This model is bigger than this Mac's safety line and probably won't load. Pick a smaller one, or download one that fits in the oMLX admin page.</string>
+	<key>这台还没有模型。</key>
+	<string>This Mac has no models yet.</string>
+	<key>连接客户端</key>
+	<string>Connect Clients</string>
+	<key>选放着模型的文件夹（里面一个模型一个子文件夹，MLX 格式）</key>
+	<string>Choose the folder that holds your models (MLX format, one subfolder per model)</string>
+	<key>，或打开「表放 SSD」</key>
+	<string>, or turn on Tables on SSD</string>
+	<key>许可证</key>
+	<string>License</string>
+</dict>
+</plist>

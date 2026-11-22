@@ -1,0 +1,22 @@
+{
+  "说明": "出厂说明（三层里的①，已定第 1、27 条）：只写这个家族是什么、有哪些开关，不含任何人的实测。文字写中英两份；{eta}、{title} 是占位。你的说法在运行目录的 model-notes.json（③），模型自己的数在 model-facts.json（②）。",
+  "family": "generic",
+  "title": {
+    "zh": "模型",
+    "en": "Model"
+  },
+  "match": {},
+  "about": [
+    [
+      {
+        "zh": "能做什么",
+        "en": "What it does"
+      },
+      {
+        "zh": "控制台还不认识这个家族，只显示 oMLX 报出来的基本信息。",
+        "en": "The Console doesn't know this model family yet, so it only shows the basics oMLX reports."
+      }
+    ]
+  ],
+  "switches": []
+}
