@@ -6,15 +6,20 @@ For ModelTower 0.5.2. When something goes wrong, first click **Health Check** at
 
 ## Opening, permissions and updates
 
-### Double-clicking does nothing, or the system says the developer cannot be verified
+### macOS says it cannot verify ModelTower, or offers to move it to the Trash
 
-That is expected. ModelTower is not notarized by Apple, so it needs one manual approval the first time:
+That is expected and does not mean anything is wrong with the app. ModelTower is an independent open-source project and is not notarized by Apple (notarization requires a paid Apple Developer membership). The first time you open it, macOS blocks it with a dialog that has only two buttons, **Done** and **Move to Trash**. Approve it once:
 
-1. Close the system's dialog first.
+1. Click **Done** to close the dialog. **Do not click Move to Trash.**
 2. Open **System Settings → Privacy & Security**, scroll to **Security**, and click **Open Anyway** next to the line about ModelTower.
-3. Enter your Mac password or use Touch ID.
+3. Confirm when asked, with your Mac password or Touch ID.
 
 After that it opens normally. You may need to approve it again after updating to a new version.
+
+- **There is no line about ModelTower under Security**: **Open Anyway** only shows up for about an hour after the app was blocked. Double-click ModelTower again, then look right away.
+- **You already clicked Move to Trash**: open the Trash, right-click ModelTower and choose **Put Back**, or download it again.
+- **You want to check the file first**: the source code is in this repository. The `.sha256` file on the release page verifies the zip: put both files in the same folder, go to that folder in Terminal, and run `shasum -a 256 -c ModelTower-<version>.zip.sha256`. It should say `OK`.
+- **You are comfortable with Terminal and the button never appears**: run `xattr -dr com.apple.quarantine /Applications/ModelTower.app` to remove the "downloaded from the internet" mark, then double-click it. This skips the system's check, so only do it with a file you have verified.
 
 ### The system asks whether to allow access to the Local Network
 
@@ -35,7 +40,7 @@ When there is a newer ModelTower, **Settings → Updates** says so and gives a *
 
 1. Press ⌘Q to quit ModelTower.
 2. Download the new zip from Releases, unzip it, and drag the new ModelTower into Applications, replacing the old one. Settings live in `~/Library/Application Support/ModelTower/`, so replacing the app does not lose them.
-3. Open the new version. If the system blocks it again, approve it as described under "the developer cannot be verified" above.
+3. Open the new version. If the system blocks it again, approve it as described in the first question above.
 
 The notice relies on the online check reading the signed update information. If the online check is off or cannot get through for a while, nothing stops working, and you can always look at Releases yourself.
 

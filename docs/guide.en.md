@@ -16,11 +16,13 @@ A few terms first:
 
 ## 1. Opening it for the first time
 
-ModelTower is not notarized by Apple. macOS blocks it the first time. Approve it once and it will not ask again.
+ModelTower is not notarized by Apple (notarization requires a paid Apple Developer membership). macOS blocks it the first time; this is expected. Approve it once and it will not ask again.
 
-1. Drag ModelTower into Applications and double-click it. The system says the developer cannot be verified. Click **Done** or **OK** to close that dialog.
+1. Drag ModelTower into Applications and double-click it. The system says it cannot verify the app. Click **Done** or **OK** to close that dialog. **Do not click Move to Trash.**
 2. Open **System Settings → Privacy & Security** and scroll down to **Security**. You will see a line saying ModelTower was blocked. Click **Open Anyway** next to it.
 3. Confirm with your Mac password or Touch ID. From then on, double-clicking opens it normally.
+
+**Open Anyway** only shows up for about an hour after the app was blocked; if it is not there, double-click ModelTower again. If you clicked Move to Trash or want to check the file first, see the [FAQ](faq.en.md#macos-says-it-cannot-verify-modeltower-or-offers-to-move-it-to-the-trash).
 
 If the system asks whether ModelTower may access the **Local Network**: 0.5 only uses this one Mac and does not need it, so you can decline. You can change it later in **System Settings → Privacy & Security → Local Network**.
 

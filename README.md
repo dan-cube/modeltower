@@ -66,8 +66,17 @@ Set per model. Each switch appears only when oMLX reports that the model support
 
 ## Get started in three steps
 
+> [!IMPORTANT]
+> **macOS blocks ModelTower the first time you open it. This is expected and does not mean anything is wrong with the app.** ModelTower is an independent open-source project and is not notarized by Apple (notarization requires a paid Apple Developer membership), so macOS says it cannot verify the app. Approve it once:
+>
+> 1. In the dialog, click **Done**. **Do not click Move to Trash.**
+> 2. Open **System Settings → Privacy & Security**, scroll to **Security**, click **Open Anyway** next to ModelTower, and confirm with your Mac password or Touch ID.
+> 3. From then on it opens normally.
+>
+> **Open Anyway** only shows up for about an hour after the app was blocked; if it is not there, double-click ModelTower again. Already clicked Move to Trash? Put it back from the Trash. Want to check the download first? The source code is in this repository, and the `.sha256` file next to the zip verifies the download. More in the [FAQ](docs/faq.en.md#macos-says-it-cannot-verify-modeltower-or-offers-to-move-it-to-the-trash).
+
 1. **Download**: get the latest zip from [Releases](https://github.com/dan-cube/modeltower/releases), unzip it, and drag ModelTower into Applications. The `.sha256` file next to it lets you check the download.
-2. **Open it the first time**: the app is not notarized by Apple, so macOS stops it once. Go to **System Settings → Privacy & Security** and click **Open Anyway** next to ModelTower. After that it opens normally.
+2. **Open it the first time**: approve it once as described above.
 3. **Follow Get Started**: install oMLX (from GitHub, the ModelScope mirror, or an installer you already have) → find your existing models (or download one in oMLX) → pick one and click **Load and self-test**.
 
 Then, in your chat or coding app, choose "OpenAI compatible" and enter the three things from the **Connect Clients** page:
