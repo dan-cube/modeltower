@@ -766,6 +766,7 @@ final class Console: ObservableObject {
     var lastUpdatesCheck = Date.distantPast
     var updatesStarted = false
     @Published var setup = SetupState()
+    @Published var settingsTab = SettingsTab.general   // 0.5.2：设置窗口停在哪一页；要去指定的页就先改它再打开
     var setupProcess: Process?
     var setupPrompting = false          // 装好后的确认框开着时，先不问主密钥，免得两个框叠在一起
     @Published var autoUpdate: AutoUpdateInfo?
@@ -2872,7 +2873,7 @@ struct StallBanner: View {
     }
 }
 
-/// oMLX 的版本要注意（太旧、有已知问题、读不到版本、没有兼容表）：一行不挡操作的提示，细节在设置的 oMLX 页
+/// oMLX 的版本要注意（太旧、有已知问题、读不到版本、没有兼容表）：一行不挡操作的提示，"查看"直接到设置的更新页
 struct EngineBanner: View {
     let engine: EngineInfo
 
@@ -2887,7 +2888,7 @@ struct EngineBanner: View {
             Image(systemName: "exclamationmark.circle.fill").foregroundStyle(.orange)
             Text(text).font(.callout).fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 8)
-            SettingsLink { Text(L("查看")) }.controlSize(.small)
+            SettingsButton(title: L("查看"), tab: Backend.isManager ? .omlx : .updates).controlSize(.small)   // 升级按钮在更新页；管理端没有更新页
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -4266,7 +4267,7 @@ struct HubSheet: View {
             } else {
                 HStack {
                     Text(L("先设最高密码。")).foregroundStyle(.orange)
-                    SettingsLink { Text(L("打开设置")) }
+                    SettingsButton(title: L("打开设置"), tab: .security)
                 }
             }
         }
@@ -4312,7 +4313,7 @@ struct HubSheet: View {
             Text(L("只能在主机本机做")).font(.headline)
             HStack {
                 Button(L("通知各台")) { console.hubJoin() }.disabled(running).help(L("把现在的主机和加密的钥匙发给各台；加了新机器的授权行之后点一次"))
-                SettingsLink { Text(L("最高密码在设置里改")) }
+                SettingsButton(title: L("最高密码在设置里改"), tab: .security)
                 Spacer()
             }
             ForEach((hub?.machines ?? [:]).keys.sorted().filter { $0 != hub?.me }, id: \.self) { name in
@@ -4962,17 +4963,32 @@ struct PairingTeaser: View {
 
 // MARK: - 设置（用户 11-04 定）：和别的软件一样，⌘, 或右上角的设置
 
+enum SettingsTab: Hashable { case general, updates, security, guide, about, omlx }
+
+/// 打开设置并停在指定的那一页（0.5.2，用户 11-22 在 副机 上发现）：SettingsLink 只管开窗口，开出来是上次停的那页，
+/// 橙色提示的"查看"就到不了有"升级…"的更新页
+struct SettingsButton: View {
+    let title: String
+    let tab: SettingsTab
+    @EnvironmentObject var console: Console
+    @Environment(\.openSettings) private var openSettings
+
+    var body: some View {
+        Button(title) { console.settingsTab = tab; NSApp.activate(ignoringOtherApps: true); openSettings() }
+    }
+}
+
 struct SettingsView: View {
     @EnvironmentObject var console: Console
 
     var body: some View {
-        TabView {
-            GeneralSettings().tabItem { Label(L("通用"), systemImage: "gearshape") }
-            if !Backend.isManager { UpdatesSettings().tabItem { Label(L("更新"), systemImage: "arrow.down.circle") } }
-            if Backend.showsHub { SecuritySettings().tabItem { Label(L("安全"), systemImage: "lock") } }
-            GuideSettings().tabItem { Label(L("教程"), systemImage: "book") }
-            AboutSettings().tabItem { Label(L("关于"), systemImage: "info.circle") }
-            OMLXSettings().tabItem { Label { Text(verbatim: "oMLX") } icon: { Image(systemName: "cpu") } }
+        TabView(selection: $console.settingsTab) {
+            GeneralSettings().tabItem { Label(L("通用"), systemImage: "gearshape") }.tag(SettingsTab.general)
+            if !Backend.isManager { UpdatesSettings().tabItem { Label(L("更新"), systemImage: "arrow.down.circle") }.tag(SettingsTab.updates) }
+            if Backend.showsHub { SecuritySettings().tabItem { Label(L("安全"), systemImage: "lock") }.tag(SettingsTab.security) }
+            GuideSettings().tabItem { Label(L("教程"), systemImage: "book") }.tag(SettingsTab.guide)
+            AboutSettings().tabItem { Label(L("关于"), systemImage: "info.circle") }.tag(SettingsTab.about)
+            OMLXSettings().tabItem { Label { Text(verbatim: "oMLX") } icon: { Image(systemName: "cpu") } }.tag(SettingsTab.omlx)
         }
         .frame(width: 560, height: 540)
     }
@@ -6514,6 +6530,8 @@ struct UpdatesSettings: View {
                 .disabled(console.sourceInfo == nil)
                 Text(L("自动：下载 oMLX 安装包时测速，挑 GitHub 和魔搭转存里快的；国际：只用 GitHub；中国：优先魔搭转存，下载模型请在 oMLX 的模型下载页选「魔搭」（官方 oMLX 自带）。"))
                     .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                Text(L("GitHub 是 oMLX 官方发布页；魔搭转存是本项目开发者原样转存的同一份安装包，供中国大陆下载。"))
+                    .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 if console.sourceInfo?.pref == "cn" && console.sourceInfo?.applies == true {
                     Toggle(L("也把 oMLX 的 Hugging Face 地址换成社区镜像 \(console.sourceInfo?.cn_endpoint ?? "hf-mirror.com")"),
                            isOn: Binding(get: { console.sourceInfo?.mirror ?? false }, set: { console.setMirror($0) }))
@@ -6664,21 +6682,47 @@ struct InstallFlow: View {
         return URL(string: "https://github.com/jundot/omlx/releases/tag/v\(v)") ?? all
     }
 
+    /// 每个来源一句话说清是什么：GitHub 是 oMLX 官方的，魔搭是本项目开发者转存给中国大陆用的
+    static func sourceLabel(_ source: InstallPlan.Source) -> String {
+        switch source.id {
+        case "github": return L("GitHub：oMLX 官方发布页")
+        case "modelscope": return L("魔搭：本项目开发者的原样转存，供中国大陆下载")
+        default: return source.name ?? source.id
+        }
+    }
+
+    /// 选中的来源：没手选过时，照设置里的下载源——中国是魔搭、国际是 GitHub、自动是"自动"那一行
+    private func sourceChoice(_ sources: [InstallPlan.Source]) -> Binding<String> {
+        Binding(get: {
+            let picked = console.setup.pickedSource
+            if picked != "auto", sources.contains(where: { $0.id == picked }) { return picked }
+            switch plan?.source_pref {
+            case "cn" where sources.contains { $0.id == "modelscope" }: return "modelscope"
+            case "intl" where sources.contains { $0.id == "github" }: return "github"
+            case "cn", "intl": return sources.first?.id ?? "auto"
+            default: return "auto"
+            }
+        }, set: { console.setup.pickedSource = $0 })
+    }
+
     private var choices: some View {
         VStack(alignment: .leading, spacing: 12) {
             GroupBox {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(L("从官方发布的地址下载，下完按兼容表核对大小和 SHA-256；对不上就删掉，不打开。"))
+                    Text((plan?.sources?.count ?? 0) > 1 ? L("两个来源是同一份 oMLX 官方安装包。下完按兼容表核对大小和 SHA-256；对不上就删掉，不打开。")
+                                                         : L("下完按兼容表核对大小和 SHA-256；对不上就删掉，不打开。"))
                         .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                     if let sources = plan?.sources, sources.count > 1 {
-                        Picker(L("来源"), selection: $console.setup.pickedSource) {
-                            Text(L("按设置里的下载源")).tag("auto")
-                            ForEach(sources) { Text($0.name ?? $0.id).tag($0.id) }
+                        // 0.5.2（用户 11-22 定）：两个来源明着列出来选，各写清是什么；设置里是"自动"才多一行自动
+                        Text(L("从哪里下载")).font(.callout.weight(.medium))
+                        Picker("", selection: sourceChoice(sources)) {
+                            if plan?.source_pref != "cn" && plan?.source_pref != "intl" { Text(L("自动：下载时测速，挑快的那个")).tag("auto") }
+                            ForEach(sources) { Text(Self.sourceLabel($0)).tag($0.id) }
                         }
-                        .frame(maxWidth: 320)
+                        .pickerStyle(.radioGroup).labelsHidden()
                     } else if let only = plan?.sources?.first {
                         // A2（已定第 31 条 ②）：只有一个来源时也写出来
-                        Text(L("来源：\(only.name ?? only.id)") + (only.id == "github" ? L("（oMLX 官方发布页）") : "")).font(.callout)
+                        Text(L("来源：\(only.name ?? only.id)") + (only.id == "github" ? L("（oMLX 官方发布页）") : only.id == "modelscope" ? L("（本项目开发者的原样转存）") : "")).font(.callout)
                     }
                     if plan?.source_pref == "cn", plan?.sources?.contains(where: { $0.id == "modelscope" }) == false, plan?.target != nil {
                         Text(L("下载源选了「中国」，但魔搭上还没有这一版的转存，只能从 GitHub 下。"))

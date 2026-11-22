@@ -6,7 +6,7 @@
 
 Install the engine, pick a model, load it with one click, let it test itself, and hand out keys to your apps. No commands to type.<br>The models run on this Mac, so your conversations stay on it.
 
-![version 0.5.1](https://img.shields.io/badge/version-0.5.1-2ea44f) ![macOS 15+](https://img.shields.io/badge/macOS-15%2B-000000?logo=apple) ![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1%2B-555555)
+![version 0.5.2](https://img.shields.io/badge/version-0.5.2-2ea44f) ![macOS 15+](https://img.shields.io/badge/macOS-15%2B-000000?logo=apple) ![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1%2B-555555)
 
 [简体中文](README.zh-CN.md) · [Guide](docs/guide.en.md) · [FAQ](docs/faq.en.md) · [Changelog](CHANGELOG.md)
 
@@ -90,7 +90,7 @@ The [guide](docs/guide.en.md) covers every step in detail.
 
 | Version | What it brings | Status |
 |---|---|---|
-| **0.5.1** | **Single Mac**: one Mac runs the models for the apps on that Mac | ✅ Available |
+| **0.5** | **Single Mac**: one Mac runs the models for the apps on that Mac | ✅ Available |
 | **0.6** | **Local network**: computers and phones at home or in the office use this Mac's models, one key per device<br>**Away from home**: connect back securely through mesh VPN apps such as Tailscale, PgyVPN or EasyTier | 🔜 Next |
 | **1.0** | **Linked Macs**: manage the Macs at home together in one window, with a different model on each, and start or stop them all with one click. Pairing checks a fingerprint without handling the other Mac's password; revoke access at any time and choose how much access to give | 🗺️ Planned |
 | **Manager edition** | Manage your model Macs remotely from a Mac that does not run models, such as a MacBook: see their status, load and switch models, hand out keys | 💡 Planned |

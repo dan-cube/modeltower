@@ -2,9 +2,9 @@
 
 [简体中文](guide.zh-CN.md) · [FAQ](faq.en.md) · [Back to the front page](../README.md)
 
-For ModelTower 0.5.1. This guide follows the order you will actually go through: opening the app for the first time → getting one model running → connecting a client → daily use → updates → shutting down and uninstalling.
+For ModelTower 0.5.2. This guide follows the order you will actually go through: opening the app for the first time → getting one model running → connecting a client → daily use → updates → shutting down and uninstalling.
 
-0.5.1 supports a **single Mac** only: one Mac runs the models for itself. Using this Mac's models from other devices on your local network comes in 0.6; linking several Macs together comes in 1.0 (see [section 7](#7-linking-macs-a-preview)).
+0.5 supports a **single Mac** only: one Mac runs the models for itself. Using this Mac's models from other devices on your local network comes in 0.6; linking several Macs together comes in 1.0 (see [section 7](#7-linking-macs-a-preview)).
 
 A few terms first:
 
@@ -22,7 +22,7 @@ ModelTower is not notarized by Apple. macOS blocks it the first time. Approve it
 2. Open **System Settings → Privacy & Security** and scroll down to **Security**. You will see a line saying ModelTower was blocked. Click **Open Anyway** next to it.
 3. Confirm with your Mac password or Touch ID. From then on, double-clicking opens it normally.
 
-If the system asks whether ModelTower may access the **Local Network**: 0.5.1 only uses this one Mac and does not need it, so you can decline. You can change it later in **System Settings → Privacy & Security → Local Network**.
+If the system asks whether ModelTower may access the **Local Network**: 0.5 only uses this one Mac and does not need it, so you can decline. You can change it later in **System Settings → Privacy & Security → Local Network**.
 
 ## 2. Get Started: three steps to a running model
 
@@ -36,8 +36,8 @@ The first time you open the app, the window shows a **Get Started** panel with t
 
 Click **Install oMLX…** to open the install window. There are three ways; pick one:
 
-- **Download the Official Installer (Recommended)**: click **Download**. The console downloads from the **Source** shown in the window, then checks the size and SHA-256 against its compatibility table. If they do not match, the file is deleted and not opened. The installer is about 900 MB, and an interrupted download resumes.
-  - The **Source** follows **Settings → Updates → Download Source** by default (see [section 8](#8-updates-and-download-source)): GitHub (oMLX's official release page), or the ModelScope mirror for mainland China. When both sources are available, you can also change it right in the install window.
+- **Download the Official Installer (Recommended)**: pick one under **Download from** and click **Download**. The console then checks the size and SHA-256 against its compatibility table. If they do not match, the file is deleted and not opened. The installer is about 900 MB, and an interrupted download resumes.
+  - **Download from** has two options: **GitHub** (oMLX's official release page) and **ModelScope** (an unmodified copy kept by this project's developer, for mainland China). Both are the same official installer. Which one starts selected follows **Settings → Updates → Download Source** (see [section 8](#8-updates-and-download-source)); with the download source on Auto there is also an **Automatic** option that picks the faster one when downloading.
   - If the download will not move, click **Open release page** in the window: download it in your browser from the official release page, then use **I Already Downloaded It** below.
   - When it is ready, click **Open Installer** and, in the window that appears, **drag oMLX into Applications**. You do not need to come back and click anything: the console connects by itself once oMLX is installed.
 - **Install with Homebrew**: the window shows the commands. Copy them into Terminal and run them. If Homebrew is not installed, this option tells you to get it from brew.sh first.
@@ -244,14 +244,14 @@ The oMLX app also has its own settings window in the menu bar, which changes the
 
 ## 7. Linking Macs: a preview
 
-In 0.5.1, **Add Machine** and **This Mac's Access** under **Machines** each open a preview page describing what linking Macs will let you do:
+In 0.5, **Add Machine** and **This Mac's Access** under **Machines** each open a preview page describing what linking Macs will let you do:
 
 - **Add Machine**: connect the Macs at home into a group and manage them in one window, seeing each one's memory, speed and what it is running, with a different model on each; start, stop, restart or shut down every Mac with one click; pairing checks a fingerprint and a check code, without handling the other Mac's password.
 - **This Mac's Access**: manages who can control this Mac. Another Mac sends a pairing string, you check it and click Allow, and you can revoke access at any time; when allowing, you choose how much access to give (call models only, view status only, operate, or manage).
 
 Linking Macs comes in **1.0**. Stay tuned.
 
-**Using this Mac's models from other devices on your local network** (a chat app on another computer or a phone connecting to this Mac): **comes in 0.6**. In 0.5.1 the client address only works on this Mac.
+**Using this Mac's models from other devices on your local network** (a chat app on another computer or a phone connecting to this Mac): **comes in 0.6**. In 0.5 the client address only works on this Mac.
 
 ## 8. Updates and download source
 

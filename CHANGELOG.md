@@ -1,6 +1,17 @@
 # Changelog
 
-中文在后面：[0.5.1 中文](#051中文)。
+中文在后面：[0.5.2 中文](#052中文)。
+
+## 0.5.2
+
+2026-11-22
+
+Two fixes found while installing 0.5.1 on a real Mac.
+
+- **View on the orange oMLX notice now opens Settings → Updates**, where **Upgrade…** is. It used to open Settings on whichever page was showing last.
+- **Choosing where to download oMLX from** is now two plainly labelled options in the install and upgrade window: **GitHub** (oMLX's official release page) and **ModelScope** (an unmodified copy kept by this project's developer, for mainland China). Both are the same official installer and both are checked against the SHA-256 in the compatibility table. With the download source on Auto there is also an **Automatic** option that picks the faster one. The old text called both "the official release address", which was wrong for the mirror.
+
+Nothing else changed; settings and keys from 0.5.1 carry over. To update, download the new zip and replace the app.
 
 ## 0.5.1
 
@@ -56,6 +67,17 @@ The first release of ModelTower: a console for running open-source LLMs on Apple
 - The app does not ship its own Python. It uses the one that comes with oMLX, or Apple's command line tools.
 - New versions of ModelTower are not installed from inside the app: download them from Releases.
 - English and Simplified Chinese.
+
+## 0.5.2（中文）
+
+2026-11-22
+
+在真机上装 0.5.1 时发现的两处，修了。
+
+- **橙色 oMLX 提示上的「查看」直接到「设置 → 更新」**，**升级…** 就在那一页。以前只是打开设置窗口，停在上次看的那一页。
+- **oMLX 从哪里下载**，在安装和升级窗口里改成明着列出来的两项：**GitHub**（oMLX 官方发布页）、**魔搭**（本项目开发者的原样转存，供中国大陆下载）。两个是同一份官方安装包，下完都按兼容表里的 SHA-256 核对。下载源是「自动」时多一项**自动**，下载时测速挑快的。原来那句把两个来源都叫「官方发布的地址」，对魔搭不准确，改了。
+
+别的没变；0.5.1 的设置和密钥照用。更新办法：下载新的 zip，换掉原来的应用。
 
 ## 0.5.1（中文）
 

@@ -6,7 +6,7 @@
 
 装引擎、挑模型、一键加载、自动自检、给客户端发钥匙，不用敲命令。<br>模型在本机跑，对话不出这台 Mac。
 
-![版本 0.5.1](https://img.shields.io/badge/version-0.5.1-2ea44f) ![macOS 15+](https://img.shields.io/badge/macOS-15%2B-000000?logo=apple) ![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1%2B-555555)
+![版本 0.5.2](https://img.shields.io/badge/version-0.5.2-2ea44f) ![macOS 15+](https://img.shields.io/badge/macOS-15%2B-000000?logo=apple) ![Apple Silicon](https://img.shields.io/badge/Apple%20Silicon-M1%2B-555555)
 
 [English](README.md) · [操作指南](docs/guide.zh-CN.md) · [常见问题](docs/faq.zh-CN.md) · [更新记录](CHANGELOG.md)
 
@@ -88,7 +88,7 @@
 
 | 版本 | 带来什么 | 状态 |
 |---|---|---|
-| **0.5.1** | **单机**：一台 Mac 自己跑模型，给本机的软件用 | ✅ 可用 |
+| **0.5** | **单机**：一台 Mac 自己跑模型，给本机的软件用 | ✅ 可用 |
 | **0.6** | **局域网**：家里、办公室的电脑和手机直接用这台的模型，每台设备一把钥匙<br>**外网**：借 Tailscale、蒲公英、EasyTier 这类组网软件，人在外面也能安全地连回来 | 🔜 下一版 |
 | **1.0** | **联机**：家里的几台 Mac 在一个窗口里一起管，每台加载不同的模型，一键启停所有机器；配对时核对指纹，不经手对方的密码；随时吊销，按需给权限 | 🗺️ 规划中 |
 | **管理版** | 用不跑模型的 Mac（比如 MacBook）远程管理你的模型主机：看状态、加载和切换模型、发钥匙 | 💡 规划中 |

@@ -2,7 +2,7 @@
 
 [简体中文](faq.zh-CN.md) · [Guide](guide.en.md) · [Back to the front page](../README.md)
 
-For ModelTower 0.5.1. When something goes wrong, first click **Health Check** at the bottom of the window. It checks things one by one, and every failing item says why. Below are the questions asked most often beyond that.
+For ModelTower 0.5.2. When something goes wrong, first click **Health Check** at the bottom of the window. It checks things one by one, and every failing item says why. Below are the questions asked most often beyond that.
 
 ## Opening, permissions and updates
 
@@ -18,7 +18,7 @@ After that it opens normally. You may need to approve it again after updating to
 
 ### The system asks whether to allow access to the Local Network
 
-0.5.1 only uses this one Mac and does not need it; either answer is fine. You can change it later in **System Settings → Privacy & Security → Local Network**.
+0.5 only uses this one Mac and does not need it; either answer is fine. You can change it later in **System Settings → Privacy & Security → Local Network**.
 
 ### The window is empty after opening, or it says Python cannot be found
 
@@ -64,7 +64,7 @@ The console carries a compatibility table that records which oMLX versions have 
 | being verified | Under test, no problems found so far | Fine to use |
 | newer than the verified version, not verified yet, usually works | Your oMLX is newer than what the console was tested with | Fine to use; if something odd happens, suspect this first |
 | not in the compatibility table, not verified yet | The console does not know this version | Same as above |
-| version too old | Below the minimum (0.5.1 needs oMLX 0.8.0 or later) | Go to **Settings → Updates** and click **Upgrade…** |
+| version too old | Below the minimum (0.5 needs oMLX 0.8.0 or later) | Go to **Settings → Updates** and click **Upgrade…** |
 | this version has known problems | This version has been flagged | Follow the note and change versions |
 
 If a test build of oMLX is installed (0.8.0rc1, for example), **Settings → Updates** says "Test build, please upgrade to the release": the release is already out, so upgrade to the latest release.
@@ -181,11 +181,11 @@ Yes. The Gateway answers the browser's preflight requests, so web-based clients 
 
 ### Can other computers or phones use this Mac's models?
 
-That comes in 0.6. In 0.5.1 the client address only works on this Mac. For when you are away from home, 0.6 will support connecting back through mesh VPN apps such as Tailscale, PgyVPN or EasyTier.
+That comes in 0.6. In 0.5 the client address only works on this Mac. For when you are away from home, 0.6 will support connecting back through mesh VPN apps such as Tailscale, PgyVPN or EasyTier.
 
 ### Can I link several Macs together?
 
-Linking Macs comes in 1.0: several Macs managed together in one window, each running a different model; pairing checks a fingerprint and a check code without handling the other Mac's password; access can be revoked at any time, and you choose how much access to give. In 0.5.1, **Add Machine** and **This Mac's Access** open preview pages.
+Linking Macs comes in 1.0: several Macs managed together in one window, each running a different model; pairing checks a fingerprint and a check code without handling the other Mac's password; access can be revoked at any time, and you choose how much access to give. In 0.5, **Add Machine** and **This Mac's Access** open preview pages.
 
 ## Uninstalling
 

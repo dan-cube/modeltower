@@ -362,8 +362,22 @@ You can restore it on the Updates page at any time.</string>
 	<string>Quit Anyway</string>
 	<key>从 %@ 升级到 %@。控制台先备份 oMLX 的设置，下载并核对新版，由你替换，换好后自检一遍。</key>
 	<string>Upgrade from %1$@ to %2$@. The console backs up oMLX's settings, downloads and verifies the new version, you replace the app, and then it runs a self-test.</string>
-	<key>从官方发布的地址下载，下完按兼容表核对大小和 SHA-256；对不上就删掉，不打开。</key>
-	<string>Downloads from the official release address, then checks the size and SHA-256 against the compatibility table. If they don't match, the file is deleted and never opened.</string>
+	<key>两个来源是同一份 oMLX 官方安装包。下完按兼容表核对大小和 SHA-256；对不上就删掉，不打开。</key>
+	<string>Both sources carry the same official oMLX installer. After downloading, the size and SHA-256 are checked against the compatibility table. If they don't match, the file is deleted and never opened.</string>
+	<key>下完按兼容表核对大小和 SHA-256；对不上就删掉，不打开。</key>
+	<string>After downloading, the size and SHA-256 are checked against the compatibility table. If they don't match, the file is deleted and never opened.</string>
+	<key>从哪里下载</key>
+	<string>Download from</string>
+	<key>自动：下载时测速，挑快的那个</key>
+	<string>Automatic: tests both when downloading and uses the faster one</string>
+	<key>GitHub：oMLX 官方发布页</key>
+	<string>GitHub: oMLX's official release page</string>
+	<key>魔搭：本项目开发者的原样转存，供中国大陆下载</key>
+	<string>ModelScope: unmodified copy by this project's developer, for mainland China</string>
+	<key>（本项目开发者的原样转存）</key>
+	<string> (an unmodified copy kept by this project's developer)</string>
+	<key>GitHub 是 oMLX 官方发布页；魔搭转存是本项目开发者原样转存的同一份安装包，供中国大陆下载。</key>
+	<string>GitHub is oMLX's official release page. The ModelScope mirror is the same installer, copied unmodified by this project's developer for downloads in mainland China.</string>
 	<key>从这台的控制台移除 %@？</key>
 	<string>Remove %@ from this Mac's Console?</string>
 	<key>以后关机、移交、接管、改名单、改最高密码，系统都会弹框要指纹或 Mac 密码。
@@ -1036,8 +1050,6 @@ You can turn it back on here at any time.</string>
 	<string>Fingerprint %@, from %@. Expires if not approved within 10 minutes.</string>
 	<key>指纹不认、手指磨损、键盘坏了</key>
 	<string>Touch ID fails, worn fingertips, broken keyboard</string>
-	<key>按设置里的下载源</key>
-	<string>Use the download source setting</string>
 	<key>换一个恢复码</key>
 	<string>Replace Recovery Code</string>
 	<key>换一个恢复码？</key>
