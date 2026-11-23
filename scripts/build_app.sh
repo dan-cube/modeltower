@@ -23,7 +23,7 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources/console/scripts" "$APP/C
 cp -R "$SOURCES"/*.lproj "$APP/Contents/Resources/"
 cp "$WORK/$EXECUTABLE" "$APP/Contents/MacOS/$EXECUTABLE"
 # The backend: exactly the files the console installs on a paired Mac, plus the launcher.
-for f in clusterctl.py paths.py brand.py rpc.py serve_omlx.py hub.py chip.py gateway.py device_service.py i18n.py i18n_en.json omlx_adapter.py updates.py signing.py run.py; do
+for f in clusterctl.py paths.py brand.py rpc.py serve_omlx.py hub.py chip.py gateway.py device_service.py i18n.py i18n_en.json omlx_adapter.py updates.py signing.py run.py netscan.py gateway_defaults.py; do
   cp "$PROJECT/scripts/$f" "$APP/Contents/Resources/console/scripts/$f"
 done
 cp "$PROJECT/config/engine-compat.json" "$APP/Contents/Resources/console/config/"

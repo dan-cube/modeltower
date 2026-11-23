@@ -2122,8 +2122,6 @@ To just put the window away, click "Mini Bar" at the top right, or turn off "Qui
 	<string>**Top right**: **Settings** is where you are now, and its last tab, **oMLX**, opens oMLX's own settings directly; **Arrange** changes the layout, **Mini Bar** shrinks the window to a strip, and **Pin** keeps the window in place and always on top.</string>
 	<key>**机器卡片**：启动或关闭、重启、关机、**oMLX 管理页**。**oMLX 管理页**打开这台 oMLX 自己的网页（仪表盘、下载模型、聊天、日志），不用输密钥。这台自己的卡片也能关机，关了这个窗口跟着关掉。多轮缓存也在这里选。</key>
 	<string>**Machine card**: start or stop, restart, shut down, **oMLX Admin**. **oMLX Admin** opens this Mac's own oMLX web page (dashboard, model downloads, chat, logs) without typing a key. This Mac's own card can shut it down too, and this window closes with it. The cache is also set here.</string>
-	<key>0.6 先让局域网里的别的设备（手机、笔记本）调用这台的模型。</key>
-	<string>0.6 comes first: other devices on your local network (phones, laptops) can use this Mac's models.</string>
 	<key>macOS 自己报的内存压力，和活动监视器里「内存压力」那条曲线的颜色是一回事。正常就是够用；警告是系统已经在压缩内存；严重是在拿硬盘顶内存，模型会变得极慢。</key>
 	<string>Memory pressure as macOS reports it, the same thing as the color of the Memory Pressure graph in Activity Monitor. Normal means there's enough; Warning means the system is already compressing memory; Critical means it's using the disk as memory, and models get extremely slow.</string>
 	<key>oMLX 和加载着的模型照常运行，菜单栏的图标继续显示状态。</key>
@@ -2292,8 +2290,6 @@ To quit completely: menu bar icon → Quit Console, or press ⌘Q. To make the r
 	<string>, over the %@ GB safety line</string>
 	<key> · 放不下</key>
 	<string> · too big</string>
-	<key>0.6 起支持</key>
-	<string>Supported from 0.6</string>
 	<key>3. 第二步点**打开 oMLX 的管理页**，在里面下载一个模型，下完回到这个窗口，模型卡片会自己出现。硬盘上已经有 MLX 格式的模型，就点**添加已有的模型文件夹…**，不用重新下载。要是先看到**允许读主密钥…**，点它：控制台有了这把钥匙才看得到这台有哪些模型，钥匙只在这台上用。</key>
 	<string>3. Step two: click **Open the oMLX Admin Page**, download a model there, then come back to this window; the model card appears by itself. If you already have MLX-format models on disk, click **Add an Existing Model Folder…** instead of downloading again. If you see **Allow Reading the Main Key…** first, click it: the console needs that key to see which models this Mac has, and the key is only used on this Mac.</string>
 	<key>4. 第三步挑一个模型，点**加载并自检**（列表里标了每个模型多大、放不放得下）。大模型要等几分钟，卡片上的按钮变成**卸载**就是加载好了，控制台接着让模型算一道题，确认它答得出来。以后想再测，点卡片上的**自检**。</key>
@@ -2306,8 +2302,6 @@ To quit completely: menu bar icon → Quit Console, or press ⌘Q. To make the r
 	<string>Changing oMLX's model folders unloads the loaded models (%1$@) and interrupts requests in progress; you'll need to load them again afterward.
 
 %2$@</string>
-	<key>上面的地址只在这台 Mac 上能用。让别的电脑、手机连这台，在 0.6 版支持</key>
-	<string>The address above only works on this Mac. Connecting from other computers and phones is supported from version 0.6</string>
 	<key>不带 /v1 的地址。Chatbox、Cherry Studio 这类软件要填这个</key>
 	<string>The address without /v1. Apps such as Chatbox and Cherry Studio need this one</string>
 	<key>主密钥（管理用，不要填进客户端）</key>
@@ -2392,5 +2386,195 @@ To quit completely: menu bar icon → Quit Console, or press ⌘Q. To make the r
 	<string>, or turn on Tables on SSD</string>
 	<key>许可证</key>
 	<string>License</string>
+	<key>%@
+只有地址，没有密钥。密钥在那台设备上另外填。</key>
+	<string>%@
+Address only, no key. Enter the key separately on that device.</string>
+	<key>1. 在这台 Mac 和手机上装同一个组网软件，登录同一个账号或加入同一个网络。常见的：Tailscale（海外用得多，个人免费）、蒲公英（国内，现成）、EasyTier（开源，可以全部自己搭）、ZeroTier。</key>
+	<string>1. Install the same mesh VPN app on this Mac and on your phone, and sign in to the same account or join the same network. Common choices: Tailscale (popular outside China, free for personal use), Oray PgyVPN (China, ready to use), EasyTier (open source, fully self-hostable), ZeroTier.</string>
+	<key>1. 点右上角**设置**，到 **oMLX** 页，在「让这些网络里的设备用这台的模型」里勾上家里的网络（Wi-Fi 或网线）。勾的时候会把后果说清，点**打开**才生效。</key>
+	<string>1. Click **Settings** at the top right, open the **oMLX** tab, and under "Let devices on these networks use this Mac's models" tick your home network (Wi-Fi or Ethernet). It explains the consequences first; nothing changes until you click **Turn On**.</string>
+	<key>1. 这台的设置 → oMLX 里，那个网络勾上了吗？上面的地址列表里有它那一行才算开着。</key>
+	<string>1. In Settings → oMLX on this Mac, is that network ticked? It only counts as open when its row appears in the address list above.</string>
+	<key>2. 两台设备在同一个网络里吗？访客 Wi-Fi 通常不让设备互相连。在外面用要走组网软件，两边都登录同一个网络。</key>
+	<string>2. Are both devices on the same network? Guest Wi-Fi usually keeps devices from reaching each other. Away from home, use a mesh VPN and sign both devices in to the same network.</string>
+	<key>2. 回到**设置**的 **oMLX** 页，列表里会多出它的网络（认得出是 Tailscale 就写 Tailscale，别的写「其他虚拟网络」），勾上。</key>
+	<string>2. Back in **Settings**, on the **oMLX** tab, its network now appears in the list (shown as Tailscale when recognised, otherwise "Other virtual network"). Tick it.</string>
+	<key>2. 点左下角**密钥**：地址多出一行「局域网」，像 `http://192.168.x.y:8900/v1`，能复制，也能出二维码。</key>
+	<string>2. Click **Keys** at the bottom left: the addresses now include a "Local network" row such as `http://192.168.x.y:8900/v1`. You can copy it or show it as a QR code.</string>
+	<key>3. iPhone、iPad 上那个 App 的「本地网络」权限开了吗？（系统设置 → 隐私与安全性 → 本地网络）第一次弹框点了不允许，之后不会再问。</key>
+	<string>3. On iPhone or iPad, is Local Network access turned on for that app? (Settings → Privacy &amp; Security → Local Network.) If you tapped Don't Allow the first time, it will not ask again.</string>
+	<key>3. 手机上的软件填**密钥**页里那个网络的那一行地址，别的和在家里一样。</key>
+	<string>3. In the app on your phone, enter that network's address from the **Keys** page. Everything else is the same as at home.</string>
+	<key>4. 在那台设备的软件里选「OpenAI 兼容」，填地址、模型名、子密钥。密钥页的「各个软件里怎么填」写了常见软件每个框填什么。手机上用 Chatbox 的话，点**新建并出 Chatbox 二维码**，扫一下就填好。</key>
+	<string>4. In the app on that device, choose "OpenAI compatible" and enter the address, model name and sub-key. "What to enter in each app" on the Keys page lists the fields for common apps. For Chatbox on a phone, click **Create and Show Chatbox QR Code** and scan it to fill everything in.</string>
+	<key>4. 这台的地址变了吗？路由器分配的地址会变，以上面列表里现在的为准。</key>
+	<string>4. Has this Mac's address changed? Addresses assigned by the router can change; use the one shown in the list above now.</string>
+	<key>5. 这台睡眠了吗？睡着了连不上。可以在设置的 oMLX 页打开「开着网络时不让这台睡眠」。</key>
+	<string>5. Is this Mac asleep? It cannot be reached while asleep. You can turn on "Keep this Mac awake while a network is open" in Settings → oMLX.</string>
+	<key>6. 密钥连错 8 次，那台设备会被锁 30 秒，等一会儿再试。少于 32 个字符的子密钥别的设备用不了，新建一把。</key>
+	<string>6. After 8 wrong keys in a row that device is locked out for 30 seconds; wait and try again. Sub-keys shorter than 32 characters do not work from other devices; create a new one.</string>
+	<key>7. 这台的系统防火墙拦了吗？点主窗口底部的体检，它会查。</key>
+	<string>7. Is the macOS firewall on this Mac blocking it? Click Health Check at the bottom of the main window; it checks this.</string>
+	<key>&lt;模型名&gt;</key>
+	<string>&lt;model name&gt;</string>
+	<key>&lt;这台设备的子密钥&gt;</key>
+	<string>&lt;this device's sub-key&gt;</string>
+	<key>API Provider 选「OpenAI Compatible」：
+Base URL：%@
+API Key：这台设备的子密钥
+Model ID：%@</key>
+	<string>Set API Provider to "OpenAI Compatible":
+Base URL: %@
+API Key: this device's sub-key
+Model ID: %@</string>
+	<key>上面的地址只在这台 Mac 上能用。勾上一个网络以后，这里会多出那个网络的地址</key>
+	<string>The address above only works on this Mac. Once you tick a network, its address appears here</string>
+	<key>也可以写成 %@</key>
+	<string>Can also be written as %@</string>
+	<key>入口的记录里还没有这把的调用</key>
+	<string>The gateway's log has no calls from this key yet</string>
+	<key>关闭「开着网络时不让这台睡眠」</key>
+	<string>Turn off "Keep this Mac awake while a network is open"</string>
+	<key>其他 OpenAI 兼容的软件</key>
+	<string>Other OpenAI-compatible app</string>
+	<key>出这个地址的二维码（里面只有地址，没有密钥），手机扫了能复制</key>
+	<string>Show a QR code for this address (address only, no key) to copy it on a phone</string>
+	<key>别的设备只能调用已经加载的模型，不能加载、卸载，也进不了管理页。每把子密钥同时最多 2 个请求，多的排队；密钥连错 8 次，那台设备先锁 30 秒。这台自己的软件不受这些限制。</key>
+	<string>Other devices can only call models that are already loaded; they cannot load or unload models or open the admin page. Each sub-key runs at most 2 requests at a time and the rest wait in line; after 8 wrong keys in a row a device is locked out for 30 seconds. Apps on this Mac are not limited this way.</string>
+	<key>别的设备来的请求：每把子密钥同时 %@ 个（多的排队）、每分钟 %@ 个，所有设备合计同时 %@ 个；本机的不限。密钥连错 8 次，那台设备先锁 30 秒。</key>
+	<string>Requests from other devices: %@ at a time per sub-key (the rest wait in line), %@ per minute, %@ at a time across all devices; requests from this Mac are not limited. After 8 wrong keys in a row, that device is locked out for 30 seconds.</string>
+	<key>别的设备连不上怎么办</key>
+	<string>If another device can't connect</string>
+	<key>加进 Continue 的 config.yaml 的 models 里：</key>
+	<string>Add under models in Continue's config.yaml:</string>
+	<key>加进那台电脑的 ~/.dsh/profiles/desktop/cordis.patch.yml 的 providers 里；子密钥放 ~/.dsh/.credentials.yaml，名字和 apiKeyEnv 一样：</key>
+	<string>Add under providers in ~/.dsh/profiles/desktop/cordis.patch.yml on that computer; put the sub-key in ~/.dsh/.credentials.yaml under the same name as apiKeyEnv:</string>
+	<key>勾着，但入口还没在这个网络上开门。</key>
+	<string>Ticked, but the gateway has not opened on this network yet.</string>
+	<key>只能本机用</key>
+	<string>This Mac only</string>
+	<key>各个软件里怎么填</key>
+	<string>What to enter in each app</string>
+	<key>在外面用（组网软件）</key>
+	<string>Using it away from home (mesh VPN)</string>
+	<key>复制这一段</key>
+	<string>Copy This</string>
+	<key>家里的网络不加密：同一个网络里的人有可能看到密钥和对话。只在自己的家庭、办公室网络里开，别在公司访客网、酒店、咖啡店开。</key>
+	<string>A home network is not encrypted: others on the same network may be able to see keys and conversations. Only turn it on for your own home or office network, not on corporate guest Wi-Fi, in hotels or in cafés.</string>
+	<key>对 %@ 个网络开着</key>
+	<string>open to %@ network(s)</string>
+	<key>对「%@」关门</key>
+	<string>Close access for "%@"</string>
+	<key>对「%@」开门</key>
+	<string>Open access for "%@"</string>
+	<key>局域网里的别的设备（手机、笔记本）现在就能调用这台的模型，见「让别的设备用这台的模型」一章。</key>
+	<string>Other devices on your local network (phones, laptops) can already use this Mac's models; see "Letting other devices use this Mac's models".</string>
+	<key>带着这台 Mac 换到别的 Wi-Fi，门会自动关上，回到勾过的那个网络自动恢复；新的网络要再勾一次。</key>
+	<string>If you take this Mac to a different Wi-Fi network, access closes automatically and comes back when you return to the network you ticked; a new network has to be ticked again.</string>
+	<key>开着</key>
+	<string>Open</string>
+	<key>开着网络时不让这台睡眠</key>
+	<string>Keep this Mac awake while a network is open</string>
+	<key>想在外面（手机用流量、在别处的 Wi-Fi）也用这台的模型，靠组网软件：它把你的几台设备连成一个只有你能进的加密网络，像在同一个 Wi-Fi 里一样。这台不用开公网端口。</key>
+	<string>To use this Mac's models away from home (on mobile data or someone else's Wi-Fi), use a mesh VPN: it joins your devices into an encrypted network only you can enter, as if they were on the same Wi-Fi. This Mac does not need a port open to the internet.</string>
+	<key>我用的是</key>
+	<string>I'm using</string>
+	<key>手机、笔记本上的聊天和写代码软件，可以调用这台 Mac 上的模型。默认不开：要你在这台上勾了哪个网络，那个网络里的设备才连得进来。</key>
+	<string>Chat and coding apps on your phone or laptop can use the models on this Mac. It is off by default: only devices on a network you have ticked on this Mac can connect.</string>
+	<key>打开</key>
+	<string>Turn On</string>
+	<key>打开「开着网络时不让这台睡眠」</key>
+	<string>Turn on "Keep this Mac awake while a network is open"</string>
+	<key>新建并出 Chatbox 二维码</key>
+	<string>Create and Show Chatbox QR Code</string>
+	<key>最近一次经入口调用：%@，来自 %@</key>
+	<string>Last call through the gateway: %@, from %@</string>
+	<key>最近使用</key>
+	<string>Last Used</string>
+	<key>正在读取这台的网络…</key>
+	<string>Reading this Mac's networks…</string>
+	<key>没开。别的电脑、手机要连这台，到设置的 oMLX 页勾上要开的网络</key>
+	<string>Off. To let other computers and phones connect, tick a network on the oMLX tab in Settings</string>
+	<key>用手机的相机扫，会打开 Chatbox 并填好地址、模型和子密钥「%@」。
+这个二维码里有密钥：不要截图，不要发给别人。60 秒后自动收起。</key>
+	<string>Scan with your phone's camera to open Chatbox with the address, model and sub-key "%@" filled in.
+This QR code contains the key: do not screenshot it or send it to anyone. It closes after 60 seconds.</string>
+	<key>管理员设置 → Connections（外部连接）→ OpenAI → 添加：
+URL：%@
+Key：一把子密钥
+保存后在模型列表里选 %@。它由服务器去连这台，所以填的是 Open WebUI 所在那台电脑能连到的地址。</key>
+	<string>Admin Settings → Connections → OpenAI → Add:
+URL: %@
+Key: a sub-key
+After saving, pick %@ in the model list. Its server makes the connection, so use an address the computer running Open WebUI can reach.</string>
+	<key>给手机上的 Chatbox 用：新建一把子密钥，出一个二维码，手机扫一下，地址、模型和密钥就都填好了。二维码里有这把密钥，只显示 60 秒</key>
+	<string>For Chatbox on a phone: creates a sub-key and shows a QR code; scan it and the address, model and key are filled in. The QR code contains the key and is shown for 60 seconds only</string>
+	<key>让别的设备用这台的模型</key>
+	<string>Letting other devices use this Mac's models</string>
+	<key>让这个网络里的设备用这台的模型？</key>
+	<string>Let devices on this network use this Mac's models?</string>
+	<key>让这个虚拟网络里的设备用这台的模型？</key>
+	<string>Let devices on this virtual network use this Mac's models?</string>
+	<key>让这些网络里的设备用这台的模型</key>
+	<string>Let devices on these networks use this Mac's models</string>
+	<key>设置 → 模型提供方 → 添加，API 类型选「OpenAI API 兼容」：
+API Host：%@
+API Path：留空（它会自己补 /v1/chat/completions；这里再写 /v1 会连不上）
+API Key：这台设备的子密钥
+模型：%@</key>
+	<string>Settings → Model Provider → Add, with API type "OpenAI API Compatible":
+API Host: %@
+API Path: leave empty (it adds /v1/chat/completions itself; adding /v1 here breaks the connection)
+API Key: this device's sub-key
+Model: %@</string>
+	<key>设置 → 模型服务 → 添加：
+API 地址：%@（不带 /v1，它会自己补）
+API 密钥：这台设备的子密钥
+模型 ID：%@</key>
+	<string>Settings → Model Provider → Add:
+API address: %@ (without /v1; it adds that itself)
+API key: this device's sub-key
+Model ID: %@</string>
+	<key>还在运行的是上一版的入口。勾一个网络时，会等它把正在回答的请求答完，再换成新的。</key>
+	<string>The gateway still running is from the previous version. When you tick a network, it finishes the reply in progress and is then replaced by the new one.</string>
+	<key>这个地址是路由器分配的，可能会变：在路由器里给这台 Mac 固定地址。</key>
+	<string>This address is assigned by the router and may change: reserve a fixed address for this Mac in the router.</string>
+	<key>这个地址是路由器分配的，过一阵可能会变。在路由器里给这台 Mac 固定地址，别的设备就不用改配置。</key>
+	<string>This address is assigned by the router and may change over time. Reserve a fixed address for this Mac in the router so other devices don't need reconfiguring.</string>
+	<key>这个虚拟网络里的每台设备都连得到入口，所以别和外人共用它，网络的密码设复杂一些；子密钥照样一台设备一把。</key>
+	<string>Every device on this virtual network can reach the gateway, so do not share it with outsiders and use a strong network password; still give each device its own sub-key.</string>
+	<key>这台停电重启以后，有的组网软件要等你登录桌面才运行，这之前在外面连不上。</key>
+	<string>After a power cut and restart, some mesh VPN apps only start once you log in to the desktop; until then this Mac cannot be reached from outside.</string>
+	<key>这台现在没有连着能开门的网络（Wi-Fi、网线，或组网软件的虚拟网络）。</key>
+	<string>This Mac is not connected to a network that can be opened right now (Wi-Fi, Ethernet, or a mesh VPN's virtual network).</string>
+	<key>这台睡着了，别的设备就连不上。打开后，有网络开着门、又接着电源时不会自己睡眠；用电池时、合上笔记本的盖子时照常睡。</key>
+	<string>Other devices cannot connect while this Mac is asleep. With this on, the Mac will not go to sleep by itself while a network is open and it is on power; on battery, or with a laptop lid closed, it sleeps as usual.</string>
+	<key>这把少于 32 个字符，容易被猜到，别的设备经入口用不了。给别的设备新建一把</key>
+	<string>This key is shorter than 32 characters and easy to guess, so it does not work from other devices through the gateway. Create a new one for them</string>
+	<key>这是本机的地址，只有这台 Mac 上的软件能用。给别的设备用，先在设置的 oMLX 页勾上一个网络。</key>
+	<string>This is this Mac's own address; only apps on this Mac can use it. For other devices, tick a network on the oMLX tab in Settings first.</string>
+	<key>这段内容太长，画不成二维码。</key>
+	<string>This is too long to show as a QR code.</string>
+	<key>连不上时，密钥页最下面的「别的设备连不上怎么办」逐条写了要看什么。</key>
+	<string>If a device cannot connect, "If another device can't connect" at the bottom of the Keys page lists what to check.</string>
+	<key>连哪个地址</key>
+	<string>Address</string>
+	<key>选「OpenAI 兼容」或「自定义接口」：
+地址：%@（有的软件要不带 /v1 的：%@）
+密钥：这台设备的子密钥
+模型：%@</key>
+	<string>Choose "OpenAI compatible" or "Custom API":
+Address: %@ (some apps want it without /v1: %@)
+Key: this device's sub-key
+Model: %@</string>
+	<key>重新读取网络</key>
+	<string>Reload Networks</string>
+	<key>默认都不开。勾哪个网络，入口就只在那个网络上开门，oMLX 自己仍然只听本机。家里的网络不加密，只在自己的家庭、办公室网络里开；换到别的 Wi-Fi 会自动关上，回来自动恢复。要在外面用，在这台和手机上装同一个组网软件（Tailscale、蒲公英、EasyTier 等），再勾它的网络。每台设备用它自己的子密钥，在密钥页新建。</key>
+	<string>All off by default. The gateway opens only on the networks you tick; oMLX itself still listens on this Mac only. A home network is not encrypted, so only turn it on for your own home or office network; on a different Wi-Fi it closes automatically and comes back when you return. To use it away from home, install the same mesh VPN (Tailscale, Oray PgyVPN, EasyTier, and the like) on this Mac and your phone, then tick its network. Give each device its own sub-key, created on the Keys page.</string>
+	<key>3. 给每台设备新建一把它自己的子密钥（**新建并复制**），名字写清是哪台、哪个软件，比如 iphone-chatbox。哪台丢了、不用了，只对它那一把点**停用**或**删除…**。</key>
+	<string>3. Create a separate sub-key for each device (**Create and Copy**) and name it after the device and app, e.g. iphone-chatbox. If a device is lost or retired, **Disable** or **Delete…** just that key.</string>
+	<key>去设置</key>
+	<string>Open Settings</string>
 </dict>
 </plist>

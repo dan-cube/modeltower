@@ -1114,7 +1114,7 @@ def console_files():
     """装到被控方的那几个文件（相对 PROJECT）；对方的 code_hash() 和这边不同就提示版本不一致。
     模型说明只算①出厂说明（随程序发）；②③在各台的运行目录，是那台自己的，不算、也不同步。"""
     return [Path('scripts') / f for f in ('clusterctl.py', 'paths.py', 'brand.py', 'rpc.py', 'serve_omlx.py', 'hub.py', 'chip.py', 'gateway.py', 'device_service.py', 'i18n.py', 'i18n_en.json',
-                                          'omlx_adapter.py', 'updates.py', 'signing.py')] + [Path('config/engine-compat.json')] + \
+                                          'omlx_adapter.py', 'updates.py', 'signing.py', 'netscan.py', 'gateway_defaults.py')] + [Path('config/engine-compat.json')] + \
         sorted(p.relative_to(PROJECT) for p in FAMILIES_DIR.glob('*.json'))   # 3a 加对接模块和兼容表：副机少了它们 import 就失败
 
 
@@ -3943,6 +3943,13 @@ def key_coverage():
             unreachable.append(node)
             continue
         for key in found: rows.setdefault((key['name'], key['hint']), {**key, 'on': []})['on'].append(node)
+    if not MANAGED_HERE:   # 0.6（只在官方版）：每把最近一次经入口用是什么时候、从哪来；太短的别的设备用不了
+        used = key_last_used()
+        short = {k.get('name', '') for k in auth_settings().get('sub_keys', []) if len(k.get('key', '')) < 32} if key_consent() is True else set()
+        for row in rows.values():
+            if LOCAL not in row['on']: continue
+            if row['name'] in used: row['last_used'] = used[row['name']]
+            if row['name'] in short: row['short'] = True
     return {'ok': True, 'order': list(NODES), 'unreachable': unreachable, 'sub_keys': list(rows.values())}
 
 
@@ -4409,6 +4416,14 @@ def gateway_info():
         if data and data.get('hub') != LOCAL: return {'gateway': 'elsewhere', **shown}
     port = gateway_port(gateway_conf())
     out = {'gateway': 'running' if hub.gateway_pid() else 'stopped', **shown, **({'client_port': port} if port else {}), **urls(port)}
+    conf = gateway_conf()
+    if out['gateway'] == 'running' and port and chosen_networks(conf):   # 0.6：勾了网络才问入口现在开着哪些门（一次本机请求）；没勾时和 0.5.1 一样
+        health = gateway_health(conf)
+        scheme = 'https' if ((conf or {}).get('tls') or {}).get('cert') else 'http'
+        doors = [d for d in (health or {}).get('doors', []) if isinstance(d, dict) and d.get('address')]
+        out['client_urls'] += [{'id': f"{d.get('kind')}:{d['address']}", 'name': network_tag(d.get('kind')), 'url': f"{scheme}://{url_host(d['address'])}:{port}/v1"} for d in doors]
+        out['networks_open'] = len({d.get('id') for d in doors})
+        if health is not None and 'version' not in health: out['old_gateway'] = True
     if out['gateway'] == 'stopped' and port:
         who = port_owner(port)
         if who: out['gateway_note'] = tr('端口 {0} 被别的程序占着：{1}。', port, who)
@@ -4437,6 +4452,7 @@ def ensure_gateway():
                 time.sleep(0.1)
         pid = hub.gateway_pid()
         if pid and gateway_draining(port, host, conf): return 'failed', tr('入口正在等请求答完后退出，稍后再开。')
+    if pid and chosen_networks(conf) and swap_old_gateway(only_idle=True) is None and not hub.gateway_pid(): pid = None   # 0.6：勾着网络、还在跑的却是闲着的旧入口——换成新的
     if pid: return 'running', None
     if port and omlx_adapter.listening(port, host):
         return 'port_busy', tr('端口 {0} 被别的程序占着：{1}。', port, port_owner(port) or '?')
@@ -4485,6 +4501,280 @@ def report_gateway(result, quiet=False):
         print(warn(tr('入口没起来：{0} 客户端要是直连 oMLX，没加载的模型会被点起来。', why)))
 
 
+# ---------- 0.6：按网络开门 ----------
+SWAP_WAIT = 10   # 换掉旧入口时最多等它几秒把正在答的答完
+
+
+def url_host(address):
+    """地址写进网址里：IPv6 要加方括号。"""
+    return f'[{address}]' if ':' in str(address) else str(address)
+
+
+def network_tag(kind):
+    """连接客户端页地址前面的小标签。"""
+    return {'lan': tr('局域网'), 'tailscale': 'Tailscale'}.get(kind) or tr('虚拟网络')
+
+
+def gateway_health(conf=None):
+    """问这台入口的 /health（本机那扇门，不用密钥）。答不上返回 None。0.6 的入口多回 version、doors（开着哪些门）、pending、awake；0.5.1 的没有 version。"""
+    conf = gateway_conf() if conf is None else conf
+    port = gateway_port(conf)
+    if not port or conf is None: return None
+    listen = conf.get('listen', '127.0.0.1')
+    host = '127.0.0.1' if listen in ('0.0.0.0', '::', 'localhost') else listen
+    try:
+        raw = socket.create_connection((host, port), timeout=2)
+        if (conf.get('tls') or {}).get('cert'):
+            context = ssl.create_default_context()
+            context.check_hostname, context.verify_mode = False, ssl.CERT_NONE   # 本机自己的入口，只读一个状态
+            raw = context.wrap_socket(raw, server_hostname=host)
+        with raw as s:
+            s.settimeout(2)
+            s.sendall(f'GET /health HTTP/1.1\r\nHost: {host}\r\nConnection: close\r\n\r\n'.encode())
+            data = b''
+            while len(data) < 65536:
+                chunk = s.recv(4096)
+                if not chunk: break
+                data += chunk
+        found = json.loads(data.partition(b'\r\n\r\n')[2] or b'{}')
+        return found if isinstance(found, dict) and found.get('ok') is True else None
+    except (OSError, ValueError, ssl.SSLError, AttributeError):
+        return None
+
+
+def chosen_networks(conf=None):
+    """gateway.json 里勾了哪些网络（记号的列表）。没有、读不懂是 []。"""
+    conf = gateway_conf() if conf is None else conf
+    nets = (conf or {}).get('networks')
+    return [n for n in nets if isinstance(n, str)] if isinstance(nets, list) else []
+
+
+def networks_allowed():
+    """这台能不能按网络开门：(能不能, 不能时的原因)。这一版只给单机的官方 oMLX，而且入口要开着——门开在入口上，入口关着就没有门。"""
+    import hub
+    if MANAGED_HERE or ENGINE_HERE['kind'] != 'official': return False, tr('这一版只有装官方 oMLX 的单机能让别的设备连进来。')
+    if not hub.gateway_follows_omlx(): return False, tr('开了主机模式：让别的设备连进来在 1.0 联机里做。')
+    if not hub.gateway_enabled(ENGINE_HERE['kind']): return False, tr('入口关着。先在 设置 → oMLX 打开入口：别的设备只能经入口连进来。')
+    return True, ''
+
+
+def network_title(row):
+    """列表里这一行叫什么。"""
+    if row.get('kind') == 'lan': return tr('家里的网络（{0}）', {'Wi-Fi': 'Wi-Fi', 'Ethernet': tr('网线')}.get(row.get('port'), row.get('port') or tr('网线')))
+    if row.get('kind') == 'tailscale': return 'Tailscale'
+    return tr('其他虚拟网络（{0}）', row.get('iface') or '?')
+
+
+def local_hostname():
+    """主机名.local：手机上有的软件连不了 IP 地址时的备选。读不到是 ''。环境变量只给测试用。"""
+    if 'LMC_FIRST_HOST' in os.environ: name = os.environ['LMC_FIRST_HOST']
+    else:
+        try: name = subprocess.run(['scutil', '--get', 'LocalHostName'], capture_output=True, text=True, errors='replace', timeout=5).stdout.strip()
+        except (OSError, subprocess.SubprocessError): name = ''
+    return f'{name}.local' if re.fullmatch(r'[A-Za-z0-9-]{1,63}', name or '') else ''
+
+
+def tailscale_name():
+    """这台在 Tailscale 里的名字（<机器名>.<网络名>.ts.net）；没装、没登录、读不到是 ''。只读。"""
+    if os.environ.get('LMC_ROOT') and 'LMC_TAILSCALE_NAME' in os.environ: return os.environ['LMC_TAILSCALE_NAME']   # 测试给了就用它的，不问真的 Tailscale
+    for binary in ('/Applications/Tailscale.app/Contents/MacOS/Tailscale', '/usr/local/bin/tailscale', '/opt/homebrew/bin/tailscale'):
+        if not Path(binary).exists(): continue
+        try: name = json.loads(subprocess.run([binary, 'status', '--json'], capture_output=True, text=True, errors='replace', timeout=4).stdout)['Self']['DNSName']
+        except (OSError, subprocess.SubprocessError, ValueError, KeyError, TypeError): continue
+        name = str(name).rstrip('.')
+        if re.fullmatch(r'[A-Za-z0-9.-]{1,253}', name): return name
+    return ''
+
+
+def address_from_router(iface):
+    """这张网卡的地址是不是路由器分配的（DHCP）：是的话过一阵可能变，提示在路由器里固定。读不出来当不是。"""
+    if os.environ.get('LMC_ROOT') and 'LMC_DHCP_IFACES' in os.environ: return os.environ['LMC_DHCP_IFACES'].split(',').count(iface) > 0   # 测试给了就用它的，不问系统
+    try: out = subprocess.run(['/usr/sbin/ipconfig', 'getpacket', iface], capture_output=True, text=True, errors='replace', timeout=4).stdout
+    except (OSError, subprocess.SubprocessError): return False
+    return 'yiaddr' in out
+
+
+def networks_view():
+    """engine networks show：这台现在连着哪些网络、勾了哪些、哪些门真的开着。打开设置页、连接客户端页时才查（要读网卡），不进 10 秒一次的刷新。"""
+    import netscan
+    conf = gateway_conf()
+    allowed, why = networks_allowed()
+    chosen = chosen_networks(conf)
+    names = (conf or {}).get('network_names') if isinstance((conf or {}).get('network_names'), dict) else {}
+    health = gateway_health(conf) if chosen and allowed else None
+    doors = {d.get('address') for d in (health or {}).get('doors', []) if isinstance(d, dict)}
+    port, scheme = gateway_port(conf) or 8900, 'https' if ((conf or {}).get('tls') or {}).get('cert') else 'http'
+    host, rows, seen = None, [], set()
+    for row in netscan.scan():
+        seen.add(row.get('id'))
+        item = {'id': row.get('id'), 'kind': row['kind'], 'name': network_title(row), 'iface': row.get('iface', ''), 'address': row['address'], 'subnet': row.get('subnet', ''), 'ready': bool(row.get('ready')),
+                'on': bool(row.get('id')) and row.get('id') in chosen, 'open': row['address'] in doors, 'url': f"{scheme}://{url_host(row['address'])}:{port}/v1"}
+        if row['kind'] == 'lan':
+            if host is None: host = local_hostname()
+            if host: item['host_url'] = f'{scheme}://{host}:{port}/v1'
+            if address_from_router(row.get('iface', '')): item['dhcp'] = True
+        elif row['kind'] == 'tailscale':
+            name = tailscale_name()
+            if name: item['host'], item['host_url'] = name, f'{scheme}://{name}:{port}/v1'
+        if not item['ready']: item['note'] = tr('还在认这个网络的路由器，过几秒再看。')
+        else: item['warning'] = network_warning(item)   # 勾之前要说清的话：界面的确认框和命令行用同一段
+        rows.append(item)
+    for ident in chosen:   # 勾过、现在没连着的：留一行，连上后自动打开，也能取消
+        if ident in seen or not re.fullmatch(r'(lan:[0-9a-f]{12}|tailscale|virtual:[0-9./]{9,18})', ident): continue
+        kind = ident.split(':', 1)[0]
+        rows.append({'id': ident, 'kind': kind, 'name': str(names.get(ident) or ('Tailscale' if kind == 'tailscale' else tr('勾过的网络'))), 'iface': '', 'address': '', 'ready': False,
+                     'on': True, 'open': False, 'absent': True, 'note': tr('现在没连着，连上后自动打开。')})
+    out = {'ok': True, 'can': allowed, 'networks': rows, 'port': port, 'keep_awake': (conf or {}).get('keep_awake') is True, 'limits': gateway_limits(conf)}
+    if not allowed: out['why'] = why
+    if health is not None and 'version' not in health: out['old_gateway'] = True
+    if chosen and allowed and health is None: out['why_closed'] = tr('入口没在运行：勾着的网络现在都没开门。')
+    return out
+
+
+def gateway_limits(conf=None):
+    """限流的数：gateway.json 的 limits，没写、写错的用入口的默认。"""
+    import gateway_defaults
+    conf = gateway_conf() if conf is None else conf
+    return gateway_defaults.numbers((conf or {}).get('limits'), {k: gateway_defaults.LIMITS[k] for k in ('concurrent', 'per_minute', 'total')})
+
+
+def swap_old_gateway(only_idle=False):
+    """升级衔接：入口是独立的常驻进程，应用从 0.5.1 升上来以后，旧入口可能还在跑（它不认 networks，收到 HUP 还会退出）。
+    认出是旧的就让它把正在答的答完、退出（新的由调用方起）。only_idle：它正在答请求就先不动。
+    返回 None（不是旧的，或已经退了）或一句没换成的原因；没换成时让旧入口接着收请求，本机的客户端不受影响。"""
+    import hub
+    health = gateway_health()
+    if health is None or 'version' in health: return None
+    busy = tr('旧版本的入口还在答一个请求，换不了新的。等它答完再勾一次。')
+    if only_idle and health.get('active'): return busy
+    pid = hub.gateway_pid()
+    if not pid or not hub.stop_gateway(drain=True): return None
+    for _ in range(SWAP_WAIT * 10):
+        if not hub.gateway_pid(): return None
+        time.sleep(0.1)
+    try: os.kill(pid, signal.SIGUSR2)   # 等了 SWAP_WAIT 秒还没答完：不换了，让它接着收新请求
+    except OSError: return None
+    return busy
+
+
+def apply_networks(conf, wait_for=None):
+    """写回 gateway.json、叫入口重新对门，等它对好（最多约 5 秒）。wait_for：等这个记号的门开（True）或关（False）。"""
+    import hub
+    write_gateway_conf(conf)
+    problem = swap_old_gateway()
+    if problem: return problem
+    if not hub.gateway_pid():
+        state, note = ensure_gateway()
+        if state not in ('started', 'running'): return tr('入口没起来：{0}', note or tr('入口关着'))
+    elif 'version' in (gateway_health(conf) or {}): hub.reload_gateway()   # 认得出是 0.6 的入口才发 HUP（0.5.1 的收到会退出）
+    if wait_for is None: return None
+    ident, want_open = wait_for
+    for _ in range(50):
+        health = gateway_health(conf) or {}
+        is_open = any(isinstance(d, dict) and d.get('id') == ident for d in health.get('doors', []))
+        if is_open == want_open: return None
+        time.sleep(0.1)
+    return tr('已经记下，但入口还没在这个网络上开门：过几秒再看一眼。') if want_open else tr('已经取消，入口正在关门。')
+
+
+def networks_command(rest):
+    """engine networks show | on <网络> yes=1 | off <网络或 all> | awake on|off。<网络> 是 show 里的记号（lan:…、tailscale、virtual:…）或它的序号（从 1 起）。"""
+    what, sure = (rest[0] if rest else 'show'), rest[-1:] == ['yes=1']
+    args = [a for a in rest[1:] if a != 'yes=1']
+    if what == 'show': return networks_view()
+    if what not in ('on', 'off', 'awake') or len(args) != 1: raise RuntimeError(tr('engine networks show | on <网络> yes=1 | off <网络|all> | awake on|off'))
+    conf = gateway_conf()
+    if conf is None: raise RuntimeError(tr('{0} 读不懂，没改。请先看一眼这个文件。', ROOT / 'gateway.json'))
+    chosen = chosen_networks(conf)
+    if what == 'awake':
+        if args[0] not in ('on', 'off'): raise RuntimeError('engine networks awake on|off')
+        if args[0] == 'on': conf['keep_awake'] = True
+        else: conf.pop('keep_awake', None)
+        problem = apply_networks(conf)
+        return {**networks_view(), 'note': problem or (tr('已打开：有网络开着门、又接着电源时，这台不会自己睡眠（合上笔记本的盖子照样会睡）。') if args[0] == 'on' else tr('已关闭：这台照系统设置睡眠。'))}
+    view = networks_view()
+    target = args[0]
+    if target.isdigit() and 1 <= int(target) <= len(view['networks']): target = view['networks'][int(target) - 1]['id'] or ''
+    if what == 'off':
+        gone = chosen if target == 'all' else [target]
+        if target != 'all' and target not in chosen: raise RuntimeError(tr('没有勾过这个网络：{0}', args[0]))
+        left = [n for n in chosen if n not in gone]
+        if left: conf['networks'] = left
+        else: conf.pop('networks', None)
+        names = {k: v for k, v in (conf.get('network_names') or {}).items() if k in left} if isinstance(conf.get('network_names'), dict) else {}
+        if names: conf['network_names'] = names
+        else: conf.pop('network_names', None)
+        problem = apply_networks(conf, (gone[0], False) if len(gone) == 1 else None) if hub_gateway_running() else (write_gateway_conf(conf) or None)
+        return {**networks_view(), 'note': problem or tr('已取消：入口不再在这个网络上收新的连接，正在答的那一路会答完。')}
+    allowed, why = networks_allowed()
+    if not allowed: raise RuntimeError(why)
+    row = next((r for r in view['networks'] if r['id'] == target and not r.get('absent')), None)
+    if row is None: raise RuntimeError(tr('这台现在没有连着这个网络：{0}。用 engine networks show 看现在有哪些。', args[0]))
+    if not sure:
+        raise RuntimeError(network_warning(row) + tr(' 确认要开，在命令最后加 yes=1。'))
+    if target not in chosen: chosen.append(target)
+    conf['networks'] = chosen
+    names = dict(conf.get('network_names')) if isinstance(conf.get('network_names'), dict) else {}
+    names[target] = f"{row['name']} {row.get('subnet', '')}".strip()
+    conf['network_names'] = names
+    problem = apply_networks(conf, (target, True))
+    return {**networks_view(), 'note': problem or tr('已打开：别的设备现在可以连 {0}，每台设备用它自己的子密钥。', row['url'])}
+
+
+def hub_gateway_running():
+    import hub
+    return bool(hub.gateway_pid())
+
+
+def network_warning(row):
+    """勾一个网络前要说清的话（界面上用同一段）。"""
+    if row['kind'] == 'lan':
+        return tr('会在 {0} 上打开端口 {1}。这个网络里不加密：同一个网络里的人可能看到密钥和对话，所以只在自己的家庭、办公室网络里开；每台设备用它自己的子密钥；要在外面用、或者要加密，请装组网软件（Tailscale、蒲公英、EasyTier 等）再勾它的网络。',
+                  row['address'], gateway_port(gateway_conf()) or 8900)
+    return tr('会在 {0} 上打开端口 {1}。这个虚拟网络里的每台设备都连得到入口（仍然要子密钥）：别和外人共用这个网络，网络的密码设复杂一些。', row['address'], gateway_port(gateway_conf()) or 8900)
+
+
+def limits_command(rest):
+    """engine gateway limits [concurrent=2] [per_minute=60] [total=6] | limits reset：外来请求的限流。只改写了的那几项；入口立刻生效，不用重启。"""
+    import gateway_defaults
+    conf = gateway_conf()
+    if conf is None: raise RuntimeError(tr('{0} 读不懂，没改。请先看一眼这个文件。', ROOT / 'gateway.json'))
+    if rest == ['reset']:
+        conf.pop('limits', None)
+        write_gateway_conf(conf)
+    elif rest:
+        opts = opts_of(rest)
+        bad = [part for part in rest if '=' not in part] + [k for k in opts if k not in ('concurrent', 'per_minute', 'total')]
+        if bad: raise RuntimeError('engine gateway limits [concurrent=N] [per_minute=N] [total=N] | limits reset')
+        current = dict(conf.get('limits')) if isinstance(conf.get('limits'), dict) else {}
+        for key, value in opts.items():
+            if not value.isdigit() or not 1 <= int(value) <= 100000: raise RuntimeError(tr('{0} 要是 1 到 100000 的整数。', key))
+            current[key] = int(value)
+        conf['limits'] = current
+        write_gateway_conf(conf)
+    lim = gateway_limits(conf)
+    return {'ok': True, 'limits': lim, 'defaults': {k: gateway_defaults.LIMITS[k] for k in lim},
+            'note': tr('别的设备来的请求：每把子密钥同时 {0} 个（多的排队）、每分钟 {1} 个；所有外来设备合计同时 {2} 个。本机来的不限。', lim['concurrent'], lim['per_minute'], lim['total'])}
+
+
+def key_last_used():
+    """每把子密钥最近一次经入口调用：{名字: {'at', 'from', 'via'}}。从入口日志的尾部读（日志里本来就有名字和来源），不另存东西。
+    名字里带空格的（oMLX 管理页建的）日志里拆不出来，就没有这一项。"""
+    found = {}
+    for name in ('gateway.log.old', 'gateway.log'):
+        try:
+            with (RUN_DIR / name).open('rb') as f:
+                f.seek(0, 2)
+                start = max(0, f.tell() - 512 * 1024)
+                f.seek(start)
+                lines = f.read().decode('utf-8', 'replace').splitlines()[1 if start else 0:]   # 从中间读起时第一行是半截的，不要；文件小、从头读时第一行是完整的
+        except OSError: continue
+        for line in lines:
+            hit = re.match(r'^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d) (\S+)@([0-9A-Fa-f:.]+)(?:\[(\w+)\])? \S+ .* \d{3} ', line)
+            if hit: found[hit.group(2)] = {'at': hit.group(1), 'from': hit.group(3), 'via': hit.group(4) or 'local'}
+    return found
+
+
 def gateway_on_hub_here():
     """开了主机模式、这台就是主机。"""
     import hub
@@ -4511,6 +4801,7 @@ def gateway_command(what):
             if mine: hub.stop_gateway(drain=True)   # 正在答的答完再停
             note = tr('入口已关。客户端要改连 oMLX 的端口 {0}；这样没加载的模型会被点起来，官方版的子密钥也能加载模型。', HERE_PORT) if mine \
                 else tr('开了主机模式：入口只在主机上跑，这台的开关不起作用。')
+            if mine and chosen_networks(conf): note += tr('对别的设备开的门也一起关了（勾选还记着，再开入口时自动恢复）。')
         elif hub.gateway_follows_omlx(): result = ensure_gateway()
         elif mine: hub.start_gateway(ENGINE_HERE['kind'])
         else: note = tr('开了主机模式：入口只在主机上跑，这台的开关不起作用。')
@@ -4545,7 +4836,7 @@ def engine_command(rest, as_json=False):
         return models_dir_command(more[:-1] if sure else more, sure, as_json)
     extra = engine_extra(what, rest[1:])
     if extra is not None: return print(json.dumps(extra, ensure_ascii=False, **({} if as_json else {'indent': 1})))
-    raise RuntimeError('engine show | allow-key | deny-key | install-plan | download | check-file | open-package | autoupdate | source | gateway | models-dir | backup-settings | selfcheck')
+    raise RuntimeError('engine show | allow-key | deny-key | install-plan | download | check-file | open-package | autoupdate | source | gateway | networks | models-dir | backup-settings | selfcheck')
 
 
 # ── 第 3b 期：安装、下载源、升级、更新中心（草案 10.5–10.8，接口见 p3b/CONTRACT.md） ──
@@ -5045,7 +5336,8 @@ def engine_extra(what, rest):
         return check_package(rest[0])
     if what == 'autoupdate': return autoupdate(rest[0] if rest else 'show')
     if what == 'source': return download_source(rest[0] if rest else 'show', mirror=rest[1:2] == ['mirror'])
-    if what == 'gateway': return gateway_command(rest[0] if rest else 'show')
+    if what == 'gateway': return limits_command(rest[1:]) if rest[:1] == ['limits'] else gateway_command(rest[0] if rest else 'show')
+    if what == 'networks': return networks_command(rest)
     if what == 'backup-settings': return backup_omlx_settings()
     if what == 'selfcheck': return selfcheck(opts.get('expect'))
     return None
@@ -5234,6 +5526,7 @@ def doctor_official():
         else:
             check(tr('入口在运行（端口 {0}）', info.get('client_port', '?')), info.get('gateway') == 'running', '' if info.get('gateway') == 'running'
                   else info.get('gateway_note') or tr('开着但没在运行：重开控制台或启动 oMLX 时会再起'))
+            if info.get('gateway') == 'running': doctor_gateway_doors(check)
     for node in remotes():
         reach(node)
         up = health(node) == 'up'
@@ -5244,6 +5537,55 @@ def doctor_official():
     failed = results.count(False)
     if failed and not sys.stdout.isatty(): print(DOCTOR_FAILED)
     print(ok(tr('体检：{0} 项全部通过', len(results))) if not failed else warn(tr('体检：{0} 项里有 {1} 项要看（见上面 ✕ 的行）', len(results), failed)))
+
+
+def doctor_gateway_doors(check):
+    """体检（0.6）：入口只在该听的地址上听——本机那一个，加上勾了、入口说开着的那几扇门；多出来的（尤其是 * 所有网卡）就报。
+    勾了网络时再看系统防火墙有没有把入口拦住。"""
+    import hub
+    conf = gateway_conf()
+    pid, port, chosen = hub.gateway_pid(), gateway_port(conf), chosen_networks(conf)
+    if not pid or not port: return
+    health = gateway_health(conf) or {}
+    doors = [d for d in health.get('doors', []) if isinstance(d, dict) and d.get('address')]
+    listen = (conf or {}).get('listen', '127.0.0.1')
+    expected = {'127.0.0.1': {'127.0.0.1'}, '::1': {'::1'}, 'localhost': {'127.0.0.1', '::1'}, '0.0.0.0': {'*'}, '::': {'*'}}.get(listen, {listen})
+    expected |= {d['address'] for d in doors}
+    try: out = subprocess.run(['lsof', '-nP', '-a', '-p', str(pid), f'-iTCP:{port}', '-sTCP:LISTEN', '-Fn'], capture_output=True, text=True, errors='replace', timeout=15).stdout
+    except (OSError, subprocess.SubprocessError): out = ''
+    heard = {line[1:].rsplit(':', 1)[0].strip('[]') for line in out.splitlines() if line.startswith('n')}
+    if heard:
+        extra = sorted(heard - expected)
+        check(tr('入口只在本机和勾了的网络上听'), not extra, tr('多听了 {0}：没勾的地址不该开着。看一眼 {1} 的 listen，或重开入口', tr('、').join(extra), ROOT / 'gateway.json') if extra else '')
+    if not chosen: return
+    if 'version' not in health:
+        check(tr('入口是这一版的'), False, tr('还在跑的是旧版本的入口，不认勾的网络：到 设置 → oMLX 把入口关了再开'))
+        return
+    if doors: check(tr('入口对 {0} 个网络开着（{1}）', len({d.get('id') for d in doors}), tr('、').join(sorted(d['address'] for d in doors))), True)
+    else: check(tr('勾了的网络开着门'), False, tr('勾了 {0} 个网络，现在一个都没连着（或还在认路由器）：连上后会自动打开', len(chosen)))
+    state = firewall_state(pid)
+    if state == 'blocked':
+        check(tr('系统防火墙没有拦入口'), False, tr('防火墙拦住了入口用的 Python，别的设备连不进来：到 系统设置 → 网络 → 防火墙 → 选项，把它改成"允许传入连接"'))
+    elif state in ('allowed', 'off'): check(tr('系统防火墙没有拦入口'), True)
+
+
+def firewall_state(pid):
+    """系统防火墙对入口那个进程的态度：'off'（防火墙没开）、'blocked'、'allowed'、None（开着但名单里没有它，或读不出来——第一次有设备连进来时系统会问）。只读。"""
+    tool = os.environ.get('LMC_FIREWALL_TOOL') if os.environ.get('LMC_ROOT') else None   # 环境变量只给测试用
+    tool = tool or '/usr/libexec/ApplicationFirewall/socketfilterfw'
+    def ask(*args):
+        try: return subprocess.run([tool, *args], capture_output=True, text=True, errors='replace', timeout=5).stdout
+        except (OSError, subprocess.SubprocessError): return ''
+    state = ask('--getglobalstate')
+    if 'disabled' in state.lower() or 'State = 0' in state: return 'off'
+    if 'enabled' not in state.lower(): return None
+    try: binary = subprocess.run(['ps', '-p', str(pid), '-o', 'comm='], capture_output=True, text=True, errors='replace', timeout=5).stdout.strip()
+    except (OSError, subprocess.SubprocessError): return None
+    if not binary: return None
+    answer = ask('--getappblocked', os.path.realpath(binary)).lower()
+    if 'blocked' in answer and 'not' not in answer and 'permitted' not in answer: return 'blocked'
+    if 'permitted' in answer: return 'allowed'
+    return None
 
 
 def doctor():

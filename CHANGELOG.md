@@ -1,6 +1,25 @@
 # Changelog
 
-中文在后面：[0.5.2 中文](#052中文)。
+中文在后面：[0.6.0-rc.2 中文](#060-rc2中文)、[0.5.2 中文](#052中文)。
+
+## 0.6.0-rc.2 (pre-release)
+
+2026-11-23
+
+A release candidate: other devices can use the models on this Mac. **0.5.2 remains the stable version.** 0.5.x does not offer this build as an update; you only get it by downloading it from its release page.
+
+**What has been tested, and what has not.** Tested on a single Mac, against its real network addresses and official oMLX 0.8.2: opening and closing a network, requests through the local-network address (model list, chat, streaming), the rules for other devices listed below, and Health Check; plus the full automated test suite. **Not tested yet**: a second device actually connecting (including what the macOS firewall does), moving to another Wi-Fi and back, any mesh VPN (Tailscale, Oray PgyVPN and the others), client apps on phones and tablets, the field names under **What to enter in each app**, **Create and Show Chatbox QR Code**, and replacing an installed 0.5.x with this build. If you try any of these, please tell us how it went in Issues.
+
+- **Let devices on your networks connect**: in **Settings → oMLX**, a new section lists the networks this Mac is on (home Wi-Fi or Ethernet, Tailscale, other virtual networks from mesh VPN apps). Tick one and the gateway opens on that network only. Everything is off by default, and oMLX itself still listens on this Mac only.
+- **Away from home**: install a mesh VPN (Tailscale, Oray PgyVPN, EasyTier, ZeroTier) on this Mac and on the other device, then tick its network. No port needs to be opened to the internet.
+- **A home network is tied to the one you ticked**: on a different Wi-Fi it closes by itself and comes back when you return. A home network is not encrypted; use it only on your own home or office network.
+- **Rules for other devices** (apps on this Mac are not affected): private addresses only; 8 wrong keys in a row lock that device out for 30 seconds, then 300; each sub-key runs 2 requests at a time (the rest wait in line) and 60 per minute, 6 at a time across all devices; sub-keys shorter than 32 characters are refused. Other devices can only call models that are already loaded. These numbers may change before 0.6.0.
+- **Connect Clients page**: one address row per open network, with **Copy**, **Copy Root Address** and a QR code (address only); **What to enter in each app** for Chatbox, Cherry Studio, Open WebUI, Continue, Cline / Roo Code and dsh; **If another device can't connect**; a **Last Used** column for sub-keys.
+- **Keep this Mac awake while a network is open** (off by default; applies on power only).
+- **Health Check** now verifies the gateway listens only on this Mac and the ticked networks, and tells you if the macOS firewall is blocking it.
+- **Guide**: two new chapters, "Letting other devices use this Mac's models" and "Using it away from home (mesh VPN)".
+
+Settings, keys and models from 0.5.x carry over. Nothing changes until you tick a network. To go back, untick the networks and replace the app with 0.5.2.
 
 ## 0.5.2
 
@@ -67,6 +86,25 @@ The first release of ModelTower: a console for running open-source LLMs on Apple
 - The app does not ship its own Python. It uses the one that comes with oMLX, or Apple's command line tools.
 - New versions of ModelTower are not installed from inside the app: download them from Releases.
 - English and Simplified Chinese.
+
+## 0.6.0-rc.2（中文）
+
+2026-11-23，预发布
+
+候选版：别的设备可以用这台 Mac 上的模型。**稳定版仍然是 0.5.2。** 0.5.x 不会提示升级到这一版，要用只能到它的发布页自己下载。
+
+**测过什么，没测什么。** 在一台 Mac 上、用它真的网络地址、对着官方 oMLX 0.8.2 测过：打开和关掉一个网络，经局域网地址发请求（列模型、问答、流式），下面列的"别的设备的规矩"，体检；另外全套自动测试都过了。**还没测的**：真的另一台设备连进来（包括系统防火墙会怎么反应），换到别的 Wi-Fi 再换回来，任何一家组网软件（Tailscale、蒲公英等），手机和平板上的客户端，**各个软件里怎么填** 里每个框的名字，**新建并出 Chatbox 二维码**，以及在装着 0.5.x 的 Mac 上直接换成这一版。你试了其中哪一项，欢迎到 Issues 里说一声结果。
+
+- **让你网络里的设备连进来**：**设置 → oMLX** 多了一节，列出这台现在连着的网络（家里的 Wi-Fi 或网线、Tailscale、组网软件的其他虚拟网络）。勾哪个，入口就只在那个网络上开门。默认都不开，oMLX 自己仍然只听本机。
+- **在外面用**：在这台和另一台设备上装同一个组网软件（Tailscale、蒲公英、EasyTier、ZeroTier），再勾它的网络。不用开公网端口。
+- **家里的网络只认勾的那一个**：换到别的 Wi-Fi 会自动关上，回来自动恢复。家里的网络不加密，只在自己的家庭、办公室网络里用。
+- **别的设备的规矩**（这台自己的软件不受影响）：只收私网地址；密钥连错 8 次，那台设备锁 30 秒，再犯 300 秒；每把子密钥同时 2 个请求（多的排队）、每分钟 60 个，所有设备合计同时 6 个；少于 32 个字符的子密钥不认。别的设备只能调用已经加载的模型。这几个数在 0.6.0 之前可能调。
+- **连接客户端页**：每个开着的网络一行地址，带 **复制**、**复制根地址** 和二维码（只有地址）；**各个软件里怎么填**（Chatbox、Cherry Studio、Open WebUI、Continue、Cline / Roo Code、dsh）；**别的设备连不上怎么办**；子密钥多一栏 **最近使用**。
+- **开着网络时不让这台睡眠**（默认关；只在接着电源时起作用）。
+- **体检** 多查一项：入口只在本机和勾了的网络上听；系统防火墙拦住入口时会告诉你。
+- **教程** 多两章："让别的设备用这台的模型""在外面用（组网软件）"。
+
+0.5.x 的设置、密钥、模型都照旧。不勾网络，什么都不变。要退回去：先把勾着的网络都关掉，再把应用换回 0.5.2。
 
 ## 0.5.2（中文）
 

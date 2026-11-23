@@ -534,6 +534,15 @@ def start_gateway(kind=None):
     return True
 
 
+def reload_gateway():
+    """叫入口马上重新对一遍门（0.6）：改了 gateway.json 的 networks 以后用。只发给 0.6 的入口——0.5.1 的入口收到 HUP 会直接退出，调用方先认版本。"""
+    pid = gateway_pid()
+    if not pid: return False
+    try: os.kill(pid, signal.SIGHUP)
+    except OSError: return False
+    return True
+
+
 def stop_gateway(drain=False):
     pid = gateway_pid()
     if not pid: return False

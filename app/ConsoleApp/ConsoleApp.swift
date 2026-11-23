@@ -6,8 +6,10 @@
 // 有哪些机器、哪些模型都听 status --json 的（来自 cluster.json 和型号档案），这里不写死。
 
 import AppKit
+import CoreImage.CIFilterBuiltins
 import CryptoKit
 import LocalAuthentication
+import Network
 import ServiceManagement
 import SwiftUI
 import UniformTypeIdentifiers
@@ -101,8 +103,10 @@ struct EngineInfo: Decodable {
     var gateway_set: String?  // default on off：用户自己开关过没有
     var gateway_note: String? // 起不来的原因（端口被谁占着）
     var client_urls: [ClientURL]?   // 客户端能填的地址（0.5.1 只有本机一行；0.6 加局域网）
+    var networks_open: Int?         // 0.6：入口现在对几个网络开着门（一个都没勾时没有这一项）
+    var old_gateway: Bool?          // 0.6：还在跑的是上一版的入口（不认勾的网络）
 
-    private enum Field: String, CodingKey { case kind, kind_text, how_text, port, client_port, version, verdict, verdict_text, note, key, gateway, gateway_set, gateway_note, client_urls }
+    private enum Field: String, CodingKey { case kind, kind_text, how_text, port, client_port, version, verdict, verdict_text, note, key, gateway, gateway_set, gateway_note, client_urls, networks_open, old_gateway }
 
     init(from decoder: Decoder) throws {
         guard let c = try? decoder.container(keyedBy: Field.self) else { return }
@@ -112,6 +116,8 @@ struct EngineInfo: Decodable {
         port = try? c.decode(Int.self, forKey: .port)
         client_port = try? c.decode(Int.self, forKey: .client_port)
         client_urls = try? c.decode([ClientURL].self, forKey: .client_urls)
+        networks_open = try? c.decode(Int.self, forKey: .networks_open)
+        old_gateway = try? c.decode(Bool.self, forKey: .old_gateway)
         version = try? c.decode(String.self, forKey: .version)
         verdict = try? c.decode(String.self, forKey: .verdict)
         verdict_text = try? c.decode(String.self, forKey: .verdict_text)
@@ -291,7 +297,64 @@ struct ProgressInfo: Decodable {
 
 struct OllamaModel: Decodable { let name: String; let size_gb: Int }
 /// 客户端能填的一个地址：id 是 local（0.6 起还有 lan 等），url 带 /v1
-struct ClientURL: Decodable, Identifiable { let id: String; let name: String; let url: String }
+struct ClientURL: Decodable, Identifiable {
+    let id: String; let name: String; let url: String
+    var isLocal: Bool { id == "local" }
+    /// 不带 /v1 的地址：Chatbox、Cherry Studio 这类软件要填这个
+    var root: String { url.hasSuffix("/v1") ? String(url.dropLast(3)) : url }
+}
+
+/// engine networks show（0.6 按网络开门）：这台现在连着的一个网络。每个字段都可以没有：读不懂一项不能把整张表读坏
+struct NetworkRow: Decodable, Identifiable {
+    var id: String { (ident ?? "") + "@" + address }
+    var ident: String?        // 记号：lan:<指纹>、tailscale、virtual:<子网>；路由器还没认出来时没有
+    var kind = ""             // lan tailscale virtual
+    var name = ""
+    var address = ""
+    var on = false            // 勾了
+    var open = false          // 入口真的在这个地址上开着门
+    var url: String?
+    var host: String?         // Tailscale 里这台的名字
+    var host_url: String?     // 用名字写的地址（主机名.local、Tailscale 的名字）
+    var dhcp: Bool?           // 地址是路由器分配的，过一阵可能变
+    var absent: Bool?         // 勾过、现在没连着
+    var note: String?
+    var warning: String?      // 勾之前要说清的话
+
+    private enum Field: String, CodingKey { case id, kind, name, address, on, open, url, host, host_url, dhcp, absent, note, warning }
+
+    init(from decoder: Decoder) throws {
+        guard let c = try? decoder.container(keyedBy: Field.self) else { return }
+        ident = try? c.decode(String.self, forKey: .id)
+        kind = (try? c.decode(String.self, forKey: .kind)) ?? ""
+        name = (try? c.decode(String.self, forKey: .name)) ?? ""
+        address = (try? c.decode(String.self, forKey: .address)) ?? ""
+        on = (try? c.decode(Bool.self, forKey: .on)) ?? false
+        open = (try? c.decode(Bool.self, forKey: .open)) ?? false
+        url = try? c.decode(String.self, forKey: .url)
+        host = try? c.decode(String.self, forKey: .host)
+        host_url = try? c.decode(String.self, forKey: .host_url)
+        dhcp = try? c.decode(Bool.self, forKey: .dhcp)
+        absent = try? c.decode(Bool.self, forKey: .absent)
+        note = try? c.decode(String.self, forKey: .note)
+        warning = try? c.decode(String.self, forKey: .warning)
+    }
+}
+
+struct NetworkLimits: Decodable { let concurrent: Int; let per_minute: Int; let total: Int }
+
+struct NetworksView: Decodable {
+    var ok: Bool?
+    var can: Bool?            // 这台能不能按网络开门（单机、官方 oMLX、入口开着）
+    var why: String?          // 不能时的原因
+    var networks: [NetworkRow]?
+    var keep_awake: Bool?
+    var limits: NetworkLimits?
+    var old_gateway: Bool?
+    var why_closed: String?   // 勾着网络、入口却没在运行
+    var note: String?         // 刚做完一次操作的回话
+    var error: String?
+}
 struct Keys: Decodable { let note: String; let sub_keys: [SubKey]; let can_disable: Bool? }   // can_disable：入口开着且在这台，停用才起作用
 struct SubKey: Decodable, Identifiable {
     let name: String
@@ -355,8 +418,12 @@ struct CoveredKey: Decodable, Identifiable {
     let hint: String
     var disabled: Bool? = nil
     let on: [String]
+    var last_used: LastUsed? = nil   // 0.6：最近一次经入口调用（官方版才有）
+    var short: Bool? = nil           // 0.6：少于 32 个字符，别的设备用不了
     var id: String { name + hint }
 }
+/// 一把子密钥最近一次经入口调用：什么时候、从哪个地址、走的哪条路（local lan tailscale virtual）
+struct LastUsed: Decodable { let at: String; let from: String; let via: String }
 
 /// 机器顺序：每次刷新按 status 的 order 更新（clusterctl 读 cluster.json）；记在偏好里，下次打开时读到之前也能先画出卡片
 var nodeOrder = UserDefaults.standard.stringArray(forKey: "nodeOrder") ?? []
@@ -969,6 +1036,7 @@ final class Console: ObservableObject {
             let key = localKey ?? nodeOrder.first
             parts = [key.map { headState($0, named: false) } ?? L("读取中…")]
             if node(key ?? "")?.up == true { parts.append(L("客户端连 127.0.0.1:\(clientPort)")) }
+            if let open = engine?.networks_open, open > 0 { parts.append(L("对 \(open) 个网络开着")) }   // 0.6：门开着要一眼看得到
         }
         return (parts + [time].compactMap { $0 }).joined(separator: " · ")
     }
@@ -1172,6 +1240,103 @@ final class Console: ObservableObject {
                 if what != "ensure" || text != nil { self.append("▶ " + (what == "on" ? L("打开入口") : what == "off" ? L("关掉入口") : L("启动入口")), false) }
                 if let text { self.append(text, failed) }
                 self.engineError = failed ? text : nil   // 设置窗口里也写一行
+                self.refresh(full: true)
+            }
+        }
+    }
+
+    // MARK: 0.6 按网络开门
+
+    @Published var networks: NetworksView?
+    @Published var networksBusy = false
+    @Published var networksError: String?
+    private var pathMonitor: NWPathMonitor?
+    private var pathStamp = 0
+
+    /// 这台现在连着哪些网络、勾了哪些、哪些门开着。要读网卡，所以只在打开设置的 oMLX 页、连接客户端页时查，不进 10 秒一次的刷新
+    func loadNetworks() {
+        guard !Backend.isManager, !Backend.isPreview, engine?.official == true else { return }
+        watchNetworkChanges()
+        DispatchQueue.global().async {
+            let view = lastJSON(Backend.run(["engine", "networks", "show", "--json"]).out, as: NetworksView.self)
+            DispatchQueue.main.async { if let view, view.networks != nil { self.networks = view } }
+        }
+    }
+
+    /// 系统说网络变了（换 Wi-Fi、插拔网线、组网软件连上或断开）：等几秒让入口先把门对好，再重读一遍。靠系统通知，不轮询。
+    /// 只在看过网络列表以后才听；地址列表本身跟着 10 秒一次的刷新走，不靠这里
+    private func watchNetworkChanges() {
+        guard pathMonitor == nil else { return }
+        let monitor = NWPathMonitor()
+        monitor.pathUpdateHandler = { [weak self] _ in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                self.pathStamp += 1
+                let stamp = self.pathStamp
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    guard stamp == self.pathStamp else { return }   // 换网络时通知是一串，只认最后一个
+                    self.loadNetworks()
+                    self.refresh(full: true)
+                }
+            }
+        }
+        monitor.start(queue: DispatchQueue.global(qos: .utility))
+        pathMonitor = monitor
+    }
+
+    /// 勾或取消一个网络。勾之前把后果说清（话由后端给，和命令行同一段）
+    func setNetwork(_ row: NetworkRow, on: Bool) {
+        guard let ident = row.ident, !networksBusy, on != row.on else { objectWillChange.send(); return }
+        if on {
+            guard confirm(row.kind == "lan" ? L("让这个网络里的设备用这台的模型？") : L("让这个虚拟网络里的设备用这台的模型？"), row.warning ?? "", ok: L("打开")) else { objectWillChange.send(); return }
+        }
+        runNetworks(on ? ["on", ident, "yes=1"] : ["off", ident], label: on ? L("对「\(row.name)」开门") : L("对「\(row.name)」关门"))
+    }
+
+    /// Chatbox 的导入链接（里面有子密钥）：只在内存里，给当场扫码用，60 秒后清掉
+    @Published var chatboxLink = ""
+    @Published var chatboxName = ""
+
+    /// 新建一把子密钥，建好以后现读出来，拼成 Chatbox 的导入链接（连接客户端页据此出二维码）。root 是别的设备能连的根地址
+    func createSubKeyForChatbox(_ name: String, root: String, models: [String]) {
+        guard !name.isEmpty, !Backend.isManager else { return }
+        perform(L("新建子密钥「\(name)」"), ["subkey", "create", name], showLog: false, onDone: { ok in
+            guard ok else { return }
+            DispatchQueue.global().async {
+                struct Reply: Decodable { let ok: Bool; let key: String }
+                let reply = lastJSON(Backend.run(["subkey", "reveal", name]).out, as: Reply.self)
+                DispatchQueue.main.async {
+                    guard let secret = reply?.key, reply?.ok == true, let link = chatboxImportLink(secret: secret, root: root, models: models, website: AboutSettings.homepage) else { return }
+                    self.chatboxName = name
+                    self.chatboxLink = link
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 60) { if self.chatboxLink == link { self.chatboxLink = "" } }
+                }
+            }
+        })
+    }
+
+    func setKeepAwake(_ on: Bool) {
+        runNetworks(["awake", on ? "on" : "off"], label: on ? L("打开「开着网络时不让这台睡眠」") : L("关闭「开着网络时不让这台睡眠」"))
+    }
+
+    private func runNetworks(_ args: [String], label: String) {
+        guard !Backend.isManager, !Backend.isPreview else { return }
+        networksBusy = true
+        DispatchQueue.global().async {
+            let r = Backend.run(["engine", "networks"] + args + ["--json"])
+            let view = lastJSON(r.out, as: NetworksView.self)
+            DispatchQueue.main.async {
+                self.networksBusy = false
+                self.append("▶ " + label, false)
+                if let view, view.networks != nil {
+                    self.networks = view
+                    if let note = view.note { self.append(note, false) }
+                    self.networksError = nil
+                } else {
+                    let text = view?.error ?? failureText(r)
+                    self.append(text, true)
+                    self.networksError = text
+                }
                 self.refresh(full: true)
             }
         }
@@ -3821,6 +3986,12 @@ struct KeySheet: View {
     @State private var loading = false
     @State private var revealed: [String: String] = [:]   // 正在显示完整密钥的那几行（"" 是主密钥）；10 秒后收起，不存
     @State private var copied = ""                         // 刚复制了哪一项，那个按钮短暂写"已复制"
+    @State private var qrFor = ""                          // 正在出哪个地址的二维码
+    @State private var app = ClientApp.chatbox             // "我用的是"
+    @State private var appURL = ""                         // 给哪个地址看填法（空着就是第一个别的设备能连的）
+    var startExpanded = false                              // 两块折叠的说明一开始就展开（界面预览出图用；平时收着）
+    @State private var showApps = false
+    @State private var showTrouble = false
 
     private var localUp: Bool { console.localKey.flatMap { console.node($0)?.up } == true }
     private var order: [String] { coverage?.order ?? nodeOrder }
@@ -3839,6 +4010,27 @@ struct KeySheet: View {
     private var modelNames: [(id: String, loaded: Bool)] {
         guard let key = console.localKey, let n = console.node(key) else { return [] }
         return console.models(on: key).compactMap { m in console.model(m, on: key).map { (id: $0.id, loaded: n.models[m] == "loaded") } }
+    }
+    /// 0.6：这台是官方 oMLX 的单机——能让别的设备连进来的那种
+    private var lanCapable: Bool { console.engine?.official == true && !Backend.isManager }
+    /// 别的设备能连的地址（入口现在开着门的那几个）
+    private var outside: [ClientURL] { urls.filter { !$0.isLocal } }
+    /// 给"怎么填"和二维码用的那个地址：选过的，不然第一个别的设备能连的，再不然本机
+    private var shownURL: ClientURL? { urls.first { $0.url == appURL } ?? outside.first ?? urls.first }
+    /// 填法里写的模型：加载着的第一个，没有就这台的第一个；连带它在这台的上下文
+    private var shownModel: (id: String, context: Int?) {
+        guard let key = console.localKey, let n = console.node(key) else { return (L("<模型名>"), nil) }
+        let all = console.models(on: key)
+        guard let m = all.first(where: { n.models[$0] == "loaded" }) ?? all.first, let meta = console.model(m, on: key) else { return (L("<模型名>"), nil) }
+        return (meta.id, n.contexts?[m].map { $0.live ?? $0.setting })
+    }
+    /// 一个地址在网络列表里的那一行（备选的名字、地址会不会变）
+    private func network(of u: ClientURL) -> NetworkRow? { console.networks?.networks?.first { $0.url == u.url } }
+
+    /// 给 Chatbox 的导入链接里放哪些模型：加载着的；一个都没加载就这台全部的
+    private var chatboxModels: [String] {
+        let loaded = modelNames.filter { $0.loaded }
+        return (loaded.isEmpty ? modelNames : loaded).map { $0.id }
     }
 
     private func reload() {
@@ -3910,23 +4102,46 @@ struct KeySheet: View {
                         HStack(spacing: 6) {
                             Button(copied == u.url ? L("已复制") : L("复制")) { copyPlain(u.url, mark: u.url) }
                             Button(copied == u.url + "#root" ? L("已复制") : L("复制根地址")) {
-                                copyPlain(u.url.hasSuffix("/v1") ? String(u.url.dropLast(3)) : u.url, mark: u.url + "#root")
+                                copyPlain(u.root, mark: u.url + "#root")
                             }
                             .help(L("不带 /v1 的地址。Chatbox、Cherry Studio 这类软件要填这个"))
+                            if !u.isLocal {
+                                Button { qrFor = u.url } label: { Image(systemName: "qrcode") }
+                                    .help(L("出这个地址的二维码（里面只有地址，没有密钥），手机扫了能复制"))
+                                    .popover(isPresented: Binding(get: { qrFor == u.url }, set: { if !$0 { qrFor = "" } }), arrowEdge: .bottom) {
+                                        QRCard(text: u.url, caption: L("\(u.url)\n只有地址，没有密钥。密钥在那台设备上另外填。"))
+                                    }
+                            }
                         }
                         .controlSize(.small)
                     }
+                    if let row = network(of: u), let named = Optional(row.host_url.flatMap { h in urls.first { network(of: $0)?.host_url == h }?.id == u.id ? h : nil }), named != nil || row.dhcp == true {
+                        GridRow {
+                            Text("")
+                            VStack(alignment: .leading, spacing: 2) {
+                                if let named {
+                                    Text(L("也可以写成 \(named)")).font(.callout).foregroundStyle(.secondary).textSelection(.enabled)
+                                }
+                                if row.dhcp == true {
+                                    Text(L("这个地址是路由器分配的，可能会变：在路由器里给这台 Mac 固定地址。")).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                                }
+                            }
+                            if let named {
+                                Button(copied == named ? L("已复制") : L("复制")) { copyPlain(named, mark: named) }.controlSize(.small)
+                            } else { Text("") }
+                        }
+                    }
                 }
-                if !Backend.isManager {
+                if lanCapable && outside.isEmpty {
                     GridRow {
                         Text("")
                         HStack(spacing: 8) {
                             Tag(text: L("局域网"))
-                            Text(L("0.6 起支持")).foregroundStyle(.tertiary)
+                            Text(L("没开。别的电脑、手机要连这台，到设置的 oMLX 页勾上要开的网络")).foregroundStyle(.secondary)
                         }
-                        Text("")
+                        SettingsButton(title: L("去设置"), tab: .omlx).controlSize(.small)
                     }
-                    .help(L("上面的地址只在这台 Mac 上能用。让别的电脑、手机连这台，在 0.6 版支持"))
+                    .help(L("上面的地址只在这台 Mac 上能用。勾上一个网络以后，这里会多出那个网络的地址"))
                 }
                 if modelNames.isEmpty {
                     GridRow {
@@ -3942,7 +4157,7 @@ struct KeySheet: View {
                             Text(verbatim: pair.element.id).font(.system(.body, design: .monospaced)).textSelection(.enabled)
                                 .foregroundStyle(pair.element.loaded ? Color.primary : Color.secondary).lineLimit(1).truncationMode(.middle)
                                 .layoutPriority(1)   // 模型名要让人看全（照着填的）；挤的时候先缩后面那句灰字（界面验收 11-22：英文下模型名被截）
-                            if !pair.element.loaded { Text(L("加载后可用")).font(.callout).foregroundStyle(.tertiary).lineLimit(1) }
+                            if !pair.element.loaded { Text(L("加载后可用")).font(.callout).foregroundStyle(.tertiary).lineLimit(1).layoutPriority(1) }   // 0.6：这一栏变窄了，名字太长时截名字，不截这句
                         }
                         Button(copied == pair.element.id ? L("已复制") : L("复制")) { copyPlain(pair.element.id, mark: pair.element.id) }.controlSize(.small)
                     }
@@ -3955,6 +4170,54 @@ struct KeySheet: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(4)
         } label: { Label(L("客户端怎么填"), systemImage: "link") }
+    }
+
+    /// 选一个软件，看它里面各个框填什么；能整段复制
+    private var perApp: some View {
+        let u = shownURL, model = shownModel
+        let text = app.steps(v1: u?.url ?? "", root: u?.root ?? "", model: model.id, context: model.context)
+        return DisclosureGroup(L("各个软件里怎么填"), isExpanded: $showApps) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 12) {
+                    Picker(L("我用的是"), selection: $app) {
+                        ForEach(ClientApp.allCases) { Text($0.title).tag($0) }
+                    }
+                    .fixedSize()
+                    if urls.count > 1 {
+                        Picker(L("连哪个地址"), selection: Binding(get: { shownURL?.url ?? "" }, set: { appURL = $0 })) {
+                            ForEach(urls) { Text($0.name + " " + $0.root).tag($0.url) }
+                        }
+                        .fixedSize()
+                    }
+                    Spacer()
+                    Button(copied == "#steps" ? L("已复制") : L("复制这一段")) { copyPlain(text, mark: "#steps") }.controlSize(.small)
+                }
+                Text(verbatim: text).font(.system(.callout, design: .monospaced)).textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading).padding(8)
+                    .background(RoundedRectangle(cornerRadius: 6).fill(Color.secondary.opacity(0.08)))
+                if u?.isLocal == true && lanCapable {
+                    Text(L("这是本机的地址，只有这台 Mac 上的软件能用。给别的设备用，先在设置的 oMLX 页勾上一个网络。")).font(.callout).foregroundStyle(.secondary)
+                }
+            }
+            .padding(.top, 6)
+        }
+    }
+
+    private var troubleshooting: some View {
+        DisclosureGroup(L("别的设备连不上怎么办"), isExpanded: $showTrouble) {
+            VStack(alignment: .leading, spacing: 5) {
+                ForEach([L("1. 这台的设置 → oMLX 里，那个网络勾上了吗？上面的地址列表里有它那一行才算开着。"),
+                         L("2. 两台设备在同一个网络里吗？访客 Wi-Fi 通常不让设备互相连。在外面用要走组网软件，两边都登录同一个网络。"),
+                         L("3. iPhone、iPad 上那个 App 的「本地网络」权限开了吗？（系统设置 → 隐私与安全性 → 本地网络）第一次弹框点了不允许，之后不会再问。"),
+                         L("4. 这台的地址变了吗？路由器分配的地址会变，以上面列表里现在的为准。"),
+                         L("5. 这台睡眠了吗？睡着了连不上。可以在设置的 oMLX 页打开「开着网络时不让这台睡眠」。"),
+                         L("6. 密钥连错 8 次，那台设备会被锁 30 秒，等一会儿再试。少于 32 个字符的子密钥别的设备用不了，新建一把。"),
+                         L("7. 这台的系统防火墙拦了吗？点主窗口底部的体检，它会查。")], id: \.self) { line in
+                    Text(line).font(.callout).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .padding(.top, 6)
+        }
     }
 
     private var subKeys: some View {
@@ -3973,6 +4236,7 @@ struct KeySheet: View {
                         Text(L("密钥")).foregroundStyle(.secondary)
                         Text(L("建于")).foregroundStyle(.secondary)
                         Text(L("状态")).foregroundStyle(.secondary)
+                        if lanCapable { Text(L("最近使用")).foregroundStyle(.secondary) }
                         if many { Text(L("在哪几台")).foregroundStyle(.secondary) }
                         Text("")
                     }
@@ -3986,7 +4250,16 @@ struct KeySheet: View {
                                 secretText(k.name, hint: k.hint)
                             }
                             Text(String(k.created_at.prefix(10))).monospacedDigit()
-                            Text(off ? L("已停用") : L("能用")).foregroundStyle(off ? Color.orange : Color.green).fixedSize()
+                            Text(off ? L("已停用") : k.short == true ? L("只能本机用") : L("能用")).foregroundStyle(off || k.short == true ? Color.orange : Color.green).fixedSize()
+                                .help(k.short == true && !off ? L("这把少于 32 个字符，容易被猜到，别的设备经入口用不了。给别的设备新建一把") : "")
+                            if lanCapable {
+                                if let used = k.last_used {
+                                    Text(verbatim: String(used.at.dropFirst(5).prefix(11)) + " · " + (used.via == "local" ? L("本机") : used.from)).font(.callout).monospacedDigit().foregroundStyle(.secondary).fixedSize()
+                                        .help(L("最近一次经入口调用：\(used.at)，来自 \(used.from)"))
+                                } else {
+                                    Text(verbatim: "—").foregroundStyle(.tertiary).help(L("入口的记录里还没有这把的调用"))
+                                }
+                            }
                             if many {
                                 HStack(spacing: 8) {
                                     ForEach(order, id: \.self) { node in
@@ -4033,6 +4306,17 @@ struct KeySheet: View {
                     newName = ""
                 }
                 .disabled(!localUp || console.running != nil || newName.trimmingCharacters(in: .whitespaces).isEmpty)
+                if lanCapable && !outside.isEmpty {
+                    Button(L("新建并出 Chatbox 二维码")) {
+                        if let root = outside.first?.root { console.createSubKeyForChatbox(newName.trimmingCharacters(in: .whitespaces), root: root, models: chatboxModels) }
+                        newName = ""
+                    }
+                    .disabled(!localUp || console.running != nil || newName.trimmingCharacters(in: .whitespaces).isEmpty || modelNames.isEmpty)
+                    .help(L("给手机上的 Chatbox 用：新建一把子密钥，出一个二维码，手机扫一下，地址、模型和密钥就都填好了。二维码里有这把密钥，只显示 60 秒"))
+                    .popover(isPresented: Binding(get: { !console.chatboxLink.isEmpty }, set: { if !$0 { console.chatboxLink = "" } }), arrowEdge: .top) {
+                        QRCard(text: console.chatboxLink, caption: L("用手机的相机扫，会打开 Chatbox 并填好地址、模型和子密钥「\(console.chatboxName)」。\n这个二维码里有密钥：不要截图，不要发给别人。60 秒后自动收起。"), side: 320)
+                    }
+                }
             }
         }
     }
@@ -4057,15 +4341,24 @@ struct KeySheet: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text(L("连接客户端")).font(.title2.bold())
-            if let e = console.engine, e.keyBlocked {
-                Text(L("这台的 oMLX 是官方版，还没允许控制台读它的主密钥：子密钥看不到，也建不了。到设置的 oMLX 页允许。"))
-                    .fixedSize(horizontal: false, vertical: true).foregroundStyle(.orange)
+            // 0.6：地址多了、两块说明展开以后，这一页会比小屏幕的 Mac 还高。正文放进能滚动的框，高度不超过屏幕能放下的；标题和"完成"留在外面，总看得到
+            ScrollView {
+                VStack(alignment: .leading, spacing: 14) {
+                    if let e = console.engine, e.keyBlocked {
+                        Text(L("这台的 oMLX 是官方版，还没允许控制台读它的主密钥：子密钥看不到，也建不了。到设置的 oMLX 页允许。"))
+                            .fixedSize(horizontal: false, vertical: true).foregroundStyle(.orange)
+                    }
+                    howTo
+                    perApp
+                    if lanCapable { troubleshooting }
+                    Divider()
+                    subKeys
+                    Divider()
+                    mainKey
+                }
+                .padding(.trailing, 2)
             }
-            howTo
-            Divider()
-            subKeys
-            Divider()
-            mainKey
+            .frame(maxHeight: max(360, (NSScreen.main?.visibleFrame.height ?? 900) - 230))
             Divider()
             HStack {
                 if let r = console.lastResult { Text(r.text).foregroundStyle(r.ok ? .green : .red).lineLimit(2) }
@@ -4075,9 +4368,17 @@ struct KeySheet: View {
             .controlSize(.large)
         }
         .padding(22)
-        .frame(width: many ? 820 : 720)
-        .onAppear { reload() }
-        .onChange(of: console.running) { if console.running == nil { reload() } }
+        .frame(width: many ? 900 : lanCapable ? 800 : 720)
+        .onAppear {
+            reload()
+            console.loadNetworks()
+            if startExpanded { showApps = true; showTrouble = true }
+        }
+        .onChange(of: console.running) {
+            guard console.running == nil else { return }
+            reload()
+        }
+        .onDisappear { console.chatboxLink = "" }
     }
 }
 
@@ -5085,8 +5386,141 @@ struct OMLXSettings: View {
                 }
             }
             if let e = console.engine { EngineSection(engine: e) }
+            if console.engine?.official == true, !Backend.isManager { NetworksSection() }
         }
         .formStyle(.grouped)
+    }
+}
+
+/// 0.6 按网络开门：列出这台现在连着的网络，勾哪个，入口就在哪个网络上开门。默认都不勾。只有装官方 oMLX 的机器有这一节
+struct NetworksSection: View {
+    @EnvironmentObject var console: Console
+
+    private func detail(_ row: NetworkRow) -> String? {
+        if let note = row.note { return note }
+        if row.on && !row.open { return L("勾着，但入口还没在这个网络上开门。") }
+        if row.dhcp == true && row.on { return L("这个地址是路由器分配的，过一阵可能会变。在路由器里给这台 Mac 固定地址，别的设备就不用改配置。") }
+        return nil
+    }
+
+    private func caption(_ text: String, _ color: Color = .secondary) -> some View {
+        Text(text).font(.callout).foregroundStyle(color).fixedSize(horizontal: false, vertical: true)
+    }
+
+    var body: some View {
+        Section {
+            if let view = console.networks, let rows = view.networks {
+                if view.can != true, let why = view.why { caption(why, .orange) }
+                if let closed = view.why_closed { caption(closed, .orange) }
+                if view.old_gateway == true { caption(L("还在运行的是上一版的入口。勾一个网络时，会等它把正在回答的请求答完，再换成新的。")) }
+                if rows.isEmpty { caption(L("这台现在没有连着能开门的网络（Wi-Fi、网线，或组网软件的虚拟网络）。")) }
+                ForEach(rows) { row in
+                    Toggle(isOn: Binding(get: { row.on }, set: { console.setNetwork(row, on: $0) })) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            HStack(spacing: 8) {
+                                Text(row.name)
+                                if !row.address.isEmpty {
+                                    Text(verbatim: row.host.map { row.address + " · " + $0 } ?? row.address).font(.system(.callout, design: .monospaced)).foregroundStyle(.secondary).textSelection(.enabled)
+                                }
+                                if row.open { Tag(text: L("开着")) }
+                            }
+                            if let text = detail(row) { caption(text) }
+                        }
+                    }
+                    .disabled(console.networksBusy || row.ident == nil || (view.can != true && !row.on))
+                }
+                Toggle(isOn: Binding(get: { view.keep_awake == true }, set: { console.setKeepAwake($0) })) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(L("开着网络时不让这台睡眠"))
+                        caption(L("这台睡着了，别的设备就连不上。打开后，有网络开着门、又接着电源时不会自己睡眠；用电池时、合上笔记本的盖子时照常睡。"))
+                    }
+                }
+                .disabled(console.networksBusy)
+                if let l = view.limits {
+                    caption(L("别的设备来的请求：每把子密钥同时 \(l.concurrent) 个（多的排队）、每分钟 \(l.per_minute) 个，所有设备合计同时 \(l.total) 个；本机的不限。密钥连错 8 次，那台设备先锁 30 秒。"))
+                }
+                caption(L("默认都不开。勾哪个网络，入口就只在那个网络上开门，oMLX 自己仍然只听本机。家里的网络不加密，只在自己的家庭、办公室网络里开；换到别的 Wi-Fi 会自动关上，回来自动恢复。要在外面用，在这台和手机上装同一个组网软件（Tailscale、蒲公英、EasyTier 等），再勾它的网络。每台设备用它自己的子密钥，在密钥页新建。"))
+                if let e = console.networksError { Text(e).font(.callout).foregroundStyle(.red).fixedSize(horizontal: false, vertical: true).textSelection(.enabled) }
+                HStack(spacing: 10) {
+                    Button(L("重新读取网络")) { console.loadNetworks() }.disabled(console.networksBusy)
+                    if console.networksBusy { ProgressView().controlSize(.small) }
+                }
+            } else {
+                caption(L("正在读取这台的网络…"))
+            }
+        } header: { Text(L("让这些网络里的设备用这台的模型")) }
+        .onAppear { console.loadNetworks() }
+    }
+}
+
+/// 把一段字画成二维码（系统自带的 CoreImage，不加依赖）。放大时不做平滑，黑白格子要锐利
+func qrImage(_ text: String, side: CGFloat = 240) -> NSImage? {
+    let filter = CIFilter.qrCodeGenerator()
+    filter.message = Data(text.utf8)
+    filter.correctionLevel = "M"
+    guard let output = filter.outputImage, output.extent.width > 0 else { return nil }
+    let scale = max(1, (side / output.extent.width).rounded(.down))
+    let rep = NSCIImageRep(ciImage: output.samplingNearest().transformed(by: CGAffineTransform(scaleX: scale, y: scale)))
+    let image = NSImage(size: rep.size)
+    image.addRepresentation(rep)
+    return image
+}
+
+/// Chatbox 的一键导入链接（它的文档 docs.chatboxai.app 的"导入第三方提供方配置"：chatbox://provider/import?config=<Base64 的 JSON>，1.15.1 起）。
+/// JSON 里：id、name、type（只有 openai）、iconUrl、urls.website、settings.apiHost（不带 /v1 的根地址）、settings.apiKey、settings.models[].modelId。
+/// Base64 里的 + / = 在网址里要转义。没有模型时不出（它要求至少给模型列表）
+func chatboxImportLink(secret: String, root: String, models: [String], website: String) -> String? {
+    guard !models.isEmpty, !root.isEmpty else { return nil }
+    let config: [String: Any] = ["id": "modeltower-" + (URL(string: root)?.host ?? "mac"), "name": "ModelTower", "type": "openai", "iconUrl": "",
+                                 "urls": ["website": website], "settings": ["apiHost": root, "apiKey": secret, "models": models.map { ["modelId": $0] }]]
+    guard let data = try? JSONSerialization.data(withJSONObject: config, options: [.sortedKeys]) else { return nil }
+    var allowed = CharacterSet.alphanumerics
+    allowed.insert(charactersIn: "-._~")
+    return "chatbox://provider/import?config=" + (data.base64EncodedString().addingPercentEncoding(withAllowedCharacters: allowed) ?? "")
+}
+
+/// 二维码加一句说明；白底留边，深色模式下手机也扫得出
+struct QRCard: View {
+    let text: String
+    let caption: String
+    var side: CGFloat = 240
+    var body: some View {
+        VStack(spacing: 10) {
+            if let image = qrImage(text, side: side) {
+                Image(nsImage: image).interpolation(.none).padding(10).background(Color.white)
+            } else {
+                Text(L("这段内容太长，画不成二维码。")).foregroundStyle(.secondary)
+            }
+            Text(caption).font(.callout).multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true).frame(width: 260)
+        }
+        .padding(16)
+    }
+}
+
+/// 连接客户端页"我用的是"下拉里的软件。填法照各软件的文档写（0.6 调研报告第 7.1 节）
+enum ClientApp: String, CaseIterable, Identifiable {
+    case chatbox = "Chatbox", cherry = "Cherry Studio", openwebui = "Open WebUI", continueDev = "Continue", cline = "Cline / Roo Code", dsh = "dsh", other = "other"
+    var id: String { rawValue }
+    var title: String { self == .other ? L("其他 OpenAI 兼容的软件") : rawValue }
+
+    /// 这个软件里怎么填。v1 是带 /v1 的地址，root 不带；模型没有时写占位的字
+    func steps(v1: String, root: String, model: String, context: Int?) -> String {
+        switch self {
+        case .chatbox:
+            return L("设置 → 模型提供方 → 添加，API 类型选「OpenAI API 兼容」：\nAPI Host：\(root)\nAPI Path：留空（它会自己补 /v1/chat/completions；这里再写 /v1 会连不上）\nAPI Key：这台设备的子密钥\n模型：\(model)")
+        case .cherry:
+            return L("设置 → 模型服务 → 添加：\nAPI 地址：\(root)（不带 /v1，它会自己补）\nAPI 密钥：这台设备的子密钥\n模型 ID：\(model)")
+        case .openwebui:
+            return L("管理员设置 → Connections（外部连接）→ OpenAI → 添加：\nURL：\(v1)\nKey：一把子密钥\n保存后在模型列表里选 \(model)。它由服务器去连这台，所以填的是 Open WebUI 所在那台电脑能连到的地址。")
+        case .continueDev:
+            return "# " + L("加进 Continue 的 config.yaml 的 models 里：") + "\n  - name: ModelTower\n    provider: openai\n    model: \(model)\n    apiBase: \(v1)\n    apiKey: " + L("<这台设备的子密钥>")
+        case .cline:
+            return L("API Provider 选「OpenAI Compatible」：\nBase URL：\(v1)\nAPI Key：这台设备的子密钥\nModel ID：\(model)")
+        case .dsh:
+            return "# " + L("加进那台电脑的 ~/.dsh/profiles/desktop/cordis.patch.yml 的 providers 里；子密钥放 ~/.dsh/.credentials.yaml，名字和 apiKeyEnv 一样：") + "\nmodeltower:\n  displayName: \"ModelTower\"\n  api: openai-completions\n  baseURL: \"\(v1)\"\n  apiKeyEnv: MODELTOWER_KEY\n  streamIdleTimeoutMs: 3600000\n  models:\n    - id: \"\(model)\"\n      name: \"\(model)\"" + (context.map { "\n      contextWindow: \($0)" } ?? "")
+        case .other:
+            return L("选「OpenAI 兼容」或「自定义接口」：\n地址：\(v1)（有的软件要不带 /v1 的：\(root)）\n密钥：这台设备的子密钥\n模型：\(model)")
+        }
     }
 }
 
@@ -5372,8 +5806,30 @@ let guideForManager = GuideSection(title: L("这一份是管理版"), rows: [
 ])
 
 /// 教程正文。dsh：这台检测到了 dsh 才讲它那一句；讲主机模式、最高密码、安全芯片的几句只在 Backend.showsHub 时出现（公开版这次不发布）
-func guideSections(dsh: Bool) -> [GuideSection] {
+func guideSections(dsh: Bool, lan: Bool = false) -> [GuideSection] {
     let hub = Backend.showsHub, pairing = Backend.showsPairing   // pairing：公开版 0.5.1 是单机版，联机那一章换成预告（已定第 33 条）
+    // lan（0.6）：这台是装官方 oMLX 的单机，能按网络开门。两章只在这时出现
+    let lanSections: [GuideSection] = !lan ? [] : [
+    GuideSection(title: L("让别的设备用这台的模型"), rows: [
+        L("手机、笔记本上的聊天和写代码软件，可以调用这台 Mac 上的模型。默认不开：要你在这台上勾了哪个网络，那个网络里的设备才连得进来。"),
+        L("1. 点右上角**设置**，到 **oMLX** 页，在「让这些网络里的设备用这台的模型」里勾上家里的网络（Wi-Fi 或网线）。勾的时候会把后果说清，点**打开**才生效。"),
+        L("2. 点左下角**密钥**：地址多出一行「局域网」，像 `http://192.168.x.y:8900/v1`，能复制，也能出二维码。"),
+        L("3. 给每台设备新建一把它自己的子密钥（**新建并复制**），名字写清是哪台、哪个软件，比如 iphone-chatbox。哪台丢了、不用了，只对它那一把点**停用**或**删除…**。"),
+        L("4. 在那台设备的软件里选「OpenAI 兼容」，填地址、模型名、子密钥。密钥页的「各个软件里怎么填」写了常见软件每个框填什么。手机上用 Chatbox 的话，点**新建并出 Chatbox 二维码**，扫一下就填好。"),
+        L("家里的网络不加密：同一个网络里的人有可能看到密钥和对话。只在自己的家庭、办公室网络里开，别在公司访客网、酒店、咖啡店开。"),
+        L("带着这台 Mac 换到别的 Wi-Fi，门会自动关上，回到勾过的那个网络自动恢复；新的网络要再勾一次。"),
+        L("别的设备只能调用已经加载的模型，不能加载、卸载，也进不了管理页。每把子密钥同时最多 2 个请求，多的排队；密钥连错 8 次，那台设备先锁 30 秒。这台自己的软件不受这些限制。"),
+        L("连不上时，密钥页最下面的「别的设备连不上怎么办」逐条写了要看什么。"),
+    ], key: "lan"),
+    GuideSection(title: L("在外面用（组网软件）"), rows: [
+        L("想在外面（手机用流量、在别处的 Wi-Fi）也用这台的模型，靠组网软件：它把你的几台设备连成一个只有你能进的加密网络，像在同一个 Wi-Fi 里一样。这台不用开公网端口。"),
+        L("1. 在这台 Mac 和手机上装同一个组网软件，登录同一个账号或加入同一个网络。常见的：Tailscale（海外用得多，个人免费）、蒲公英（国内，现成）、EasyTier（开源，可以全部自己搭）、ZeroTier。"),
+        L("2. 回到**设置**的 **oMLX** 页，列表里会多出它的网络（认得出是 Tailscale 就写 Tailscale，别的写「其他虚拟网络」），勾上。"),
+        L("3. 手机上的软件填**密钥**页里那个网络的那一行地址，别的和在家里一样。"),
+        L("这个虚拟网络里的每台设备都连得到入口，所以别和外人共用它，网络的密码设复杂一些；子密钥照样一台设备一把。"),
+        L("这台停电重启以后，有的组网软件要等你登录桌面才运行，这之前在外面连不上。"),
+    ], key: "away"),
+    ]
     return [
     GuideSection(title: L("这是什么"), rows: [
         L("把开源大模型跑在你自己的 Mac 上。启动服务、加载和切换模型、发密钥给客户端，都在这一个窗口里。"),
@@ -5410,8 +5866,9 @@ func guideSections(dsh: Bool) -> [GuideSection] {
     ], key: "add-machine") : GuideSection(title: L("联机（1.0 推出）"), rows: [
         L("这一版是单机版，管这一台 Mac。多台 Mac 联机在 1.0 正式版推出：一个窗口管几台，每台跑不同的模型。"),
         L("左下角**机器**里的**添加机器**、**本机授权**两页先放着预告；**顺序和名字**现在就能改这台卡片的显示名。"),
-        L("0.6 先让局域网里的别的设备（手机、笔记本）调用这台的模型。"),
+        L("局域网里的别的设备（手机、笔记本）现在就能调用这台的模型，见「让别的设备用这台的模型」一章。"),
     ], key: "add-machine"),
+    ] + lanSections + [
     GuideSection(title: L("关机和安全"), rows: [
         L("关机时点确认，再按一下指纹或输 Mac 密码，不用提前设置。"),
     ] + (hub ? [L("自己在局域网里用，这样就够了。想更严，到**安全**页打开高级保护：最高密码和安全芯片都是可选的，开了哪样查哪样。启用主机模式要先设最高密码。")] : []) + [
@@ -5434,9 +5891,9 @@ func guideSections(dsh: Bool) -> [GuideSection] {
 struct GuideSettings: View {
     @EnvironmentObject var console: Console
     /// 管理版不跑模型，这几节讲的是设备版的事
-    private static let deviceOnly = ["first-run", "close-quit", "add-machine"]
+    private static let deviceOnly = ["first-run", "close-quit", "add-machine", "lan", "away"]
     private var sections: [GuideSection] {
-        let all = guideSections(dsh: console.status?.tools?.dsh == true)   // 检测到 dsh 才讲它（没读到状态时不讲）
+        let all = guideSections(dsh: console.status?.tools?.dsh == true, lan: console.engine?.official == true)   // 检测到 dsh 才讲它（没读到状态时不讲）；装官方 oMLX 才讲按网络开门
         return Backend.isManager ? [guideForManager] + all.filter { !Self.deviceOnly.contains($0.key) } : all
     }
 
