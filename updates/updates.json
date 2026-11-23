@@ -1,14 +1,37 @@
 {
  "schema": 1,
- "issued": "2026-11-22T12:13:56Z",
+ "issued": "2026-11-23T04:31:35Z",
  "compat": {
   "schema": 1,
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "about": "oMLX compatibility table shipped with the console. Each installer is pinned by SHA-256 (a version number alone is not enough). state: verified, works (usable with known gaps), testing, old (too old, please upgrade).",
   "minimum": "0.8.0",
-  "recommended": "0.8.2",
-  "tested_max": "0.8.2",
+  "recommended": "0.8.3",
+  "tested_max": "0.8.3",
   "versions": [
+   {
+    "version": "0.8.3",
+    "state": "verified",
+    "published": "2026-11-22",
+    "cmax_fix": true,
+    "packages": [
+     {
+      "system": "macos26",
+      "file": "oMLX-0.8.3-macos26-27.dmg",
+      "size": 945803503,
+      "sha256": "a3985ac20f53a5a9a1656ec19353e00ff0a628aae1285bfa5164fd600217af07",
+      "url": "https://github.com/jundot/omlx/releases/download/v0.8.3/oMLX-0.8.3-macos26-27.dmg"
+     },
+     {
+      "system": "macos15",
+      "file": "oMLX-0.8.3-macos15-sequoia.dmg",
+      "size": 898724538,
+      "sha256": "f2122da492650d33ea89ad558e0572846738557b02e0e1fd7778520880069c0b",
+      "url": "https://github.com/jundot/omlx/releases/download/v0.8.3/oMLX-0.8.3-macos15-sequoia.dmg",
+      "only_tested_on": "macos26"
+     }
+    ]
+   },
    {
     "version": "0.8.2",
     "state": "verified",
